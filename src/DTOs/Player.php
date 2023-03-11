@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace LaravelPubg\DTOs;
+namespace PubgApi\DTOs;
 
 use Saloon\Contracts\DataObjects\WithResponse;
 use Saloon\Contracts\Response;
@@ -29,6 +29,8 @@ class Player implements WithResponse
 
     public static function fromArray(array $data): self
     {
-        return new static($data['id'], $data['attributes']['name'],  $data['attributes']['shardId'],  $data['relationships']['matches']['data']);
+        $matches = array_map(fn ($m) => $m['id'], $data['relationships']['matches']['data']);
+
+        return new static($data['id'], $data['attributes']['name'],  $data['attributes']['shardId'], $matches);
     }
 }

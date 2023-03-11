@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace LaravelPubg\DTOs\Concerns;
+namespace PubgApi\DTOs\Concerns;
 
-use LaravelPubg\DTOs\TelemetryEvents\PlayerKillV2;
-use LaravelPubg\DTOs\TelemetryEvents\PlayerPosition;
+use PubgApi\DTOs\TelemetryEvents\PlayerKillV2;
+use PubgApi\DTOs\TelemetryEvents\PlayerPosition;
 
 trait HasPlayerEvents
 {

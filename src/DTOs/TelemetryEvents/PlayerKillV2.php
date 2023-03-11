@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace LaravelPubg\DTOs\TelemetryEvents;
+namespace PubgApi\DTOs\TelemetryEvents;
 
-use LaravelPubg\DTOs\TelemetryObjects\Character;
-use LaravelPubg\DTOs\TelemetryObjects\DamageInfo;
-use LaravelPubg\DTOs\TelemetryObjects\GameResult;
+use PubgApi\DTOs\TelemetryObjects\Character;
+use PubgApi\DTOs\TelemetryObjects\DamageInfo;
+use PubgApi\DTOs\TelemetryObjects\GameResult;
 
 class PlayerKillV2 extends AbstractEventDTO
 {

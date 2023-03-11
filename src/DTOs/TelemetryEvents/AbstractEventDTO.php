@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace LaravelPubg\DTOs\TelemetryEvents;
+namespace PubgApi\DTOs\TelemetryEvents;
 
 class AbstractEventDTO
 {

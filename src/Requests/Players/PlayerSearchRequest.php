@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace LaravelPubg\Requests\Players;
+namespace PubgApi\Requests\Players;
 
-use LaravelPubg\DTOs\Player;
-use LaravelPubg\PubgConnector;
+use PubgApi\DTOs\Player;
 use Saloon\Contracts\Response;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -21,11 +20,6 @@ class PlayerSearchRequest extends Request
         protected string $shard,
         protected string $playerName,
     ) {
-    }
-
-    public function resolveConnector(): PubgConnector
-    {
-        return new PubgConnector(config('pubg.api_key'));
     }
 
     /**

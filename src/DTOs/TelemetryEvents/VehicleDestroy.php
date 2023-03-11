@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace LaravelPubg\DTOs\TelemetryEvents;
+namespace PubgApi\DTOs\TelemetryEvents;
 
-use LaravelPubg\DTOs\Concerns\AccessesJsonDictionaries;
-use LaravelPubg\DTOs\TelemetryObjects\Character;
-use LaravelPubg\DTOs\TelemetryObjects\Vehicle;
+use PubgApi\DTOs\Concerns\AccessesJsonDictionaries;
+use PubgApi\DTOs\TelemetryObjects\Character;
+use PubgApi\DTOs\TelemetryObjects\Vehicle;
 
 class VehicleDestroy extends AbstractEventDTO
 {

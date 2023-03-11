@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace LaravelPubg\DTOs\TelemetryEvents;
+namespace PubgApi\DTOs\TelemetryEvents;
 
-use LaravelPubg\DTOs\TelemetryObjects\GameState;
+use PubgApi\DTOs\TelemetryObjects\GameState;
 
 class GameStatePeriodic extends AbstractEventDTO
 {

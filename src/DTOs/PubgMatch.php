@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace LaravelPubg\DTOs;
+namespace PubgApi\DTOs;
 
 use Carbon\Carbon;
-use LaravelPubg\DTOs\Concerns\AccessesJsonDictionaries;
-use LaravelPubg\Requests\Telemetry\TelemetryRequest;
+use PubgApi\DTOs\Concerns\AccessesJsonDictionaries;
+use PubgApi\Requests\Telemetry\TelemetryRequest;
 use Saloon\Contracts\DataObjects\WithResponse;
 use Saloon\Contracts\Response;
 use Saloon\Traits\Responses\HasResponse;

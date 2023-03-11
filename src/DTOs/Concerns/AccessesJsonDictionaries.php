@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace LaravelPubg\DTOs\Concerns;
+namespace PubgApi\DTOs\Concerns;
 
 trait AccessesJsonDictionaries
 {
@@ -11,7 +11,7 @@ trait AccessesJsonDictionaries
      */
     public function getJsonFromFile(string $path): array
     {
-        $json = file_get_contents(storage_path('pubg-assets/dictionaries/'.$path));
+        $json = file_get_contents(__DIR__.'/../../assets/dictionaries/'.$path);
 
         return json_decode($json, true);
     }
@@ -26,6 +26,6 @@ trait AccessesJsonDictionaries
         }
         $json = $this->getJsonFromFile($path);
 
-        return $json[$key];
+        return $json[$key] ?? $key;
     }
 }

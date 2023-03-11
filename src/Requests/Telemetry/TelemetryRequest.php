@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace LaravelPubg\Requests\Telemetry;
+namespace PubgApi\Requests\Telemetry;
 
-use LaravelPubg\DTOs\Telemetry;
+use PubgApi\DTOs\Telemetry;
 use Saloon\Contracts\Response;
 use Saloon\Enums\Method;
 use Saloon\Http\SoloRequest;

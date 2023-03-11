@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace LaravelPubg\Requests\Stats;
+namespace PubgApi\Requests\Stats;
 
-use LaravelPubg\DTOs\LifetimeStats;
-use LaravelPubg\PubgConnector;
+use PubgApi\DTOs\LifetimeStats;
 use Saloon\Contracts\Response;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -22,11 +21,6 @@ class MultipleLifetimeStatsRequest extends Request
         protected string $gameMode,
         protected array $playerIds,
     ) {
-    }
-
-    public function resolveConnector(): PubgConnector
-    {
-        return new PubgConnector(config('pubg.api_key'));
     }
 
     public function resolveEndpoint(): string

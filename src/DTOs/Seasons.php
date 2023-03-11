@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace LaravelPubg\DTOs;
+namespace PubgApi\DTOs;
 
 use Illuminate\Support\Collection;
 use Saloon\Contracts\DataObjects\WithResponse;
@@ -23,11 +23,11 @@ class Seasons implements WithResponse
         $data = $response->json()['data'];
 
         $seasons = collect($data)->map(function ($s) {
-            return [
-                'id' => $s['id'],
-                'isCurrentSeason' => $s['attributes']['isCurrentSeason'],
-                'isOffSeason' => $s['attributes']['isOffseason'],
-            ];
+            return new Season(
+                id: $s['id'],
+                isCurrentSeason: $s['attributes']['isCurrentSeason'],
+                isOffSeason: $s['attributes']['isOffseason'],
+            );
         });
 
         return new static($seasons);
@@ -36,7 +36,7 @@ class Seasons implements WithResponse
     /**
      * Get the current season
      */
-    public function currentSeason(): ?array
+    public function currentSeason(): Season
     {
         return $this->seasons->firstWhere('isCurrentSeason', true);
     }

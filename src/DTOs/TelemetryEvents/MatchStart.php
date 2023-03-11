@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace LaravelPubg\DTOs\TelemetryEvents;
+namespace PubgApi\DTOs\TelemetryEvents;
 
-use LaravelPubg\DTOs\TelemetryObjects\CharacterWrapper;
+use PubgApi\DTOs\TelemetryObjects\CharacterWrapper;
 
 class MatchStart extends AbstractEventDTO
 {

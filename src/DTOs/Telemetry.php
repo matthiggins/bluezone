@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace LaravelPubg\DTOs;
+namespace PubgApi\DTOs;
 
 use Illuminate\Support\Collection;
-use LaravelPubg\DTOs\Concerns\HasPlayerEvents;
+use PubgApi\DTOs\Concerns\HasPlayerEvents;
 use Saloon\Contracts\Response;
 
 class Telemetry

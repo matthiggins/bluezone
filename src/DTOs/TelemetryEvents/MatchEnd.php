@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace LaravelPubg\DTOs\TelemetryEvents;
+namespace PubgApi\DTOs\TelemetryEvents;
 
-use LaravelPubg\DTOs\TelemetryObjects\AllWeaponStats;
-use LaravelPubg\DTOs\TelemetryObjects\CharacterWrapper;
-use LaravelPubg\DTOs\TelemetryObjects\GameResultOnFinished;
+use PubgApi\DTOs\TelemetryObjects\AllWeaponStats;
+use PubgApi\DTOs\TelemetryObjects\CharacterWrapper;
+use PubgApi\DTOs\TelemetryObjects\GameResultOnFinished;
 
 class MatchEnd extends AbstractEventDTO
 {

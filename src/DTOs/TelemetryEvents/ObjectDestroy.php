@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace LaravelPubg\DTOs\TelemetryEvents;
+namespace PubgApi\DTOs\TelemetryEvents;
 
-use LaravelPubg\DTOs\TelemetryObjects\Character;
-use LaravelPubg\DTOs\TelemetryObjects\Location;
+use PubgApi\DTOs\TelemetryObjects\Character;
+use PubgApi\DTOs\TelemetryObjects\Location;
 
 class ObjectDestroy extends AbstractEventDTO
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace LaravelPubg\DTOs;
+namespace PubgApi\DTOs;
 
 use Saloon\Contracts\DataObjects\WithResponse;
 use Saloon\Contracts\Response;

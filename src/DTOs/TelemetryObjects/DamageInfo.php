@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace LaravelPubg\DTOs\TelemetryObjects;
+namespace PubgApi\DTOs\TelemetryObjects;
 
-use LaravelPubg\DTOs\Concerns\AccessesJsonDictionaries;
+use PubgApi\DTOs\Concerns\AccessesJsonDictionaries;
 
 class DamageInfo
 {

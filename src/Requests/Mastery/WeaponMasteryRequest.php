@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace LaravelPubg\Requests\Mastery;
+namespace PubgApi\Requests\Mastery;
 
-use LaravelPubg\DTOs\WeaponMastery;
-use LaravelPubg\PubgConnector;
+use PubgApi\DTOs\WeaponMastery;
 use Saloon\Contracts\Response;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -21,11 +20,6 @@ class WeaponMasteryRequest extends Request
         protected string $shard,
         protected string $accountId,
     ) {
-    }
-
-    public function resolveConnector(): PubgConnector
-    {
-        return new PubgConnector(config('pubg.api_key'));
     }
 
     public function resolveEndpoint(): string

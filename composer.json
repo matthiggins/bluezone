@@ -1,12 +1,12 @@
 {
-    "name": "matthiggins/laravel-pubg-api",
-    "description": "A package for interacting with the PUBG API using Laravel.",
+    "name": "matthiggins/php-pubg-api",
+    "description": "A package for interacting with the PUBG API using PHP.",
     "keywords": [
         "matthiggins",
-        "laravel",
-        "laravel-pubg-api"
+        "php",
+        "php-pubg-api"
     ],
-    "homepage": "https://github.com/matthiggins/laravel-pubg-api",
+    "homepage": "https://github.com/matthiggins/php-pubg-api",
     "license": "MIT",
     "authors": [
         {
@@ -17,7 +17,7 @@
     ],
     "require": {
         "php": "^8.2",
-        "illuminate/config": "^10.3",
+        "illuminate/collections": "*",
         "sammyjo20/saloon": "^2.2",
         "sammyjo20/saloon-laravel": "^2.0"
     },
@@ -35,12 +35,12 @@
     },
     "autoload": {
         "psr-4": {
-            "LaravelPubg\\": "src"
+            "PubgApi\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "LaravelPubg\\Tests\\": "tests"
+            "PubgApi\\Tests\\": "tests"
         }
     },
     "scripts": {

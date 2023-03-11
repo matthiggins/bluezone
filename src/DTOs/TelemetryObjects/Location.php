@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace LaravelPubg\DTOs\TelemetryObjects;
+namespace PubgApi\DTOs\TelemetryObjects;
 
 class Location
 {

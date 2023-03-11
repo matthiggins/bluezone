@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace LaravelPubg\Requests\Stats;
+namespace PubgApi\Requests\Stats;
 
-use LaravelPubg\DTOs\SeasonStats;
-use LaravelPubg\PubgConnector;
+use PubgApi\DTOs\SeasonStats;
 use Saloon\Contracts\Response;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -23,11 +22,6 @@ class MultipleSeasonStatsRequest extends Request
         protected string $gameMode,
         protected array $playerIds,
     ) {
-    }
-
-    public function resolveConnector(): PubgConnector
-    {
-        return new PubgConnector(config('pubg.api_key'));
     }
 
     public function resolveEndpoint(): string

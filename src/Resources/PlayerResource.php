@@ -19,7 +19,10 @@ class PlayerResource extends Resource
      */
     public function find(string $shard, string $accountId): Response
     {
-        return $this->connector->send(new PlayerAccountRequest($shard, $accountId));
+        return $this->connector->send(new PlayerAccountRequest(
+            shard: $shard,
+            accountId: $accountId,
+        ));
     }
 
     /**
@@ -27,7 +30,10 @@ class PlayerResource extends Resource
      */
     public function lifetimeStats(string $shard, string $accountId): Response
     {
-        return $this->connector->send(new LifetimeStatsRequest($shard, $accountId));
+        return $this->connector->send(new LifetimeStatsRequest(
+            shard: $shard,
+            accountId: $accountId,
+        ));
     }
 
     /**
@@ -35,7 +41,11 @@ class PlayerResource extends Resource
      */
     public function multipleLifetimeStats(string $shard, string $gameMode, array $playerIds): Response
     {
-        return $this->connector->send(new MultipleLifetimeStatsRequest($shard, $gameMode, $playerIds));
+        return $this->connector->send(new MultipleLifetimeStatsRequest(
+            shard: $shard,
+            gameMode: $gameMode,
+            playerIds: $playerIds,
+        ));
     }
 
     /**
@@ -43,7 +53,12 @@ class PlayerResource extends Resource
      */
     public function multipleSeasonStats(string $shard, string $seasonId, string $gameMode, array $playerIds): Response
     {
-        return $this->connector->send(new MultipleSeasonStatsRequest($shard, $seasonId, $gameMode, $playerIds));
+        return $this->connector->send(new MultipleSeasonStatsRequest(
+            shard: $shard,
+            seasonId: $seasonId,
+            gameMode: $gameMode,
+            playerIds: $playerIds,
+        ));
     }
 
     /**
@@ -51,7 +66,11 @@ class PlayerResource extends Resource
      */
     public function rankedSeason(string $shard, string $seasonId, string $accountId): Response
     {
-        return $this->connector->send(new RankedSeasonStatsRequest($shard, $seasonId, $accountId));
+        return $this->connector->send(new RankedSeasonStatsRequest(
+            shard: $shard,
+            seasonId: $seasonId,
+            accountId: $accountId,
+        ));
     }
 
     /**
@@ -59,7 +78,10 @@ class PlayerResource extends Resource
      */
     public function search(string $shard, string $playerName): Response
     {
-        return $this->connector->send(new PlayerSearchRequest($shard, $playerName));
+        return $this->connector->send(new PlayerSearchRequest(
+            shard: $shard,
+            playerName: $playerName,
+        ));
     }
 
     /**
@@ -67,7 +89,10 @@ class PlayerResource extends Resource
      */
     public function searchMultiple(string $shard, array $playerNames): Response
     {
-        return $this->connector->send(new MultiplePlayerSearchRequest($shard, $playerNames));
+        return $this->connector->send(new MultiplePlayerSearchRequest(
+            shard: $shard,
+            playerNames: $playerNames,
+        ));
     }
 
     /**
@@ -75,6 +100,10 @@ class PlayerResource extends Resource
      */
     public function seasonStats(string $shard, string $seasonId, string $accountId): Response
     {
-        return $this->connector->send(new SeasonStatsRequest($shard, $seasonId, $accountId));
+        return $this->connector->send(new SeasonStatsRequest(
+            shard: $shard,
+            seasonId: $seasonId,
+            accountId: $accountId,
+        ));
     }
 }

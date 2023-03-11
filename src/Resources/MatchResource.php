@@ -12,6 +12,9 @@ class MatchResource extends Resource
      */
     public function find(string $shard, string $matchId): Response
     {
-        return $this->connector->send(new MatchRequest($shard, $matchId));
+        return $this->connector->send(new MatchRequest(
+            shard: $shard,
+            matchId: $matchId,
+        ));
     }
 }

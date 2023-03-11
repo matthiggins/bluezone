@@ -13,7 +13,10 @@ class MasteryResource extends Resource
      */
     public function weapon(string $shard, string $accountId): Response
     {
-        return $this->connector->send(new WeaponMasteryRequest($shard, $accountId));
+        return $this->connector->send(new WeaponMasteryRequest(
+            shard: $shard,
+            accountId: $accountId,
+        ));
     }
 
     /**
@@ -21,6 +24,9 @@ class MasteryResource extends Resource
      */
     public function survival(string $shard, string $accountId): Response
     {
-        return $this->connector->send(new SurvivalMasteryRequest($shard, $accountId));
+        return $this->connector->send(new SurvivalMasteryRequest(
+            shard: $shard,
+            accountId: $accountId,
+        ));
     }
 }

@@ -12,6 +12,8 @@ class SeasonResource extends Resource
      */
     public function all(string $shard): Response
     {
-        return $this->connector->send(new SeasonsRequest($shard));
+        return $this->connector->send(new SeasonsRequest(
+            shard: $shard
+        ));
     }
 }

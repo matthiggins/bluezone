@@ -7,9 +7,12 @@ use PubgApi\Resources\MatchResource;
 use PubgApi\Resources\PlayerResource;
 use PubgApi\Resources\SeasonResource;
 use Saloon\Http\Connector;
+use Saloon\Traits\Plugins\AlwaysThrowOnErrors;
 
 class PubgApi extends Connector
 {
+    use AlwaysThrowOnErrors;
+
     /**
      * Constructor
      */

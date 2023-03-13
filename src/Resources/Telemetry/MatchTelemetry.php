@@ -49,7 +49,7 @@ class MatchTelemetry {
     /**
      * Get the phase change event
      */
-    public function phaseChange(): Collection
+    public function phaseChanges(): Collection
     {
         return $this->telemetry->filter(function ($event) {
             return $event instanceof PhaseChange;

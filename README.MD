@@ -1,3 +1,5 @@
+![banner](https://user-images.githubusercontent.com/422780/224612205-5081d7bd-d7f1-475f-a204-d9fb22411c9c.jpg)
+
 # BLUEZONE : A PHP SDK for the PUBG API 
 
 BLUEZONE is an SDK for PHP that makes using the [PUBG API](https://developer.pubg.com/) dead simple. It provides a set of simple and intuitive methods that allow you to interact with the PUBG API without having to worry about low-level details such as authentication and request handling. With BLUEZONE, you can easily retrieve data for players, matches, seasons, weapon mastery, and survival mastery. It also includes a set of data transfer objects (DTOs) that help you work with the data returned by the API in a structured and organized way.
@@ -266,7 +268,7 @@ $telemetry->match()->definition();
 $telemetry->match()->end();
 
 // Get all phase change events for the match
-$telemetry->match()->phaseChange();
+$telemetry->match()->phaseChanges();
 
 // Get the start state of the match
 $telemetry->match()->start();
@@ -283,7 +285,7 @@ For example:
 ```php
 use Bluezone\DTOs\TelemetryEvents\PlayerAttack;
 
-$playerAttackEvents = $telemetry->data()->filter(function ($event) use ($accountId) {
+$playerAttackEvents = $telemetry->events()->filter(function ($event) use ($accountId) {
     return ($event instanceof PlayerAttack) && $event->attacker->accountId == $accountId;
 });
 ```

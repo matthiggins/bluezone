@@ -1,8 +1,8 @@
 <?php
 
-namespace PubgApi\Resources;
+namespace Bluezone\Resources;
 
-use PubgApi\Requests\Matches\MatchRequest;
+use Bluezone\Requests\Matches\MatchRequest;
 use Saloon\Http\Response;
 
 class MatchResource extends Resource

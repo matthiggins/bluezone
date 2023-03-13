@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace PubgApi\DTOs;
+namespace Bluezone\DTOs;
 
 use Carbon\Carbon;
-use PubgApi\DTOs\Concerns\AccessesJsonDictionaries;
-use PubgApi\Requests\Telemetry\TelemetryRequest;
+use Bluezone\DTOs\Concerns\AccessesJsonDictionaries;
+use Bluezone\Requests\Telemetry\TelemetryRequest;
 use Saloon\Contracts\DataObjects\WithResponse;
 use Saloon\Contracts\Response;
 use Saloon\Traits\Responses\HasResponse;

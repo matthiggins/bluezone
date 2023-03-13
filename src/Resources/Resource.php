@@ -1,6 +1,6 @@
 <?php
 
-namespace PubgApi\Resources;
+namespace Bluezone\Resources;
 
 use Saloon\Contracts\Connector;
 

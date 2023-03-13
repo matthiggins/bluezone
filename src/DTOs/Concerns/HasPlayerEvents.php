@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace PubgApi\DTOs\Concerns;
+namespace Bluezone\DTOs\Concerns;
 
-use PubgApi\DTOs\TelemetryEvents\PlayerKillV2;
-use PubgApi\DTOs\TelemetryEvents\PlayerPosition;
+use Bluezone\DTOs\TelemetryEvents\PlayerKillV2;
+use Bluezone\DTOs\TelemetryEvents\PlayerPosition;
 
 trait HasPlayerEvents
 {

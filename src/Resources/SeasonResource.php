@@ -1,8 +1,8 @@
 <?php
 
-namespace PubgApi\Resources;
+namespace Bluezone\Resources;
 
-use PubgApi\Requests\Seasons\SeasonsRequest;
+use Bluezone\Requests\Seasons\SeasonsRequest;
 use Saloon\Http\Response;
 
 class SeasonResource extends Resource

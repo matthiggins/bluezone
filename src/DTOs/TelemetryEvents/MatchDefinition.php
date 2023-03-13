@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PubgApi\DTOs\TelemetryEvents;
+namespace Bluezone\DTOs\TelemetryEvents;
 
 class MatchDefinition extends AbstractEventDTO
 {

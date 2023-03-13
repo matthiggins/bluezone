@@ -1,15 +1,15 @@
 <?php
 
-namespace PubgApi\Resources;
+namespace Bluezone\Resources;
 
-use PubgApi\Requests\Players\PlayerAccountRequest;
-use PubgApi\Requests\Players\PlayerSearchManyRequest;
-use PubgApi\Requests\Players\PlayerSearchRequest;
-use PubgApi\Requests\Stats\LifetimeStatsManyRequest;
-use PubgApi\Requests\Stats\LifetimeStatsRequest;
-use PubgApi\Requests\Stats\RankedSeasonStatsRequest;
-use PubgApi\Requests\Stats\SeasonStatsManyRequest;
-use PubgApi\Requests\Stats\SeasonStatsRequest;
+use Bluezone\Requests\Players\PlayerAccountRequest;
+use Bluezone\Requests\Players\PlayerSearchManyRequest;
+use Bluezone\Requests\Players\PlayerSearchRequest;
+use Bluezone\Requests\Stats\LifetimeStatsManyRequest;
+use Bluezone\Requests\Stats\LifetimeStatsRequest;
+use Bluezone\Requests\Stats\RankedSeasonStatsRequest;
+use Bluezone\Requests\Stats\SeasonStatsManyRequest;
+use Bluezone\Requests\Stats\SeasonStatsRequest;
 use Saloon\Http\Response;
 
 class PlayerResource extends Resource

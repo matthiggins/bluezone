@@ -1,12 +1,12 @@
 {
-    "name": "matthiggins/php-pubg-api",
-    "description": "A package for interacting with the PUBG API using PHP.",
+    "name": "matthiggins/bluezone",
+    "description": "A PHP SDK interacting with the PUBG API and PUBG match telemetry files.",
     "keywords": [
         "matthiggins",
         "php",
         "php-pubg-api"
     ],
-    "homepage": "https://github.com/matthiggins/php-pubg-api",
+    "homepage": "https://github.com/matthiggins/bluezone",
     "license": "MIT",
     "authors": [
         {
@@ -35,12 +35,12 @@
     },
     "autoload": {
         "psr-4": {
-            "PubgApi\\": "src"
+            "Bluezone\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "PubgApi\\Tests\\": "tests"
+            "Bluezone\\Tests\\": "tests"
         }
     },
     "scripts": {

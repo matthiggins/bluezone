@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PubgApi\Requests\Mastery;
+namespace Bluezone\Requests\Mastery;
 
-use PubgApi\DTOs\SurvivalMastery;
+use Bluezone\DTOs\SurvivalMastery;
 use Saloon\Contracts\Response;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;

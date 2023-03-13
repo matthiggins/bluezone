@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PubgApi\Requests\Stats;
+namespace Bluezone\Requests\Stats;
 
-use PubgApi\DTOs\LifetimeStats;
+use Bluezone\DTOs\LifetimeStats;
 use Saloon\Contracts\Response;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;

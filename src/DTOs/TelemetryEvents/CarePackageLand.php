@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PubgApi\DTOs\TelemetryEvents;
+namespace Bluezone\DTOs\TelemetryEvents;
 
-use PubgApi\DTOs\TelemetryObjects\ItemPackage;
+use Bluezone\DTOs\TelemetryObjects\ItemPackage;
 
 class CarePackageLand extends AbstractEventDTO
 {

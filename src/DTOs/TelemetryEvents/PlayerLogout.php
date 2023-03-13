@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PubgApi\DTOs\TelemetryEvents;
+namespace Bluezone\DTOs\TelemetryEvents;
 
-use PubgApi\DTOs\TelemetryObjects\Common;
+use Bluezone\DTOs\TelemetryObjects\Common;
 
 class PlayerLogout extends AbstractEventDTO
 {

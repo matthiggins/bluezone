@@ -1,8 +1,8 @@
 <?php
 
-namespace PubgApi\Resources;
+namespace Bluezone\Resources;
 
-use PubgApi\Requests\Telemetry\TelemetryRequest;
+use Bluezone\Requests\Telemetry\TelemetryRequest;
 use Saloon\Http\Response;
 
 class TelemetryResource extends Resource

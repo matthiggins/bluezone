@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PubgApi\Requests\Players;
+namespace Bluezone\Requests\Players;
 
-use PubgApi\DTOs\Player;
+use Bluezone\DTOs\Player;
 use Saloon\Contracts\Response;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;

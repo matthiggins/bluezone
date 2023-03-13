@@ -6,9 +6,9 @@ In addition to accessing data from the API, BLUEZONE also allows you to access m
 
 ## Installation
 
-To install, require the package `matthiggins/bluezone-php-sdk` via composer.
+To install, require the package `matthiggins/bluezone` via composer.
 ```
-composer require matthiggins/bluezone-php-sdk
+composer require matthiggins/bluezone
 ```
 
 ## Usage

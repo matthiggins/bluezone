@@ -1,11 +1,11 @@
 <?php
 
-namespace PubgApi;
+namespace Bluezone;
 
-use PubgApi\Resources\MasteryResource;
-use PubgApi\Resources\MatchResource;
-use PubgApi\Resources\PlayerResource;
-use PubgApi\Resources\SeasonResource;
+use Bluezone\Resources\MasteryResource;
+use Bluezone\Resources\MatchResource;
+use Bluezone\Resources\PlayerResource;
+use Bluezone\Resources\SeasonResource;
 use Saloon\Http\Connector;
 use Saloon\Traits\Plugins\AlwaysThrowOnErrors;
 

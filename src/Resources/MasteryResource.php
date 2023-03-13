@@ -1,9 +1,9 @@
 <?php
 
-namespace PubgApi\Resources;
+namespace Bluezone\Resources;
 
-use PubgApi\Requests\Mastery\SurvivalMasteryRequest;
-use PubgApi\Requests\Mastery\WeaponMasteryRequest;
+use Bluezone\Requests\Mastery\SurvivalMasteryRequest;
+use Bluezone\Requests\Mastery\WeaponMasteryRequest;
 use Saloon\Http\Response;
 
 class MasteryResource extends Resource

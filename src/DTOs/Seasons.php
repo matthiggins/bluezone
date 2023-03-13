@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PubgApi\DTOs;
+namespace Bluezone\DTOs;
 
 use Illuminate\Support\Collection;
 use Saloon\Contracts\DataObjects\WithResponse;

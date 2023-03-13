@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PubgApi\Requests\Seasons;
+namespace Bluezone\Requests\Seasons;
 
-use PubgApi\DTOs\Seasons;
+use Bluezone\DTOs\Seasons;
 use Saloon\Contracts\Response;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace PubgApi\DTOs;
+namespace Bluezone\DTOs;
 
 use Illuminate\Support\Collection;
-use PubgApi\DTOs\Concerns\HasPlayerEvents;
+use Bluezone\DTOs\Concerns\HasPlayerEvents;
 use Saloon\Contracts\Response;
 
 class Telemetry

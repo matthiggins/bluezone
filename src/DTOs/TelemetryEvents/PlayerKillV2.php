@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace PubgApi\DTOs\TelemetryEvents;
+namespace Bluezone\DTOs\TelemetryEvents;
 
-use PubgApi\DTOs\TelemetryObjects\Character;
-use PubgApi\DTOs\TelemetryObjects\DamageInfo;
-use PubgApi\DTOs\TelemetryObjects\GameResult;
+use Bluezone\DTOs\TelemetryObjects\Character;
+use Bluezone\DTOs\TelemetryObjects\DamageInfo;
+use Bluezone\DTOs\TelemetryObjects\GameResult;
 
 class PlayerKillV2 extends AbstractEventDTO
 {

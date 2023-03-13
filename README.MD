@@ -26,22 +26,19 @@ $bluezone = new Bluezone($apiKey);
 ## Making requests
 
 ```php
-// Return a Request instance of a player search
-$request = $bluezone->player()->search($shard, $playerName);
+// Return a Player DTO instance from the search response
+$player = $bluezone->player()->search($shard, $playerName);
 
-// Return a Player object from the search results
-$player = $bluezone->player()->find($shard, $accountId)->dto();
+// Return a Player DTO instance from the player id response
+$player = $bluezone->player()->find($shard, $accountId);
 ```
 
 ## Getting data
-You can get the returned data in multiple different formats. Using the response DTOs will format the response data and often provide methods to interact with the data. You can also return the data as JSON or an object. 
+By default, requests will return a DTO instance or a Collection of DTO instances. You can also get the raw data from the PUBG API by using the `->json()` method on your DTO result. 
 
 ```php
 
-$player = $request->dto();          // (Recommended) Return the data transfer object for this request
-$json = $request->json();           // Return decoded JSON data from the PUBG API
-$object = $request->object();       // Return data as an object
-$object = $request->collect();      // Return data as a Collection
+$array = $response->json();           // Return decoded JSON data from the PUBG API
 
 ```
 
@@ -49,20 +46,11 @@ $object = $request->collect();      // Return data as a Collection
 You can access details about the request including helper methods for successes and failures. 
 
 ```php
-$request->successful();     // true if the response status is in the 200s
-$request->ok();             // true if the response status is 200
-$request->serverError();    // true if the response status is 500
-$request->clientError();    // true if the response status is in the 400s
-$request->failed();         // true if the response status is not 200
-```
-
-Dealing with errors by defining a callback on the `onError` method.
-```php
-use Saloon\Contracts\Response;
-
-$request->onError(function(Response $response) {
-    // Handle error logic
-});
+$response->getResponse()->successful();     // true if the response status is in the 200s
+$response->getResponse()->ok();             // true if the response status is 200
+$response->getResponse()->serverError();    // true if the response status is 500
+$response->getResponse()->clientError();    // true if the response status is in the 400s
+$response->getResponse()->failed();         // true if the response status is not 200
 ```
 
 ## Available methods
@@ -129,12 +117,21 @@ To get a telemetry file you must first request details of a PUBG match.
 
 ```php
 $match = $bluezone->match()->find($shard, $matchId)->dto();
-$telemetry = $match->getTelemetry();
+$telemetry = $match->getTelemetry();    // Returns a Telemetry DTO
 
-$data = $telemetry->data();      // Telemetry data mapped to Event DTOs and Object DTOs
+$data = $telemetry->data();      // Telemetry data mapped to Telemetry Event instances
 $playerEvents = $telemetry->getEventsForPlayer($accountId);     // Get telemetry events for a specific player
 $positionEvents = $telemetry->getPositionEventsForPlayer($accountId);     // Get position events for a specific player
 $killEvents = $telemetry->getKillEventsForPlayer($accountId);     // Get position events for a specific player
 ```
 
 You can easily filter out events from the data using [Laravel Collection](https://laravel.com/docs/10.x/collections) methods. 
+
+For example:
+```php
+use Bluezone\DTOs\TelemetryEvents\PlayerAttack;
+
+$playerAttackEvents = $telemetry->data()->filter(function ($event) use ($accountId) {
+    return ($event instanceof PlayerAttack) && $event->attacker->accountId == $accountId;
+});
+```

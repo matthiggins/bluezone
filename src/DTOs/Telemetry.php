@@ -13,7 +13,7 @@ class Telemetry
     use HasPlayerEvents;
 
     public function __construct(
-        public Collection $telemetry,
+        protected Collection $telemetry,
     ) {
         $this->telemetry = $this->mapTelemetryToEvents();
     }

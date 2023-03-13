@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PubgApi\DTOs\TelemetryEvents;
+namespace Bluezone\DTOs\TelemetryEvents;
 
-use PubgApi\DTOs\TelemetryObjects\Character;
+use Bluezone\DTOs\TelemetryObjects\Character;
 
 class ParachuteLanding extends AbstractEventDTO
 {

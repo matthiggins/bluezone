@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PubgApi\DTOs\TelemetryEvents;
+namespace Bluezone\DTOs\TelemetryEvents;
 
-use PubgApi\DTOs\TelemetryObjects\CharacterWrapper;
+use Bluezone\DTOs\TelemetryObjects\CharacterWrapper;
 
 class MatchStart extends AbstractEventDTO
 {

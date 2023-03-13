@@ -2,19 +2,17 @@
 
 declare(strict_types=1);
 
-namespace PubgApi\DTOs;
+namespace Bluezone\DTOs;
 
+use Bluezone\DTOs\Concerns\AccessesJsonDictionaries;
+use Bluezone\Requests\Telemetry\TelemetryRequest;
 use Carbon\Carbon;
-use PubgApi\DTOs\Concerns\AccessesJsonDictionaries;
-use PubgApi\Requests\Telemetry\TelemetryRequest;
 use Saloon\Contracts\DataObjects\WithResponse;
 use Saloon\Contracts\Response;
-use Saloon\Traits\Responses\HasResponse;
 
-class PubgMatch implements WithResponse
+class PubgMatch extends PubgDTO implements WithResponse
 {
     use AccessesJsonDictionaries;
-    use HasResponse;
 
     public function __construct(
         readonly public string $id,
@@ -92,7 +90,9 @@ class PubgMatch implements WithResponse
     }
 
     /**
-     * Request the telemetry from the PUBG API
+     * Get the telemetry DTO from the telemetry file for this match.
+     * 
+     * @return Telemetry
      */
     public function getTelemetry(): Telemetry
     {

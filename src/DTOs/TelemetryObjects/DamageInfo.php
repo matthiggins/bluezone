@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PubgApi\DTOs\TelemetryObjects;
+namespace Bluezone\DTOs\TelemetryObjects;
 
-use PubgApi\DTOs\Concerns\AccessesJsonDictionaries;
+use Bluezone\DTOs\Concerns\AccessesJsonDictionaries;
 
 class DamageInfo
 {

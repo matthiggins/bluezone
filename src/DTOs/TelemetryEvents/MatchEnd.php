@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace PubgApi\DTOs\TelemetryEvents;
+namespace Bluezone\DTOs\TelemetryEvents;
 
-use PubgApi\DTOs\TelemetryObjects\AllWeaponStats;
-use PubgApi\DTOs\TelemetryObjects\CharacterWrapper;
-use PubgApi\DTOs\TelemetryObjects\GameResultOnFinished;
+use Bluezone\DTOs\TelemetryObjects\AllWeaponStats;
+use Bluezone\DTOs\TelemetryObjects\CharacterWrapper;
+use Bluezone\DTOs\TelemetryObjects\GameResultOnFinished;
 
 class MatchEnd extends AbstractEventDTO
 {

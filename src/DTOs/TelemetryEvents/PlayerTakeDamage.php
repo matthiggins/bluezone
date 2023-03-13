@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace PubgApi\DTOs\TelemetryEvents;
+namespace Bluezone\DTOs\TelemetryEvents;
 
-use PubgApi\DTOs\Concerns\AccessesJsonDictionaries;
-use PubgApi\DTOs\TelemetryObjects\Character;
+use Bluezone\DTOs\Concerns\AccessesJsonDictionaries;
+use Bluezone\DTOs\TelemetryObjects\Character;
 
 class PlayerTakeDamage extends AbstractEventDTO
 {

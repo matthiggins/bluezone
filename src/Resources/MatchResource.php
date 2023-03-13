@@ -1,17 +1,20 @@
 <?php
 
-namespace PubgApi\Resources;
+namespace Bluezone\Resources;
 
-use PubgApi\Requests\Matches\MatchRequest;
-use Saloon\Http\Response;
+use Bluezone\DTOs\PubgDTO;
+use Bluezone\Requests\Matches\MatchRequest;
 
 class MatchResource extends Resource
 {
     /**
      * Get a single match
      */
-    public function find(string $shard, string $matchId): Response
+    public function find(string $shard, string $matchId): PubgDTO
     {
-        return $this->connector->send(new MatchRequest($shard, $matchId));
+        return $this->send(new MatchRequest(
+            shard: $shard,
+            matchId: $matchId,
+        ));
     }
 }

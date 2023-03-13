@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace PubgApi\DTOs\TelemetryEvents;
+namespace Bluezone\DTOs\TelemetryEvents;
 
-use PubgApi\DTOs\TelemetryObjects\Character;
-use PubgApi\DTOs\TelemetryObjects\Item;
+use Bluezone\DTOs\TelemetryObjects\Character;
+use Bluezone\DTOs\TelemetryObjects\Item;
 
 class ItemEquip extends AbstractEventDTO
 {

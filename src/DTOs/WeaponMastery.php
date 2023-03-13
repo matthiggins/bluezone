@@ -2,16 +2,13 @@
 
 declare(strict_types=1);
 
-namespace PubgApi\DTOs;
+namespace Bluezone\DTOs;
 
 use Saloon\Contracts\DataObjects\WithResponse;
 use Saloon\Contracts\Response;
-use Saloon\Traits\Responses\HasResponse;
 
-class WeaponMastery implements WithResponse
+class WeaponMastery extends PubgDTO implements WithResponse
 {
-    use HasResponse;
-
     public function __construct(
         readonly public string $accountId,
         readonly public array $weaponSummaries,

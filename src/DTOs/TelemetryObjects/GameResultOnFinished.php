@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PubgApi\DTOs\TelemetryObjects;
+namespace Bluezone\DTOs\TelemetryObjects;
 
 class GameResultOnFinished
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PubgApi\DTOs\Concerns;
+namespace Bluezone\DTOs\Concerns;
 
 trait AccessesJsonDictionaries
 {

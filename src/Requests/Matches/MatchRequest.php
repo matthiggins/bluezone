@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PubgApi\Requests\Matches;
+namespace Bluezone\Requests\Matches;
 
-use PubgApi\DTOs\PubgMatch;
+use Bluezone\DTOs\PubgMatch;
 use Saloon\Contracts\Response;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;

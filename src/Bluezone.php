@@ -41,14 +41,6 @@ class Bluezone extends Connector
     }
 
     /**
-     * Weapon and Survival Mastery resource
-     */
-    public function mastery(): MasteryResource
-    {
-        return new MasteryResource($this);
-    }
-
-    /**
      * Match resource
      */
     public function match(): MatchResource

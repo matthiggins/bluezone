@@ -16,6 +16,9 @@ In addition to accessing data from the API, BLUEZONE also allows you to access m
   - [Making requests](#making-requests)
   - [Checking request responses](#checking-request-responses)
   - [Available methods](#available-methods)
+    - [Seasons](#seasons)
+    - [Players](#players)
+    - [Matches](#matches)
   - [JSON data from the PUBG API request](#json-data-from-the-pubg-api-request)
   - [Working with Match Telemetry Data](#working-with-match-telemetry-data)
     - [Get player events from telemetry data](#get-player-events-from-telemetry-data)
@@ -113,25 +116,30 @@ $player->getResponse()->failed();         // true if the response status is not 
 
 Bluezone has easy methods for accessing the [PUBG API endpoints](https://documentation.pubg.com/en/introduction.ht
 
-```php
 
+### Seasons
+```php
 // Get all PUBG seasons
 $seasons = $bluezone->season()->all($shard);
+```
+
+### Players
+```php
 
 // Find a specific player 
 $player = $bluezone->player()->find($shard, $accountId);
 
 // Search for a player by name 
-$player = $bluezone->player()->search($shard, 'TGLTN');
+$player = $bluezone->player()->search($shard, $playerName);
 
-// Search for up to 10 players at once
-$results = $bluezone->player()->searchMany($shard, ['TGLTN', 'hwinn']);
+// Search for up to 10 players
+$results = $bluezone->player()->searchMany($shard, [$playerName01, $playerName02]);
 
 // Season stats for a single player
 $seasonStats = $bluezone->player()->seasonStats($shard, $season, $accountId);
 
-// Season stats for multiple players
-$seasonStats = $bluezone->player()->seasonStatsMany($shard, $season, 'solo-fpp', [$accountId,$accountId]);
+// Season stats for up to 10 players
+$seasonStats = $bluezone->player()->seasonStatsMany($shard, $season, $gameMode, [$accountId,$accountId]);
 
 // Ranked season stats for a single player
 $rankedSeasonStats = $bluezone->player()->rankedSeasonStats($shard, $season, $accountId);
@@ -139,18 +147,20 @@ $rankedSeasonStats = $bluezone->player()->rankedSeasonStats($shard, $season, $ac
 // Lifetime season stats for a single player
 $lifetimeStats = $bluezone->player()->lifetimeStats($shard, $accountId);
 
-// Lifetime stats for a multiple players
-$lifetimeStats = $bluezone->player()->lifetimeStatsMany($shard, 'solo-fpp', [$accountId,$accountId]);
-
-// Get a single match
-$match = $bluezone->match()->find($shard, $matchId);
+// Lifetime stats for up to 10 players
+$lifetimeStats = $bluezone->player()->lifetimeStatsMany($shard, $gameMode, [$accountId,$accountId]);
 
 // Get weapon mastery for a single player
-$weaponMastery = $bluezone->mastery()->weapon($shard, $accountId);
+$weaponMastery = $bluezone->player()->weaponMastery($shard, $accountId);
 
 // Get survival mastery for a single player
-$survivalMastery = $bluezone->mastery()->survival($shard, $accountId);
+$survivalMastery = $bluezone->player()->survivalMastery($shard, $accountId);
+```
 
+### Matches
+```php
+// Get a match
+$match = $bluezone->match()->find($shard, $matchId);
 ```
 
 ---

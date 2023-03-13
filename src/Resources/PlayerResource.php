@@ -3,6 +3,8 @@
 namespace Bluezone\Resources;
 
 use Bluezone\DTOs\PubgDTO;
+use Bluezone\Requests\Mastery\SurvivalMasteryRequest;
+use Bluezone\Requests\Mastery\WeaponMasteryRequest;
 use Bluezone\Requests\Players\PlayerAccountRequest;
 use Bluezone\Requests\Players\PlayerSearchManyRequest;
 use Bluezone\Requests\Players\PlayerSearchRequest;
@@ -105,6 +107,28 @@ class PlayerResource extends Resource
             seasonId: $seasonId,
             gameMode: $gameMode,
             playerIds: $playerIds,
+        ));
+    }
+
+    /**
+     * Get all weapon mastery for a player
+     */
+    public function weaponMastery(string $shard, string $accountId): PubgDTO
+    {
+        return $this->send(new WeaponMasteryRequest(
+            shard: $shard,
+            accountId: $accountId,
+        ));
+    }
+
+    /**
+     * Get all survival mastery for a player
+     */
+    public function survivalMastery(string $shard, string $accountId): PubgDTO
+    {
+        return $this->send(new SurvivalMasteryRequest(
+            shard: $shard,
+            accountId: $accountId,
         ));
     }
 }

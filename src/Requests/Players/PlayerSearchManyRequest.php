@@ -10,7 +10,7 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Request\HasConnector;
 
-class MultiplePlayerSearchRequest extends Request
+class PlayerSearchManyRequest extends Request
 {
     use HasConnector;
 

@@ -23,8 +23,19 @@ class Telemetry
         return new static(collect($response->json()));
     }
 
-    public function mapTelemetryToEvents(): Collection
+    /**
+     * @return Collection<TelemetryEvents\TelemetryEvent>
+     */
+    protected function mapTelemetryToEvents(): Collection
     {
         return $this->telemetry->map(fn ($e) => TelemetryEvents\EventFactory::createDTO($e));
+    }
+
+    /**
+     * @return Collection<TelemetryEvents\TelemetryEvent>
+     */
+    public function data(): Collection
+    {
+        return $this->telemetry;
     }
 }

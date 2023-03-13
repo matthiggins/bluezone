@@ -2,13 +2,13 @@
 
 namespace PubgApi\Resources;
 
-use PubgApi\Requests\Players\MultiplePlayerSearchRequest;
 use PubgApi\Requests\Players\PlayerAccountRequest;
+use PubgApi\Requests\Players\PlayerSearchManyRequest;
 use PubgApi\Requests\Players\PlayerSearchRequest;
+use PubgApi\Requests\Stats\LifetimeStatsManyRequest;
 use PubgApi\Requests\Stats\LifetimeStatsRequest;
-use PubgApi\Requests\Stats\MultipleLifetimeStatsRequest;
-use PubgApi\Requests\Stats\MultipleSeasonStatsRequest;
 use PubgApi\Requests\Stats\RankedSeasonStatsRequest;
+use PubgApi\Requests\Stats\SeasonStatsManyRequest;
 use PubgApi\Requests\Stats\SeasonStatsRequest;
 use Saloon\Http\Response;
 
@@ -39,23 +39,10 @@ class PlayerResource extends Resource
     /**
      * Get lifetime stats for multiple players
      */
-    public function multipleLifetimeStats(string $shard, string $gameMode, array $playerIds): Response
+    public function lifetimeStatsMany(string $shard, string $gameMode, array $playerIds): Response
     {
-        return $this->connector->send(new MultipleLifetimeStatsRequest(
+        return $this->connector->send(new LifetimeStatsManyRequest(
             shard: $shard,
-            gameMode: $gameMode,
-            playerIds: $playerIds,
-        ));
-    }
-
-    /**
-     * Get season stats for multiple players
-     */
-    public function multipleSeasonStats(string $shard, string $seasonId, string $gameMode, array $playerIds): Response
-    {
-        return $this->connector->send(new MultipleSeasonStatsRequest(
-            shard: $shard,
-            seasonId: $seasonId,
             gameMode: $gameMode,
             playerIds: $playerIds,
         ));
@@ -64,7 +51,7 @@ class PlayerResource extends Resource
     /**
      * Get ranked season stats for a player
      */
-    public function rankedSeason(string $shard, string $seasonId, string $accountId): Response
+    public function rankedSeasonStats(string $shard, string $seasonId, string $accountId): Response
     {
         return $this->connector->send(new RankedSeasonStatsRequest(
             shard: $shard,
@@ -87,9 +74,9 @@ class PlayerResource extends Resource
     /**
      * Search for multiple players by name
      */
-    public function searchMultiple(string $shard, array $playerNames): Response
+    public function searchMany(string $shard, array $playerNames): Response
     {
-        return $this->connector->send(new MultiplePlayerSearchRequest(
+        return $this->connector->send(new PlayerSearchManyRequest(
             shard: $shard,
             playerNames: $playerNames,
         ));
@@ -104,6 +91,19 @@ class PlayerResource extends Resource
             shard: $shard,
             seasonId: $seasonId,
             accountId: $accountId,
+        ));
+    }
+
+    /**
+     * Get season stats for multiple players
+     */
+    public function seasonStatsMany(string $shard, string $seasonId, string $gameMode, array $playerIds): Response
+    {
+        return $this->connector->send(new SeasonStatsManyRequest(
+            shard: $shard,
+            seasonId: $seasonId,
+            gameMode: $gameMode,
+            playerIds: $playerIds,
         ));
     }
 }

@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace PubgApi\Requests\Stats;
 
-use PubgApi\DTOs\LifetimeStats;
+use PubgApi\DTOs\SeasonStats;
 use Saloon\Contracts\Response;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Request\HasConnector;
 
-class MultipleLifetimeStatsRequest extends Request
+class SeasonStatsManyRequest extends Request
 {
     use HasConnector;
 
@@ -18,6 +18,7 @@ class MultipleLifetimeStatsRequest extends Request
 
     public function __construct(
         protected string $shard,
+        protected string $seasonId,
         protected string $gameMode,
         protected array $playerIds,
     ) {
@@ -25,7 +26,7 @@ class MultipleLifetimeStatsRequest extends Request
 
     public function resolveEndpoint(): string
     {
-        return 'shards/'.$this->shard.'/seasons/lifetime/gameMode/'.$this->gameMode.'/players';
+        return 'shards/'.$this->shard.'/seasons/'.$this->seasonId.'/gameMode/'.$this->gameMode.'/players';
     }
 
     protected function defaultQuery(): array
@@ -37,6 +38,6 @@ class MultipleLifetimeStatsRequest extends Request
 
     public function createDtoFromResponse(Response $response): mixed
     {
-        return collect($response->json()['data'])->map(fn ($player) => LifetimeStats::fromArray($player));
+        return collect($response->json()['data'])->map(fn ($player) => SeasonStats::fromArray($player));
     }
 }

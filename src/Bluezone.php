@@ -9,7 +9,7 @@ use Bluezone\Resources\SeasonResource;
 use Saloon\Http\Connector;
 use Saloon\Traits\Plugins\AlwaysThrowOnErrors;
 
-class PubgApi extends Connector
+class Bluezone extends Connector
 {
     use AlwaysThrowOnErrors;
 

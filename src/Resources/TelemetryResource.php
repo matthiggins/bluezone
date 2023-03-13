@@ -2,17 +2,17 @@
 
 namespace Bluezone\Resources;
 
+use Bluezone\DTOs\PubgDTO;
 use Bluezone\Requests\Telemetry\TelemetryRequest;
-use Saloon\Http\Response;
 
 class TelemetryResource extends Resource
 {
     /**
      * Get a telemetry file from a url
      */
-    public function find(string $url): Response
+    public function find(string $url): PubgDTO
     {
-        return $this->connector->send(new TelemetryRequest(
+        return $this->send(new TelemetryRequest(
             url: $url,
         ));
     }

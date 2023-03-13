@@ -4,17 +4,15 @@ declare(strict_types=1);
 
 namespace Bluezone\DTOs;
 
-use Carbon\Carbon;
 use Bluezone\DTOs\Concerns\AccessesJsonDictionaries;
 use Bluezone\Requests\Telemetry\TelemetryRequest;
+use Carbon\Carbon;
 use Saloon\Contracts\DataObjects\WithResponse;
 use Saloon\Contracts\Response;
-use Saloon\Traits\Responses\HasResponse;
 
-class PubgMatch implements WithResponse
+class PubgMatch extends PubgDTO implements WithResponse
 {
     use AccessesJsonDictionaries;
-    use HasResponse;
 
     public function __construct(
         readonly public string $id,

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Bluezone\DTOs;
 
-use Illuminate\Support\Collection;
 use Bluezone\DTOs\Concerns\HasPlayerEvents;
+use Illuminate\Support\Collection;
 use Saloon\Contracts\Response;
 
 class Telemetry

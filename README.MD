@@ -67,69 +67,60 @@ $request->onError(function(Response $response) {
 
 ## Available methods
 
-Bluezone has easy methods for accessing the [PUBG API endpoints](https://documentation.pubg.com/en/introduction.html).
+Bluezone has easy methods for accessing the [PUBG API endpoints](https://documentation.pubg.com/en/introduction.ht
 
-### Get all PUBG seasons
-```php 
-$seasons = $bluezone->season()->all($shard)->dto();
+```php
+
+// Get all PUBG seasons
+$seasons = $bluezone->season()->all($shard);
+
+// Find a specific player 
+$player = $bluezone->player()->find($shard, $accountId);
+
+// Search for a player by name 
+$player = $bluezone->player()->search($shard, 'TGLTN');
+
+// Search for up to 10 players at once
+$results = $bluezone->player()->searchMany($shard, ['TGLTN', 'hwinn']);
+
+// Season stats for a single player
+$seasonStats = $bluezone->player()->seasonStats($shard, $season, $accountId);
+
+// Season stats for multiple players
+$seasonStats = $bluezone->player()->seasonStatsMany($shard, $season, 'solo-fpp', [$accountId,$accountId]);
+
+// Ranked season stats for a single player
+$rankedSeasonStats = $bluezone->player()->rankedSeasonStats($shard, $season, $accountId);
+
+// Lifetime season stats for a single player
+$lifetimeStats = $bluezone->player()->lifetimeStats($shard, $accountId);
+
+// Lifetime stats for a multiple players
+$lifetimeStats = $bluezone->player()->lifetimeStatsMany($shard, 'solo-fpp', [$accountId,$accountId]);
+
+// Get a single match
+$match = $bluezone->match()->find($shard, $matchId);
+
+// Get weapon mastery for a single player
+$weaponMastery = $bluezone->mastery()->weapon($shard, $accountId);
+
+// Get survival mastery for a single player
+$survivalMastery = $bluezone->mastery()->survival($shard, $accountId);
+
 ```
 
-### Find a specific player 
-```php 
-$player = $bluezone->player()->find($shard, $accountId)->dto();
+---
+
+## JSON data from the PUBG API request
+
+You can still access the underlying data returned from PUBG by calling the `json()` method on your response. 
+
+```php
+$seasons = $bluezone->season()->all($shard);
+$seasons->json();
 ```
 
-### Search for a player by name 
-```php 
-$player = $bluezone->player()->search($shard, 'TGLTN')->dto();
-```
-
-### Search for multiple players at once
-
-You can search for up to 10 players in one request. 
-```php 
-$results = $bluezone->player()->searchMany($shard, ['TGLTN', 'hwinn'])->dto();
-```
-
-### Season stats for a single player
-```php 
-$seasonStats = $bluezone->player()->seasonStats($shard, $season, $accountId)->dto();
-```
-
-### Season stats for multiple players
-```php 
-$seasonStats = $bluezone->player()->seasonStatsMany($shard, $season, 'solo-fpp', [$accountId,$accountId])->dto();
-```
-
-### Ranked season stats for a single player
-```php 
-$rankedSeasonStats = $bluezone->player()->rankedSeasonStats($shard, $season, $accountId)->dto();
-```
-
-### Lifetime season stats for a single player
-```php 
-$lifetimeStats = $bluezone->player()->lifetimeStats($shard, $accountId)->dto();
-```
-
-### Lifetime stats for a multiple players
-```php 
-$lifetimeStats = $bluezone->player()->lifetimeStatsMany($shard, 'solo-fpp', [$accountId,$accountId])->dto();
-```
-
-### Get a single match
-```php 
-$match = $bluezone->match()->find($shard, $matchId)->dto();
-```
-
-### Get weapon mastery for a single player
-```php 
-$weaponMastery = $bluezone->mastery()->weapon($shard, $accountId)->dto();
-```
-
-### Get survival mastery for a single player
-```php 
-$survivalMastery = $bluezone->mastery()->survival($shard, $accountId)->dto();
-```
+---
 
 ## Working with Match Telemetry Data
 The PUBG API provides access to very detailed match data in a Match Telemetry file. This file contains information about game details, player movement, player action, zone information, and more. Telemetry files are large JSON files that can be parsed and analyzed for deeper analysis. 

@@ -2,17 +2,17 @@
 
 namespace Bluezone\Resources;
 
+use Bluezone\DTOs\PubgDTO;
 use Bluezone\Requests\Matches\MatchRequest;
-use Saloon\Http\Response;
 
 class MatchResource extends Resource
 {
     /**
      * Get a single match
      */
-    public function find(string $shard, string $matchId): Response
+    public function find(string $shard, string $matchId): PubgDTO
     {
-        return $this->connector->send(new MatchRequest(
+        return $this->send(new MatchRequest(
             shard: $shard,
             matchId: $matchId,
         ));

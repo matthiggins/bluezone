@@ -6,12 +6,9 @@ namespace Bluezone\DTOs;
 
 use Saloon\Contracts\DataObjects\WithResponse;
 use Saloon\Contracts\Response;
-use Saloon\Traits\Responses\HasResponse;
 
-class RankedSeasonStats implements WithResponse
+class RankedSeasonStats extends PubgDTO implements WithResponse
 {
-    use HasResponse;
-
     public function __construct(
         readonly public array $gameModeStats
     ) {

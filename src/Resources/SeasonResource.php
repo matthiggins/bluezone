@@ -2,17 +2,17 @@
 
 namespace Bluezone\Resources;
 
+use Bluezone\DTOs\PubgDTO;
 use Bluezone\Requests\Seasons\SeasonsRequest;
-use Saloon\Http\Response;
 
 class SeasonResource extends Resource
 {
     /**
      * Get all seasons for a shard
      */
-    public function all(string $shard): Response
+    public function all(string $shard): PubgDTO
     {
-        return $this->connector->send(new SeasonsRequest(
+        return $this->send(new SeasonsRequest(
             shard: $shard
         ));
     }

@@ -26,32 +26,23 @@ $bluezone = new Bluezone($apiKey);
 ## Making requests
 
 ```php
+// Return a Request instance of a player search
 $request = $bluezone->player()->search($shard, $playerName);
 
+// Return a Player object from the search results
 $player = $bluezone->player()->find($shard, $accountId)->dto();
 ```
 
 ## Getting data
 You can get the returned data in multiple different formats. Using the response DTOs will format the response data and often provide methods to interact with the data. You can also return the data as JSON or an object. 
 
-**As DTO (recommended)**
 ```php
-$player = $request->dto();       // Return the data transfer object for this request
-```
 
-**As JSON**
-```php
-$json = $request->json();       // Return decoded JSON data from the PUBG API
-```
-
-**As object**
-```php
+$player = $request->dto();          // (Recommended) Return the data transfer object for this request
+$json = $request->json();           // Return decoded JSON data from the PUBG API
 $object = $request->object();       // Return data as an object
-```
+$object = $request->collect();      // Return data as a Collection
 
-**As Illuminate\Collection**
-```php
-$object = $request->collect();       // Return data as a Collection
 ```
 
 ## Checking request responses
@@ -76,18 +67,67 @@ $request->onError(function(Response $response) {
 
 ## Available methods
 
-```php
+Bluezone has easy methods for accessing the [PUBG API endpoints](https://documentation.pubg.com/en/introduction.html).
+
+### Get all PUBG seasons
+```php 
 $seasons = $bluezone->season()->all($shard)->dto();
+```
+
+### Find a specific player 
+```php 
 $player = $bluezone->player()->find($shard, $accountId)->dto();
+```
+
+### Search for a player by name 
+```php 
 $player = $bluezone->player()->search($shard, 'TGLTN')->dto();
-$seasonStats = $bluezone->player()->seasonStats($shard, $season, $accountId)->dto();
-$seasonStats = $bluezone->player()->seasonStatsMany($shard, $season, 'solo-fpp', [$accountId,$accountId])->dto();
-$rankedSeasonStats = $bluezone->player()->rankedSeasonStats($shard, $season, $accountId)->dto();
-$lifetimeStats = $bluezone->player()->lifetimeStats($shard, $accountId)->dto();
-$lifetimeStats = $bluezone->player()->lifetimeStatsMany($shard, 'solo-fpp', [$accountId,$accountId])->dto();
+```
+
+### Search for multiple players at once
+
+You can search for up to 10 players in one request. 
+```php 
 $results = $bluezone->player()->searchMany($shard, ['TGLTN', 'hwinn'])->dto();
+```
+
+### Season stats for a single player
+```php 
+$seasonStats = $bluezone->player()->seasonStats($shard, $season, $accountId)->dto();
+```
+
+### Season stats for multiple players
+```php 
+$seasonStats = $bluezone->player()->seasonStatsMany($shard, $season, 'solo-fpp', [$accountId,$accountId])->dto();
+```
+
+### Ranked season stats for a single player
+```php 
+$rankedSeasonStats = $bluezone->player()->rankedSeasonStats($shard, $season, $accountId)->dto();
+```
+
+### Lifetime season stats for a single player
+```php 
+$lifetimeStats = $bluezone->player()->lifetimeStats($shard, $accountId)->dto();
+```
+
+### Lifetime stats for a multiple players
+```php 
+$lifetimeStats = $bluezone->player()->lifetimeStatsMany($shard, 'solo-fpp', [$accountId,$accountId])->dto();
+```
+
+### Get a single match
+```php 
 $match = $bluezone->match()->find($shard, $matchId)->dto();
+```
+
+### Get weapon mastery for a single player
+```php 
 $weaponMastery = $bluezone->mastery()->weapon($shard, $accountId)->dto();
+```
+
+### Get survival mastery for a single player
+```php 
 $survivalMastery = $bluezone->mastery()->survival($shard, $accountId)->dto();
 ```
 

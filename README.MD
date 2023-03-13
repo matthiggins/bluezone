@@ -266,7 +266,7 @@ $telemetry->match()->definition();
 $telemetry->match()->end();
 
 // Get all phase change events for the match
-$telemetry->match()->phaseChange();
+$telemetry->match()->phaseChanges();
 
 // Get the start state of the match
 $telemetry->match()->start();
@@ -283,7 +283,7 @@ For example:
 ```php
 use Bluezone\DTOs\TelemetryEvents\PlayerAttack;
 
-$playerAttackEvents = $telemetry->data()->filter(function ($event) use ($accountId) {
+$playerAttackEvents = $telemetry->events()->filter(function ($event) use ($accountId) {
     return ($event instanceof PlayerAttack) && $event->attacker->accountId == $accountId;
 });
 ```

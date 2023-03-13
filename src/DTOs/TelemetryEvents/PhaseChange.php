@@ -16,7 +16,7 @@ class PhaseChange extends AbstractEventDTO
         readonly public int $phase,
         readonly public float $elapsedTime,
         readonly public Common $common,
-        readonly public Carbon $timestamp,
+        readonly public Carbon|null $timestamp,
     ) {
         $this->name = $this->phaseName();
     }
@@ -27,7 +27,7 @@ class PhaseChange extends AbstractEventDTO
             phase: $data['phase'],
             elapsedTime: $data['elapsedTime'],
             common: Common::fromEvent($data['common']),
-            timestamp: Carbon::createFromTimestamp($data['timestamp'] / 1000),
+            timestamp: isset($data['timestamp']) ? Carbon::createFromTimestamp($data['timestamp']) : null,
         );
     }
 

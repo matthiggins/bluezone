@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Bluezone\DTOs;
 
 use Bluezone\DTOs\Concerns\HasPlayerEvents;
+use Bluezone\Resources\Telemetry\MatchTelemetry;
+use Bluezone\Resources\Telemetry\PlayerTelemetry;
 use Illuminate\Support\Collection;
 use Saloon\Contracts\Response;
 
@@ -15,7 +17,6 @@ class Telemetry
     public function __construct(
         protected Collection $telemetry,
     ) {
-        $this->telemetry = $this->mapTelemetryToEvents();
     }
 
     public static function fromResponse(Response $response): self
@@ -24,6 +25,8 @@ class Telemetry
     }
 
     /**
+     * Map the raw telemetry events to Telemetry Event DTOs
+     * 
      * @return Collection<TelemetryEvents\TelemetryEvent>
      */
     protected function mapTelemetryToEvents(): Collection
@@ -32,10 +35,44 @@ class Telemetry
     }
 
     /**
+     * Get all telemetry events as DTOs
+     * 
      * @return Collection<TelemetryEvents\TelemetryEvent>
      */
-    public function data(): Collection
+    public function events(): Collection
+    {
+        return $this->mapTelemetryToEvents();
+    }
+
+    /**
+     * Get the raw telemetry events from the telemetry file
+     * 
+     * @return Collection
+     */
+    public function raw(): Collection
     {
         return $this->telemetry;
+    }
+
+    /**
+     * Get a Player Telemetry Resource
+     * 
+     * @param string $ccountId
+     * @return MatchTelemetry
+     */
+    public function match(): MatchTelemetry
+    {
+        return new MatchTelemetry($this->events());
+    }
+
+    /**
+     * Get a Player Telemetry Resource
+     * 
+     * @param string $ccountId
+     * @return PlayerTelemetry
+     */
+    public function player(string $accountId): PlayerTelemetry
+    {
+        return new PlayerTelemetry($accountId, $this->events());
     }
 }

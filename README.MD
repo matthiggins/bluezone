@@ -288,4 +288,5 @@ use Bluezone\DTOs\TelemetryEvents\PlayerAttack;
 $playerAttackEvents = $telemetry->data()->filter(function ($event) use ($accountId) {
     return ($event instanceof PlayerAttack) && $event->attacker->accountId == $accountId;
 });
+
 ```

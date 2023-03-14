@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "php": "^8.2",
+        "php": ">=8.1",
         "illuminate/collections": "*",
         "sammyjo20/saloon": "^2.2",
         "sammyjo20/saloon-laravel": "^2.0"

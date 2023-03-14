@@ -2,9 +2,20 @@
 
 # BLUEZONE : A PHP SDK for the PUBG API 
 
+[![Version](http://poser.pugx.org/matthiggins/bluezone/version)](https://packagist.org/packages/matthiggins/bluezone)
+[![PHP Version Require](http://poser.pugx.org/matthiggins/bluezone/require/php)](https://packagist.org/packages/matthiggins/bluezone)
+[![License](http://poser.pugx.org/matthiggins/bluezone/license)](https://packagist.org/packages/matthiggins/bluezone)
+
 BLUEZONE is an SDK for PHP that makes using the [PUBG API](https://developer.pubg.com/) dead simple. It provides a set of simple and intuitive methods that allow you to interact with the PUBG API without having to worry about low-level details such as authentication and request handling. With BLUEZONE, you can easily retrieve data for players, matches, seasons, weapon mastery, and survival mastery. It also includes a set of data transfer objects (DTOs) that help you work with the data returned by the API in a structured and organized way.
 
 In addition to accessing data from the API, BLUEZONE also allows you to access match telemetry files and parse them for player data. This makes it easy to analyze gameplay data and gain insights into player behavior. Whether you're building a tool to help players improve their skills or conducting research on player behavior, BLUEZONE provides a powerful and flexible way to work with PUBG data.
+
+---
+
+**Relevant Links**
+- [PUBG API](https://developer.pubg.com/)
+- [Saloon](https://docs.saloon.dev/)
+- [Laravel Collections](https://laravel.com/docs/10.x/collections)
 
 ---
 
@@ -51,10 +62,10 @@ $bluezone = new Bluezone($apiKey);
 By default, requests will return a DTO instance or a Collection of DTO instances. You can also get the raw data from the PUBG API by using the `->json()` method on your DTO result. 
 
 ```php
-// Return a Player DTO instance from the search response
+// Search for a player
 $player = $bluezone->player()->search($shard, $playerName);
 
-// Return a Player DTO instance from the player id response
+// Find a player by account ID
 $player = $bluezone->player()->find($shard, $accountId);
 
 // Return decoded JSON data from the PUBG API

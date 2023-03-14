@@ -62,10 +62,10 @@ $bluezone = new Bluezone($apiKey);
 By default, requests will return a DTO instance or a Collection of DTO instances. You can also get the raw data from the PUBG API by using the `->json()` method on your DTO result. 
 
 ```php
-// Return a Player DTO instance from the search response
+// Search for a player
 $player = $bluezone->player()->search($shard, $playerName);
 
-// Return a Player DTO instance from the player id response
+// Find a player by account ID
 $player = $bluezone->player()->find($shard, $accountId);
 
 // Return decoded JSON data from the PUBG API

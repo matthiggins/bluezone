@@ -91,8 +91,6 @@ class PubgMatch extends PubgDTO implements WithResponse
 
     /**
      * Get the telemetry DTO from the telemetry file for this match.
-     * 
-     * @return Telemetry
      */
     public function getTelemetry(): Telemetry
     {

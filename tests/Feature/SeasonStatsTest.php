@@ -2,25 +2,25 @@
 
 namespace Tests\Feature;
 
-use Bluezone\PubgApi;
+use Bluezone\Bluezone;
 
 it('can request season stats', function () {
-    $pubgApi = new PubgApi(env('PUBG_TEST_API_KEY'));
-    $response = $pubgApi->player()->seasonStats('steam', env('PUBG_TEST_SEASON_ID'), env('PUBG_TEST_ACCOUNT_ID'));
+    $bluezone = new Bluezone(env('PUBG_TEST_API_KEY'));
+    $response = $bluezone->player()->seasonStats('steam', env('PUBG_TEST_SEASON_ID'), env('PUBG_TEST_ACCOUNT_ID'));
 
-    expect($response->successful())->toBeTrue();
+    expect($response->getResponse()->successful())->toBeTrue();
 
-    expect($response->dto())
+    expect($response)
         ->toBeObject()
         ->toHaveProperties(['seasonId', 'accountId', 'gameModeStats']);
 });
 it('can request survival mastery', function () {
-    $pubgApi = new PubgApi(env('PUBG_TEST_API_KEY'));
-    $response = $pubgApi->mastery()->survival('steam', env('PUBG_TEST_ACCOUNT_ID'));
+    $bluezone = new Bluezone(env('PUBG_TEST_API_KEY'));
+    $response = $bluezone->player()->survivalMastery('steam', env('PUBG_TEST_ACCOUNT_ID'));
 
-    expect((bool) $response->successful())->toBeTrue();
+    expect((bool) $response->getResponse()->successful())->toBeTrue();
 
-    expect($response->dto())
+    expect($response)
         ->toBeObject()
         ->toHaveProperties(['accountId', 'xp', 'level', 'stats']);
 });

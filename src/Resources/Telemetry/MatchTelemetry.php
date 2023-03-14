@@ -11,10 +11,12 @@ use Bluezone\DTOs\TelemetryEvents\MatchStart;
 use Bluezone\DTOs\TelemetryEvents\PhaseChange;
 use Illuminate\Support\Collection;
 
-class MatchTelemetry {
+class MatchTelemetry
+{
     public function __construct(
         protected Collection $telemetry,
-    ){}
+    ) {
+    }
 
     /**
      * Get the match care package events
@@ -25,7 +27,7 @@ class MatchTelemetry {
             return $event instanceof CarePackageLand || $event instanceof CarePackageSpawn;
         })->values();
     }
-    
+
     /**
      * Get the match definition event
      */

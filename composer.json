@@ -1,6 +1,6 @@
 {
     "name": "matthiggins/bluezone",
-    "description": "A PHP SDK interacting with the PUBG API and PUBG match telemetry files.",
+    "description": "A modern PHP SDK for interacting with the PUBG API and PUBG match telemetry files.",
     "keywords": [
         "matthiggins",
         "php",

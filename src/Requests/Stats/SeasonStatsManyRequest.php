@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Bluezone\Requests\Stats;
 
-use Bluezone\DTOs\SeasonStats;
+use Bluezone\DTOs\SeasonStatsCollection;
 use Saloon\Contracts\Response;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -36,8 +36,8 @@ class SeasonStatsManyRequest extends Request
         ];
     }
 
-    public function createDtoFromResponse(Response $response): mixed
+    public function createDtoFromResponse(Response $response): SeasonStatsCollection
     {
-        return collect($response->json()['data'])->map(fn ($player) => SeasonStats::fromArray($player));
+        return SeasonStatsCollection::fromResponse($response);
     }
 }

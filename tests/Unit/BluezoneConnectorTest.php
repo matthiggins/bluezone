@@ -7,30 +7,24 @@ use Bluezone\Resources\MatchResource;
 use Bluezone\Resources\PlayerResource;
 use Bluezone\Resources\SeasonResource;
 
-it('can be instantiated', function () {
-    $bluezone = new Bluezone('test-api-key');
+$bluezone = new Bluezone('test-api-key');
+
+it('can be instantiated', function () use ($bluezone) {
     expect($bluezone)->toBeInstanceOf(Bluezone::class);
 });
 
-it('resolves the base URL', function () {
-    $bluezone = new Bluezone('test-api-key');
+it('resolves the base URL', function () use ($bluezone) {
     expect($bluezone->resolveBaseUrl())->toBe('https://api.pubg.com');
 });
 
-it('returns a MatchResource object', function () {
-    $bluezone = new Bluezone('test-api-key');
-    $matchResource = $bluezone->match();
-    expect($matchResource)->toBeInstanceOf(MatchResource::class);
+it('returns a MatchResource object', function () use ($bluezone) {
+    expect($bluezone->match())->toBeInstanceOf(MatchResource::class);
 });
 
-it('returns a PlayerResource object', function () {
-    $bluezone = new Bluezone('test-api-key');
-    $playerResource = $bluezone->player();
-    expect($playerResource)->toBeInstanceOf(PlayerResource::class);
+it('returns a PlayerResource object', function () use ($bluezone) {
+    expect($bluezone->player())->toBeInstanceOf(PlayerResource::class);
 });
 
-it('returns a SeasonResource object', function () {
-    $bluezone = new Bluezone('test-api-key');
-    $seasonResource = $bluezone->season();
-    expect($seasonResource)->toBeInstanceOf(SeasonResource::class);
+it('returns a SeasonResource object', function () use ($bluezone) {
+    expect($bluezone->season())->toBeInstanceOf(SeasonResource::class);
 });

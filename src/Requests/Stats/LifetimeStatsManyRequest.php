@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Bluezone\Requests\Stats;
 
-use Bluezone\DTOs\LifetimeStats;
+use Bluezone\DTOs\LifetimeStatsCollection;
 use Saloon\Contracts\Response;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -35,8 +35,8 @@ class LifetimeStatsManyRequest extends Request
         ];
     }
 
-    public function createDtoFromResponse(Response $response): mixed
+    public function createDtoFromResponse(Response $response): LifetimeStatsCollection
     {
-        return collect($response->json()['data'])->map(fn ($player) => LifetimeStats::fromArray($player));
+        return LifetimeStatsCollection::fromResponse($response);
     }
 }

@@ -3,9 +3,12 @@
 namespace Bluezone\Resources;
 
 use Bluezone\DTOs\LifetimeStats;
+use Bluezone\DTOs\LifetimeStatsCollection;
 use Bluezone\DTOs\Player;
+use Bluezone\DTOs\PlayerCollection;
 use Bluezone\DTOs\RankedSeasonStats;
 use Bluezone\DTOs\SeasonStats;
+use Bluezone\DTOs\SeasonStatsCollection;
 use Bluezone\DTOs\SurvivalMastery;
 use Bluezone\DTOs\WeaponMastery;
 use Bluezone\Requests\Mastery\SurvivalMasteryRequest;
@@ -18,7 +21,6 @@ use Bluezone\Requests\Stats\LifetimeStatsRequest;
 use Bluezone\Requests\Stats\RankedSeasonStatsRequest;
 use Bluezone\Requests\Stats\SeasonStatsManyRequest;
 use Bluezone\Requests\Stats\SeasonStatsRequest;
-use Illuminate\Support\Collection;
 
 class PlayerResource extends Resource
 {
@@ -47,7 +49,7 @@ class PlayerResource extends Resource
     /**
      * Get lifetime stats for multiple players
      */
-    public function lifetimeStatsMany(string $shard, string $gameMode, array $playerIds): Collection
+    public function lifetimeStatsMany(string $shard, string $gameMode, array $playerIds): LifetimeStatsCollection
     {
         return $this->send(new LifetimeStatsManyRequest(
             shard: $shard,
@@ -82,7 +84,7 @@ class PlayerResource extends Resource
     /**
      * Search for multiple players by name
      */
-    public function searchMany(string $shard, array $playerNames): Collection
+    public function searchMany(string $shard, array $playerNames): PlayerCollection
     {
         return $this->send(new PlayerSearchManyRequest(
             shard: $shard,
@@ -105,7 +107,7 @@ class PlayerResource extends Resource
     /**
      * Get season stats for multiple players
      */
-    public function seasonStatsMany(string $shard, string $seasonId, string $gameMode, array $playerIds): Collection
+    public function seasonStatsMany(string $shard, string $seasonId, string $gameMode, array $playerIds): SeasonStatsCollection
     {
         return $this->send(new SeasonStatsManyRequest(
             shard: $shard,

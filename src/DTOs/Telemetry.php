@@ -26,7 +26,7 @@ class Telemetry
 
     /**
      * Map the raw telemetry events to Telemetry Event DTOs
-     * 
+     *
      * @return Collection<TelemetryEvents\TelemetryEvent>
      */
     protected function mapTelemetryToEvents(): Collection
@@ -36,7 +36,7 @@ class Telemetry
 
     /**
      * Get all telemetry events as DTOs
-     * 
+     *
      * @return Collection<TelemetryEvents\TelemetryEvent>
      */
     public function events(): Collection
@@ -46,8 +46,6 @@ class Telemetry
 
     /**
      * Get the raw telemetry events from the telemetry file
-     * 
-     * @return Collection
      */
     public function raw(): Collection
     {
@@ -56,9 +54,8 @@ class Telemetry
 
     /**
      * Get a Player Telemetry Resource
-     * 
-     * @param string $ccountId
-     * @return MatchTelemetry
+     *
+     * @param  string  $ccountId
      */
     public function match(): MatchTelemetry
     {
@@ -67,9 +64,8 @@ class Telemetry
 
     /**
      * Get a Player Telemetry Resource
-     * 
-     * @param string $ccountId
-     * @return PlayerTelemetry
+     *
+     * @param  string  $ccountId
      */
     public function player(string $accountId): PlayerTelemetry
     {

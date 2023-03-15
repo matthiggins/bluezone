@@ -3,10 +3,12 @@
 namespace Bluezone\Resources;
 
 use Bluezone\DTOs\LifetimeStats;
+use Bluezone\DTOs\LifetimeStatsCollection;
 use Bluezone\DTOs\Player;
-use Bluezone\DTOs\PubgDTO;
+use Bluezone\DTOs\PlayerCollection;
 use Bluezone\DTOs\RankedSeasonStats;
 use Bluezone\DTOs\SeasonStats;
+use Bluezone\DTOs\SeasonStatsCollection;
 use Bluezone\DTOs\SurvivalMastery;
 use Bluezone\DTOs\WeaponMastery;
 use Bluezone\Requests\Mastery\SurvivalMasteryRequest;
@@ -19,16 +21,11 @@ use Bluezone\Requests\Stats\LifetimeStatsRequest;
 use Bluezone\Requests\Stats\RankedSeasonStatsRequest;
 use Bluezone\Requests\Stats\SeasonStatsManyRequest;
 use Bluezone\Requests\Stats\SeasonStatsRequest;
-use Illuminate\Support\Collection;
 
 class PlayerResource extends Resource
 {
     /**
      * Find a player by account id
-     * 
-     * @param string $shard
-     * @param string $accountId
-     * @return Player
      */
     public function find(string $shard, string $accountId): Player
     {
@@ -40,10 +37,6 @@ class PlayerResource extends Resource
 
     /**
      * Get lifetime stats for a player
-     * 
-     * @param string $shard
-     * @param string $accountId
-     * @return LifetimeStats
      */
     public function lifetimeStats(string $shard, string $accountId): LifetimeStats
     {
@@ -55,13 +48,8 @@ class PlayerResource extends Resource
 
     /**
      * Get lifetime stats for multiple players
-     * 
-     * @param string $shard
-     * @param string $gameMode
-     * @param array $playerIds
-     * @return Collection
      */
-    public function lifetimeStatsMany(string $shard, string $gameMode, array $playerIds): Collection
+    public function lifetimeStatsMany(string $shard, string $gameMode, array $playerIds): LifetimeStatsCollection
     {
         return $this->send(new LifetimeStatsManyRequest(
             shard: $shard,
@@ -72,11 +60,6 @@ class PlayerResource extends Resource
 
     /**
      * Get ranked season stats for a player
-     * 
-     * @param string $shard
-     * @param string $seasonId
-     * @param string $accountId
-     * @return RankedSeasonStats
      */
     public function rankedSeasonStats(string $shard, string $seasonId, string $accountId): RankedSeasonStats
     {
@@ -89,10 +72,6 @@ class PlayerResource extends Resource
 
     /**
      * Search for a player by name
-     * 
-     * @param string $shard
-     * @param string $playerName
-     * @return Player
      */
     public function search(string $shard, string $playerName): Player
     {
@@ -104,12 +83,8 @@ class PlayerResource extends Resource
 
     /**
      * Search for multiple players by name
-     * 
-     * @param string $shard
-     * @param array $playerNames
-     * @return Collection
      */
-    public function searchMany(string $shard, array $playerNames): Collection
+    public function searchMany(string $shard, array $playerNames): PlayerCollection
     {
         return $this->send(new PlayerSearchManyRequest(
             shard: $shard,
@@ -119,11 +94,6 @@ class PlayerResource extends Resource
 
     /**
      * Get season stats for a player
-     * 
-     * @param string $shard
-     * @param string $seasonId
-     * @param string $accountId
-     * @return SeasonStats
      */
     public function seasonStats(string $shard, string $seasonId, string $accountId): SeasonStats
     {
@@ -136,14 +106,8 @@ class PlayerResource extends Resource
 
     /**
      * Get season stats for multiple players
-     * 
-     * @param string $shard
-     * @param string $seasonId
-     * @param string $gameMode
-     * @param array $playerIds
-     * @return Collection
      */
-    public function seasonStatsMany(string $shard, string $seasonId, string $gameMode, array $playerIds): Collection
+    public function seasonStatsMany(string $shard, string $seasonId, string $gameMode, array $playerIds): SeasonStatsCollection
     {
         return $this->send(new SeasonStatsManyRequest(
             shard: $shard,
@@ -155,10 +119,6 @@ class PlayerResource extends Resource
 
     /**
      * Get all weapon mastery for a player
-     * 
-     * @param string $shard
-     * @param string $accountId
-     * @return WeaponMastery
      */
     public function weaponMastery(string $shard, string $accountId): WeaponMastery
     {
@@ -170,10 +130,6 @@ class PlayerResource extends Resource
 
     /**
      * Get all survival mastery for a player
-     * 
-     * @param string $shard
-     * @param string $accountId
-     * @return SurvivalMastery
      */
     public function survivalMastery(string $shard, string $accountId): SurvivalMastery
     {

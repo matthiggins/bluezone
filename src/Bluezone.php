@@ -2,7 +2,6 @@
 
 namespace Bluezone;
 
-use Bluezone\Resources\MasteryResource;
 use Bluezone\Resources\MatchResource;
 use Bluezone\Resources\PlayerResource;
 use Bluezone\Resources\SeasonResource;

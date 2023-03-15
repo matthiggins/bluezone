@@ -10,6 +10,7 @@ use Carbon\Carbon;
 class PhaseChange extends AbstractEventDTO
 {
     public string $type = 'phase change';
+
     public string $name;
 
     public function __construct(

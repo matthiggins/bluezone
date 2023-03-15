@@ -59,7 +59,6 @@ trait HasPlayerEvents
         })->values();
     }
 
-
     /**
      * Get a list of heal events for a specific player
      */
@@ -292,7 +291,7 @@ trait HasPlayerEvents
             return (
                 ($event instanceof VehicleRide) ||
                 ($event instanceof VehicleLeave)
-             ) && $event->character->accountId == $this->accountId;
+            ) && $event->character->accountId == $this->accountId;
         })->values();
     }
 

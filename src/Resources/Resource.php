@@ -15,8 +15,6 @@ class Resource
 
     /**
      * Send a request and return the response DTO.
-     *
-     * @return PubgDTO|Collection
      */
     public function send(Request $request): PubgDTO|Collection
     {

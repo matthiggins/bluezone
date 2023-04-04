@@ -20,6 +20,7 @@ use Bluezone\DTOs\TelemetryEvents\ObjectInteraction;
 use Bluezone\DTOs\TelemetryEvents\ParachuteLanding;
 use Bluezone\DTOs\TelemetryEvents\PlayerAttack;
 use Bluezone\DTOs\TelemetryEvents\PlayerKillV2;
+use Bluezone\DTOs\TelemetryEvents\PlayerMakeGroggy;
 use Bluezone\DTOs\TelemetryEvents\PlayerPosition;
 use Bluezone\DTOs\TelemetryEvents\PlayerTakeDamage;
 use Bluezone\DTOs\TelemetryEvents\PlayerUseThrowable;
@@ -56,6 +57,36 @@ trait HasPlayerEvents
         return $this->telemetry->filter(function ($event) {
             return ($event instanceof PlayerAttack) &&
                 ($event->attacker && $event->attacker->accountId == $this->accountId);
+        })->values();
+    }
+
+    /**
+     * Get a list of attack events that happened from a vehicle for a specific player
+     */
+    public function attackEventsFromVehicle(): \Illuminate\Support\Collection
+    {
+        return $this->attackEvents()->filter(fn ($e) => $e->vehicle != null)->values();
+    }
+
+    /**
+     * Get a list of events where the player caused damage
+     */
+    public function causeDamageEvents(): \Illuminate\Support\Collection
+    {
+        return $this->telemetry->filter(function ($event) {
+            return ($event instanceof PlayerTakeDamage) &&
+                ($event->attacker && $event->attacker->accountId == $this->accountId);
+        })->values();
+    }
+
+    /**
+     * Get a list of downed events for a specific player
+     */
+    public function downedEvents(): \Illuminate\Support\Collection
+    {
+        return $this->telemetry->filter(function ($event) {
+            return ($event instanceof PlayerMakeGroggy) &&
+                ($event->victim && $event->victim->accountId == $this->accountId);
         })->values();
     }
 
@@ -178,6 +209,37 @@ trait HasPlayerEvents
             return ($event instanceof PlayerKillV2) &&
                 ($event->killer && $event->killer->accountId == $this->accountId);
         })->values();
+    }
+
+    /**
+     * Get a list of attack events that happened from a vehicle for a specific player
+     */
+    public function killEventsFromVehicle(): \Illuminate\Support\Collection
+    {
+        $attacksFromVehicle = $this->attackEvents()->filter(fn ($e) => $e->vehicle != null)->pluck('attackId');
+
+        return $this->killEvents()->filter(fn ($e) => $attacksFromVehicle->contains($e->attackId))->values();
+    }
+
+    /**
+     * Get a list of knock events for a specific player
+     */
+    public function knockEvents(): \Illuminate\Support\Collection
+    {
+        return $this->telemetry->filter(function ($event) {
+            return ($event instanceof PlayerMakeGroggy) &&
+                ($event->attacker && $event->attacker->accountId == $this->accountId);
+        })->values();
+    }
+
+    /**
+     * Get a list of knock events from a vehicle for a specific player
+     */
+    public function knockEventsFromVehicle(): \Illuminate\Support\Collection
+    {
+        $attacksFromVehicle = $this->attackEvents()->filter(fn ($e) => $e->vehicle != null)->pluck('attackId');
+
+        return $this->knockEvents()->filter(fn ($e) => $attacksFromVehicle->contains($e->attackId))->values();
     }
 
     /**

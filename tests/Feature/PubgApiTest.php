@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use Bluezone\Bluezone;
 use Bluezone\DTOs\Player;
+use Bluezone\DTOs\PlayerMatchStats;
 use Bluezone\DTOs\PubgMatch;
 use Bluezone\DTOs\SeasonStats;
 use Bluezone\DTOs\Telemetry;
@@ -22,6 +23,19 @@ it('can search for a match', function () use ($bluezone, $shard, $matchId) {
 
     expect($match)->toBeObject()
         ->toHaveProperties(['id', 'assetId', 'assetUrl', 'duration', 'stats']);
+});
+
+it('can get match stats for a single player', function () use ($bluezone, $shard, $matchId, $accountId) {
+    $match = $bluezone->match()->find($shard, $matchId);
+
+    $playerStats = $match->statsForPlayer($accountId);
+
+    expect($match->getResponse()->successful())->toBeTrue();
+    expect($match instanceof PubgMatch)->toBeTrue();
+    expect($playerStats instanceof PlayerMatchStats)->toBeTrue();
+
+    expect($playerStats)->toBeObject()
+        ->toHaveProperties(['playerId', 'name', 'kills', 'damageDealt', 'winPlace']);
 });
 
 it('can get match telemetry', function () use ($bluezone, $shard, $matchId) {

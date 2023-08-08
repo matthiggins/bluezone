@@ -31,6 +31,12 @@ class PubgMatch extends PubgDTO implements WithResponse
         $this->mapName = $this->getValueFromJsonFile('telemetry/mapName.json', $this->mapName);
     }
 
+    /**
+     * Create a DTO from a response.
+     * 
+     * @param Response $response
+     * @return self
+     */
     public static function fromResponse(Response $response): self
     {
         $data = $response->json()['data'];
@@ -39,12 +45,20 @@ class PubgMatch extends PubgDTO implements WithResponse
         return self::fromArray($data, $included);
     }
 
+    /**
+     * Create a DTO from an array.
+     *
+     * @param array $data
+     * @param array $included
+     * @return self
+     */
     public static function fromArray(array $data, array $included): self
     {
         $statsArray = collect($included)
             ->filter(fn ($item) => $item['type'] === 'participant' && $item['attributes']['stats'] !== null)
             ->mapWithKeys(fn ($item) => [$item['id'] => $item['attributes']['stats']])
             ->sortBy('winPlace')
+            ->map(fn ($item) => PlayerMatchStats::fromArray($item))
             ->toArray();
 
         $asset = collect($included)
@@ -91,11 +105,26 @@ class PubgMatch extends PubgDTO implements WithResponse
 
     /**
      * Get the telemetry DTO from the telemetry file for this match.
+     * 
+     * @return Telemetry
      */
     public function getTelemetry(): Telemetry
     {
         $response = (new TelemetryRequest($this->assetUrl))->send();
 
         return $response->dto();
+    }
+
+    /**
+     * Get the stats for a player.
+     * 
+     * @param string $playerId
+     * @return PlayerMatchStats
+     */
+    public function statsForPlayer(string $playerId): PlayerMatchStats
+    {
+        return collect($this->stats)
+            ->where('playerId', $playerId)
+            ->first();
     }
 }

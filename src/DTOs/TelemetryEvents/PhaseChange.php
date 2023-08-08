@@ -26,7 +26,7 @@ class PhaseChange extends AbstractEventDTO
     {
         return new static(
             phase: $data['phase'],
-            elapsedTime: $data['elapsedTime'],
+            elapsedTime: isset($data['elapsedTime']) ? (float) $data['elapsedTime'] : 0,
             common: Common::fromEvent($data['common']),
             timestamp: isset($data['timestamp']) ? Carbon::createFromTimestamp($data['timestamp']) : null,
         );

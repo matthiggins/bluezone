@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Bluezone\DTOs;
 
-use Bluezone\DTOs\Concerns\HasPlayerEvents;
 use Bluezone\Resources\Telemetry\MatchTelemetry;
 use Bluezone\Resources\Telemetry\PlayerTelemetry;
 use Illuminate\Support\Collection;
@@ -12,8 +11,6 @@ use Saloon\Contracts\Response;
 
 class Telemetry
 {
-    use HasPlayerEvents;
-
     public function __construct(
         protected Collection $telemetry,
     ) {

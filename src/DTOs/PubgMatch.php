@@ -33,9 +33,6 @@ class PubgMatch extends PubgDTO implements WithResponse
 
     /**
      * Create a DTO from a response.
-     * 
-     * @param Response $response
-     * @return self
      */
     public static function fromResponse(Response $response): self
     {
@@ -47,10 +44,6 @@ class PubgMatch extends PubgDTO implements WithResponse
 
     /**
      * Create a DTO from an array.
-     *
-     * @param array $data
-     * @param array $included
-     * @return self
      */
     public static function fromArray(array $data, array $included): self
     {
@@ -105,8 +98,6 @@ class PubgMatch extends PubgDTO implements WithResponse
 
     /**
      * Get the telemetry DTO from the telemetry file for this match.
-     * 
-     * @return Telemetry
      */
     public function getTelemetry(): Telemetry
     {
@@ -117,9 +108,6 @@ class PubgMatch extends PubgDTO implements WithResponse
 
     /**
      * Get the stats for a player.
-     * 
-     * @param string $playerId
-     * @return PlayerMatchStats
      */
     public function statsForPlayer(string $playerId): PlayerMatchStats
     {

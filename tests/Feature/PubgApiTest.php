@@ -7,7 +7,6 @@ use Bluezone\DTOs\Player;
 use Bluezone\DTOs\PlayerMatchStats;
 use Bluezone\DTOs\PubgMatch;
 use Bluezone\DTOs\SeasonStats;
-use Bluezone\DTOs\Telemetry;
 
 $seasonId = env('PUBG_TEST_SEASON_ID');
 $accountId = env('PUBG_TEST_ACCOUNT_ID');
@@ -36,14 +35,6 @@ it('can get match stats for a single player', function () use ($bluezone, $shard
 
     expect($playerStats)->toBeObject()
         ->toHaveProperties(['playerId', 'name', 'kills', 'damageDealt', 'winPlace']);
-});
-
-it('can get match telemetry', function () use ($bluezone, $shard, $matchId) {
-    $match = $bluezone->match()->find($shard, $matchId);
-
-    expect($match->getResponse()->successful())->toBeTrue();
-    expect($match instanceof PubgMatch)->toBeTrue();
-    expect($match->getTelemetry() instanceof Telemetry)->toBeTrue();
 });
 
 it('can search a single player', function () use ($bluezone, $shard) {

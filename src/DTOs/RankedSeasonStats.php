@@ -7,7 +7,7 @@ namespace Bluezone\DTOs;
 use Saloon\Contracts\DataObjects\WithResponse;
 use Saloon\Contracts\Response;
 
-class RankedSeasonStats extends PubgDTO implements WithResponse
+class RankedSeasonStats extends PubgDTO
 {
     public function __construct(
         readonly public array $gameModeStats

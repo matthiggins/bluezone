@@ -8,7 +8,7 @@ use Illuminate\Support\Collection;
 use Saloon\Contracts\DataObjects\WithResponse;
 use Saloon\Contracts\Response;
 
-class SeasonStatsCollection extends PubgDTO implements WithResponse
+class SeasonStatsCollection extends PubgDTO
 {
     public function __construct(
         readonly public Collection $stats,

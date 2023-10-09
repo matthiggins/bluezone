@@ -42,45 +42,6 @@ use Bluezone\DTOs\TelemetryEvents\VehicleRide;
 use Bluezone\DTOs\TelemetryEvents\WeaponFireCount;
 use Bluezone\DTOs\TelemetryEvents\WheelDestroy;
 
-/**
-src/DTOs/TelemetryEvents/GameStatePeriodic.php
-src/DTOs/TelemetryEvents/Heal.php
-src/DTOs/TelemetryEvents/ItemAttach.php
-src/DTOs/TelemetryEvents/ItemDetach.php
-src/DTOs/TelemetryEvents/ItemDrop.php
-src/DTOs/TelemetryEvents/ItemEquip.php
-src/DTOs/TelemetryEvents/ItemPickup.php
-src/DTOs/TelemetryEvents/ItemPickupFromCarePackage.php
-src/DTOs/TelemetryEvents/ItemPickupFromCustomPackage.php
-src/DTOs/TelemetryEvents/ItemPickupFromLootBox.php
-src/DTOs/TelemetryEvents/ItemUnequip.php
-src/DTOs/TelemetryEvents/ItemUse.php
-src/DTOs/TelemetryEvents/MatchDefinition.php
-src/DTOs/TelemetryEvents/MatchEnd.php
-src/DTOs/TelemetryEvents/MatchStart.php
-src/DTOs/TelemetryEvents/ObjectDestroy.php
-src/DTOs/TelemetryEvents/ObjectInteraction.php
-src/DTOs/TelemetryEvents/ParachuteLanding.php
-src/DTOs/TelemetryEvents/PhaseChange.php
-src/DTOs/TelemetryEvents/PlayerAttack.php
-src/DTOs/TelemetryEvents/PlayerCreate.php
-src/DTOs/TelemetryEvents/PlayerKillV2.php
-src/DTOs/TelemetryEvents/PlayerLogin.php
-src/DTOs/TelemetryEvents/PlayerLogout.php
-src/DTOs/TelemetryEvents/PlayerMakeGroggy.php
-src/DTOs/TelemetryEvents/PlayerPosition.php
-src/DTOs/TelemetryEvents/PlayerTakeDamage.php
-src/DTOs/TelemetryEvents/PlayerUseThrowable.php
-src/DTOs/TelemetryEvents/SwimEnd.php
-src/DTOs/TelemetryEvents/SwimStart.php
-src/DTOs/TelemetryEvents/VaultStart.php
-src/DTOs/TelemetryEvents/VehicleDamage.php
-src/DTOs/TelemetryEvents/VehicleDestroy.php
-src/DTOs/TelemetryEvents/VehicleLeave.php
-src/DTOs/TelemetryEvents/VehicleRide.php
-src/DTOs/TelemetryEvents/WeaponFireCount.php
-src/DTOs/TelemetryEvents/WheelDestroy.php
- */
 $accountId = env('PUBG_TEST_ACCOUNT_ID');
 $shard = env('PUBG_TEST_SHARD');
 $matchId = env('PUBG_TEST_MATCH_ID');

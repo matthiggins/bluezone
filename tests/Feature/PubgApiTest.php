@@ -7,6 +7,7 @@ use Bluezone\DTOs\Player;
 use Bluezone\DTOs\PlayerMatchStats;
 use Bluezone\DTOs\PubgMatch;
 use Bluezone\DTOs\SeasonStats;
+use Illuminate\Support\Collection;
 
 $seasonId = env('PUBG_TEST_SEASON_ID');
 $accountId = env('PUBG_TEST_ACCOUNT_ID');
@@ -18,7 +19,6 @@ $bluezone = new Bluezone(env('PUBG_TEST_API_KEY'));
 it('can search for a match', function () use ($bluezone, $shard, $matchId) {
     $match = $bluezone->match()->find($shard, $matchId);
 
-    expect($match->getResponse()->successful())->toBeTrue();
     expect($match instanceof PubgMatch)->toBeTrue();
 
     expect($match)->toBeObject()
@@ -30,7 +30,6 @@ it('can get match stats for a single player', function () use ($bluezone, $shard
 
     $playerStats = $match->statsForPlayer($accountId);
 
-    expect($match->getResponse()->successful())->toBeTrue();
     expect($match instanceof PubgMatch)->toBeTrue();
     expect($playerStats instanceof PlayerMatchStats)->toBeTrue();
 
@@ -45,6 +44,18 @@ it('can search a single player', function () use ($bluezone, $shard) {
 
     expect($response)->toBeObject()
         ->toHaveProperties(['id', 'shard', 'name', 'matches']);
+});
+
+it('can get player recent matches', function () use ($bluezone, $shard) {
+    $player = $bluezone->player()->search($shard, 'TGLTN');
+
+    $matches = $bluezone->player()->recentMatches($player, 5);
+
+    expect($matches instanceof Collection)->toBeTrue();
+    expect($matches->first() instanceof PubgMatch)->toBeTrue();
+
+    expect($matches->first())->toBeObject()
+        ->toHaveProperties(['id', 'shard', 'assetId', 'matchType']);
 });
 
 it('can search many players', function () use ($bluezone, $shard) {
@@ -111,7 +122,6 @@ it('can request survival mastery', function () use ($bluezone, $accountId, $shar
 
 it('can request clan details', function () use ($bluezone, $clanId, $shard) {
     $response = $bluezone->clan()->find($shard, $clanId);
-
 
     expect($response)->toBeObject()
         ->toHaveProperties(['id', 'shard', 'name', 'tag', 'level', 'memberCount']);

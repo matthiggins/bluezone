@@ -21,6 +21,7 @@ use Bluezone\Requests\Stats\LifetimeStatsRequest;
 use Bluezone\Requests\Stats\RankedSeasonStatsRequest;
 use Bluezone\Requests\Stats\SeasonStatsManyRequest;
 use Bluezone\Requests\Stats\SeasonStatsRequest;
+use Illuminate\Support\Collection;
 
 class PlayerResource extends Resource
 {
@@ -33,6 +34,48 @@ class PlayerResource extends Resource
             shard: $shard,
             accountId: $accountId,
         ));
+    }
+
+    /**
+     * Get recent matches for a player
+     *
+     * @param Player $player
+     * @param integer $limit
+     * @return Collection
+     */
+    public function recentMatches(Player $player, int $limit = 20): Collection
+    {
+        return $player->recentMatches($this->connector, $limit);
+    }
+
+    /**
+     * Get recent casual matches for a player
+     *
+     * @param Player $player
+     * @param integer $limit
+     * @return Collection
+     */
+    public function recentCasualMatches(Player $player, int $limit = 20): Collection
+    {
+        return $this->recentMatches(
+            player: $player,
+            limit: $limit,
+        )->filter(fn($match) => ! $match->isRanked());
+    }
+
+    /**
+     * Get recent ranked matches for a player
+     *
+     * @param Player $player
+     * @param integer $limit
+     * @return Collection
+     */
+    public function recentRankedMatches(Player $player, int $limit = 20): Collection
+    {
+        return $this->recentMatches(
+            player: $player,
+            limit: $limit,
+        )->filter(fn($match) => $match->isRanked());
     }
 
     /**

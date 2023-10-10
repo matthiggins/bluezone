@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Bluezone\DTOs;
 
+use Bluezone\Bluezone;
+use Bluezone\Resources\MatchResource;
+use Illuminate\Support\Collection;
 use Saloon\Contracts\DataObjects\WithResponse;
 use Saloon\Contracts\Response;
 
@@ -15,7 +18,7 @@ class Player extends PubgDTO
         readonly public string $shard,
         readonly public string|null $clanId,
         readonly public string|null $banType,
-        readonly public array $matches,
+        readonly public Collection $matches,
     ) {
     }
 
@@ -28,7 +31,7 @@ class Player extends PubgDTO
 
     public static function fromArray(array $data): self
     {
-        $matches = array_map(fn ($m) => $m['id'], $data['relationships']['matches']['data']);
+        $matches = collect($data['relationships']['matches']['data'])->map(fn($match) => $match['id']);
 
         return new static(
             id: $data['id'], 
@@ -38,5 +41,16 @@ class Player extends PubgDTO
             banType: $data['attributes']['banType'] ?? null,
             matches: $matches
         );
+    }
+
+    /**
+     * Load match data for recent matches for this player
+     *
+     * @param Bluezone $bluezone
+     * @return Collection
+     */
+    public function recentMatches(Bluezone $bluezone, int $limit = 20): Collection
+    {
+        return $this->matches->take($limit)->map(fn($matchId) => $bluezone->match()->find($this->shard, $matchId));
     }
 }

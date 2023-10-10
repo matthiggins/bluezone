@@ -10,7 +10,7 @@ use Carbon\Carbon;
 use Saloon\Contracts\DataObjects\WithResponse;
 use Saloon\Contracts\Response;
 
-class PubgMatch extends PubgDTO implements WithResponse
+class PubgMatch extends PubgDTO
 {
     use AccessesJsonDictionaries;
 
@@ -44,6 +44,9 @@ class PubgMatch extends PubgDTO implements WithResponse
 
     /**
      * Create a DTO from an array.
+     * 
+     * @param array $data
+     * @param array $included "included" data from the PUBG API to get stats and teams
      */
     public static function fromArray(array $data, array $included): self
     {
@@ -98,6 +101,8 @@ class PubgMatch extends PubgDTO implements WithResponse
 
     /**
      * Get the telemetry DTO from the telemetry file for this match.
+     * 
+     * @return Telemetry
      */
     public function getTelemetry(): Telemetry
     {
@@ -108,11 +113,24 @@ class PubgMatch extends PubgDTO implements WithResponse
 
     /**
      * Get the stats for a player.
+     * 
+     * @param string $playerId
+     * @return PlayerMatchStats
      */
     public function statsForPlayer(string $playerId): PlayerMatchStats
     {
         return collect($this->stats)
             ->where('playerId', $playerId)
             ->first();
+    }
+
+    /**
+     * Is this a ranked match?
+     *
+     * @return boolean
+     */
+    public function isRanked(): bool
+    {
+        return $this->matchType === 'competitive';
     }
 }

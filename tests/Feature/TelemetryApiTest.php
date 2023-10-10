@@ -51,7 +51,6 @@ $match = $bluezone->match()->find($shard, $matchId);
 $telemetry = $match->getTelemetry();
 
 it('can get match telemetry', function () use ($match) {
-    expect($match->getResponse()->successful())->toBeTrue();
     expect($match instanceof PubgMatch)->toBeTrue();
     expect($match->getTelemetry() instanceof Telemetry)->toBeTrue();
 });

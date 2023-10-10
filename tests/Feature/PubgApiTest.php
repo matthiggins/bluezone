@@ -114,5 +114,5 @@ it('can request clan details', function () use ($bluezone, $clanId, $shard) {
 
 
     expect($response)->toBeObject()
-        ->toHaveProperties(['name', 'tag', 'level', 'memberCount']);
+        ->toHaveProperties(['id','shard','name', 'tag', 'level', 'memberCount']);
 });

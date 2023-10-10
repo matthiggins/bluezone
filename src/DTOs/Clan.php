@@ -11,6 +11,7 @@ class Clan extends PubgDTO
 {
     public function __construct(
         readonly public string $id,
+        readonly public string $shard,
         readonly public string $name,
         readonly public string $tag,
         readonly public int $level,
@@ -18,17 +19,19 @@ class Clan extends PubgDTO
     ) {
     }
 
-    public static function fromResponse(Response $response): self
+    public static function fromResponse(string $shard, Response $response): self
     {
-        $data = $response->json()['data'];
-
-        return self::fromArray($data);
+        return self::fromArray(
+            shard: $shard, 
+            data: $response->json()['data']
+        );
     }
 
-    public static function fromArray(array $data): self
+    public static function fromArray(string $shard, array $data): self
     {
         return new static(
             id: $data['id'], 
+            shard: $shard, 
             name: $data['attributes']['clanName'], 
             tag: $data['attributes']['clanTag'], 
             level: $data['attributes']['clanLevel'],

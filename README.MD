@@ -1,4 +1,4 @@
-![banner](https://user-images.githubusercontent.com/422780/225415284-29a3851f-c564-43c8-b43f-d3ff3c855d6b.jpg)
+![bluezone-banner](https://github.com/matthiggins/bluezone/assets/422780/e309788b-b3bd-47fb-9df3-edaa2d3f6a52)
 
 # BLUEZONE : A PHP SDK for the PUBG API 
 

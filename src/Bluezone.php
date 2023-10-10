@@ -2,6 +2,7 @@
 
 namespace Bluezone;
 
+use Bluezone\Resources\ClanResource;
 use Bluezone\Resources\MatchResource;
 use Bluezone\Resources\PlayerResource;
 use Bluezone\Resources\SeasonResource;
@@ -37,6 +38,14 @@ class Bluezone extends Connector
             'Content-Type' => 'application/json',
             'Accept' => 'application/vnd.api+json',
         ];
+    }
+
+    /**
+     * Clan resource
+     */
+    public function clan(): ClanResource
+    {
+        return new ClanResource($this);
     }
 
     /**

@@ -29,6 +29,9 @@ class ClanRequest extends Request
 
     public function createDtoFromResponse(Response $response): mixed
     {
-        return Clan::fromResponse($response);
+        return Clan::fromResponse(
+            shard: $this->shard, 
+            response: $response
+        );
     }
 }

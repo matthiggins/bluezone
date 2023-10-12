@@ -7,7 +7,7 @@ namespace Bluezone\DTOs;
 use Saloon\Contracts\DataObjects\WithResponse;
 use Saloon\Contracts\Response;
 
-class WeaponMastery extends PubgDTO implements WithResponse
+class WeaponMastery extends PubgDTO
 {
     public function __construct(
         readonly public string $accountId,

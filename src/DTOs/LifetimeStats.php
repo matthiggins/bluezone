@@ -7,7 +7,7 @@ namespace Bluezone\DTOs;
 use Saloon\Contracts\DataObjects\WithResponse;
 use Saloon\Contracts\Response;
 
-class LifetimeStats extends PubgDTO implements WithResponse
+class LifetimeStats extends PubgDTO
 {
     public function __construct(
         readonly public string $accountId,

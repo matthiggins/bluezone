@@ -7,7 +7,7 @@ namespace Bluezone\DTOs;
 use Saloon\Contracts\DataObjects\WithResponse;
 use Saloon\Contracts\Response;
 
-class SeasonStats extends PubgDTO implements WithResponse
+class SeasonStats extends PubgDTO
 {
     public function __construct(
         readonly public string $seasonId,
@@ -24,11 +24,11 @@ class SeasonStats extends PubgDTO implements WithResponse
 
         $matches = [
             'solo' => $data['relationships']['matchesSolo']['data'],
-            'soloFPP' => $data['relationships']['matchesSoloFPP']['data'],
+            'solo-fpp' => $data['relationships']['matchesSoloFPP']['data'],
             'duo' => $data['relationships']['matchesDuo']['data'],
-            'duoFPP' => $data['relationships']['matchesDuoFPP']['data'],
+            'duo-fpp' => $data['relationships']['matchesDuoFPP']['data'],
             'squad' => $data['relationships']['matchesSquad']['data'],
-            'squadFPP' => $data['relationships']['matchesSquadFPP']['data'],
+            'squad-fpp' => $data['relationships']['matchesSquadFPP']['data'],
         ];
 
         return new static($data['relationships']['season']['data']['id'], $data['relationships']['player']['data']['id'], $data['attributes']['gameModeStats'], $matches, $data['attributes']['bestRankPoint']);

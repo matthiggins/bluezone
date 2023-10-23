@@ -126,3 +126,10 @@ it('can request clan details', function () use ($bluezone, $clanId, $shard) {
     expect($response)->toBeObject()
         ->toHaveProperties(['id', 'shard', 'name', 'tag', 'level', 'memberCount']);
 });
+
+it('can get api status', function () use ($bluezone) {
+    $response = $bluezone->status()->get();
+
+    expect($response)->toBeObject()
+        ->toHaveProperties(['status']);
+});

@@ -6,6 +6,7 @@ use Bluezone\Resources\ClanResource;
 use Bluezone\Resources\MatchResource;
 use Bluezone\Resources\PlayerResource;
 use Bluezone\Resources\SeasonResource;
+use Bluezone\Resources\StatusResource;
 use Saloon\Http\Connector;
 use Saloon\Traits\Plugins\AlwaysThrowOnErrors;
 
@@ -70,5 +71,13 @@ class Bluezone extends Connector
     public function season(): SeasonResource
     {
         return new SeasonResource($this);
+    }
+
+    /**
+     * Season resource
+     */
+    public function status(): StatusResource
+    {
+        return new StatusResource($this);
     }
 }

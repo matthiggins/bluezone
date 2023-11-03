@@ -6,6 +6,7 @@ use Bluezone\Bluezone;
 use Bluezone\DTOs\Player;
 use Bluezone\DTOs\PlayerMatchStats;
 use Bluezone\DTOs\PubgMatch;
+use Bluezone\DTOs\RankedSeasonStats;
 use Bluezone\DTOs\SeasonStats;
 use Illuminate\Support\Collection;
 
@@ -91,6 +92,16 @@ it('can request many season stats', function () use ($bluezone, $seasonId, $acco
     expect($response->stats->first())->toBeObject()
         ->toHaveProperties(['seasonId', 'accountId', 'gameModeStats']);
 });
+
+it('can request many ranked season stats', function () use ($bluezone, $seasonId, $accountId, $shard) {
+    $response = $bluezone->player()->rankedSeasonStatsMany($shard, $seasonId, [$accountId, $accountId]);
+
+    expect($response->stats->first() instanceof RankedSeasonStats)->toBeTrue();
+
+    expect($response->stats->first())->toBeObject()
+        ->toHaveProperties(['seasonId', 'accountId', 'gameModeStats']);
+});
+
 
 it('can request lifetime stats', function () use ($bluezone, $accountId, $shard) {
     $response = $bluezone->player()->lifetimeStats($shard, $accountId);

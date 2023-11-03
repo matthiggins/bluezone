@@ -1,5 +1,6 @@
 .idea
 .phpunit.cache
+.phpactor.json
 build
 composer.lock
 coverage

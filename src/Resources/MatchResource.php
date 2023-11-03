@@ -3,7 +3,9 @@
 namespace Bluezone\Resources;
 
 use Bluezone\DTOs\PubgDTO;
+use Bluezone\Exceptions\MatchNotFoundException;
 use Bluezone\Requests\Matches\MatchRequest;
+use Saloon\Exceptions\Request\Statuses\NotFoundException;
 
 class MatchResource extends Resource
 {
@@ -12,9 +14,16 @@ class MatchResource extends Resource
      */
     public function find(string $shard, string $matchId): PubgDTO
     {
-        return $this->send(new MatchRequest(
-            shard: $shard,
-            matchId: $matchId,
-        ));
+        try {
+            return $this->send(new MatchRequest(
+                shard: $shard,
+                matchId: $matchId,
+            ));
+        } catch(NotFoundException $e) {
+            throw new MatchNotFoundException(
+                message: 'This match is not available in the PUBG API.',
+                matchId: $matchId
+            );
+        }
     }
 }

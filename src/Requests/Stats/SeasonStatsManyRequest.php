@@ -20,7 +20,7 @@ class SeasonStatsManyRequest extends Request
         protected string $shard,
         protected string $seasonId,
         protected string $gameMode,
-        protected array $playerIds,
+        protected array $accountIds,
     ) {
     }
 
@@ -32,7 +32,7 @@ class SeasonStatsManyRequest extends Request
     protected function defaultQuery(): array
     {
         return [
-            'filter[playerIds]' => implode(',', $this->playerIds),
+            'filter[playerIds]' => implode(',', $this->accountIds),
         ];
     }
 

@@ -10,6 +10,8 @@ use Saloon\Contracts\Response;
 class RankedSeasonStats extends PubgDTO
 {
     public function __construct(
+        readonly public string $accountId,
+        readonly public string $seasonId,
         readonly public array $gameModeStats
     ) {
     }
@@ -18,6 +20,6 @@ class RankedSeasonStats extends PubgDTO
     {
         $data = $response->json()['data'];
 
-        return new static($data['attributes']['rankedGameModeStats']);
+        return new static($data['relationships']['player']['data']['id'], $data['relationships']['season']['data']['id'], $data['attributes']['rankedGameModeStats']);
     }
 }

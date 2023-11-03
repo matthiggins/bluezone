@@ -20,6 +20,11 @@ class RankedSeasonStats extends PubgDTO
     {
         $data = $response->json()['data'];
 
+        foreach($data['attributes']['rankedGameModeStats'] as $key => $stat)
+        {
+            $data['attributes']['rankedGameModeStats'][$key]['losses'] = $stat['losses'] ?? $stat['roundsPlayed'] - $stat['wins'];
+        }
+
         return new static($data['relationships']['player']['data']['id'], $data['relationships']['season']['data']['id'], $data['attributes']['rankedGameModeStats']);
     }
 }

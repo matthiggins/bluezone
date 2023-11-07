@@ -16,22 +16,6 @@ class PubgDTO
     }
 
     /**
-     * Get the response as an array.
-     */
-    public function responseArray(): array
-    {
-        return (array) $this->getResponse()->json();
-    }
-
-    /**
-     * Get the response as json.
-     */
-    public function responseJson(): string
-    {
-        return json_encode($this->responseArray());
-    }
-
-    /**
      * Get the DTO as an array.
      */
     public function toArray(): array

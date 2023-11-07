@@ -55,7 +55,7 @@ class MatchTelemetry
     {
         return $this->telemetry->filter(function ($event) {
             return $event instanceof PhaseChange;
-        });
+        })->values();
     }
 
     /**

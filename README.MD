@@ -25,15 +25,13 @@ In addition to accessing data from the API, BLUEZONE also allows you to access m
   - [Installation](#installation)
   - [Usage](#usage)
   - [Making requests](#making-requests)
-  - [Checking request responses](#checking-request-responses)
   - [Available methods](#available-methods)
-    - [Seasons](#seasons)
-    - [Players](#players)
+    - [Seasons list](#seasons-list)
+    - [Player search, player profiles, and stats](#player-search-player-profiles-and-stats)
     - [Matches](#matches)
-  - [JSON data from the PUBG API request](#json-data-from-the-pubg-api-request)
-  - [Working with Match Telemetry Data](#working-with-match-telemetry-data)
-    - [Get player events from telemetry data](#get-player-events-from-telemetry-data)
-    - [Get match events from the telemetry data](#get-match-events-from-the-telemetry-data)
+  - [Accessing Match Telemetry Data](#accessing-match-telemetry-data)
+    - [Working with telemetry events](#working-with-telemetry-events)
+    - [Game events and match events from telemetry](#game-events-and-match-events-from-telemetry)
     - [Filter events from the telemetry data](#filter-events-from-the-telemetry-data)
 
 ---
@@ -59,7 +57,7 @@ $bluezone = new Bluezone($apiKey);
 
 ## Making requests
 
-By default, requests will return a DTO instance or a Collection of DTO instances. You can also get the raw data from the PUBG API by using the `->json()` method on your DTO result. 
+Requests will return a PUBG DTO instance or a collection of instances. 
 
 ```php
 // Search for a player
@@ -67,9 +65,6 @@ $player = $bluezone->player()->search($shard, $playerName);
 
 // Find a player by account ID
 $player = $bluezone->player()->find($shard, $accountId);
-
-// Return decoded JSON data from the PUBG API
-$raw = $player->json(); 
 
 ```
 
@@ -109,38 +104,28 @@ SaloonException
         └── TooManyRequestsException (429)
 ```
 
-## Checking request responses
-You can access details about the request including helper methods for successes and failures. 
-
-```php
-
-$player = $bluezone->player()->search($shard, $playerName);
-
-$player->getResponse()->successful();     // true if the response status is in the 200s
-$player->getResponse()->ok();             // true if the response status is 200
-$player->getResponse()->serverError();    // true if the response status is 500
-$player->getResponse()->clientError();    // true if the response status is in the 400s
-$player->getResponse()->failed();         // true if the response status is not 200
-```
-
 ## Available methods
 
 Bluezone has easy methods for accessing the [PUBG API endpoints](https://documentation.pubg.com/en/introduction.ht
 
 
-### Seasons
+### Seasons list
 ```php
 // Get all PUBG seasons
 $seasons = $bluezone->season()->all($shard);
 ```
 
-### Players
+### Player search, player profiles, and stats
+
+You can search for a player by their in-game name and shard or you can retrieve a player using their Account ID. 
+
 ```php
 
-// Find a specific player 
+// Find a specific player using the account id
 $player = $bluezone->player()->find($shard, $accountId);
 
 // Search for a player by name 
+// NOTE : player search requires the name to be entered exactly as it is displayed in-game
 $player = $bluezone->player()->search($shard, $playerName);
 
 // Search for up to 10 players
@@ -176,31 +161,29 @@ $match = $bluezone->match()->find($shard, $matchId);
 
 ---
 
-## JSON data from the PUBG API request
-
-You can still access the underlying data returned from PUBG by calling the `json()` method on your response. 
-
-```php
-$seasons = $bluezone->season()->all($shard);
-$seasons->json();
-```
-
----
-
-## Working with Match Telemetry Data
+## Accessing Match Telemetry Data
 The PUBG API provides access to very detailed match data in a Match Telemetry file. This file contains information about game details, player movement, player action, zone information, and more. Telemetry files are large JSON files that can be parsed and analyzed for deeper analysis. 
 
 To get a telemetry file you must first request details of a PUBG match. 
 
 ```php
-$match = $bluezone->match()->find($shard, $matchId)->dto();
-$telemetry = $match->getTelemetry();    // Returns a Telemetry DTO
+// Get a single match DTO instance
+$match = $bluezone->match()->find($shard, $matchId);
 
-// All telemetry events mapped to DTOs
+// Get the telemetry DTO instance
+$telemetry = $match->getTelemetry();
+
+// Get the raw telemetry events in a Collection
+$rawEvents = $telemetry->raw();
+
+// Alternatively you can map all telemetry 
+// events to their DTO instances
 $events = $telemetry->events();   
+
 ```
 
-### Get player events from telemetry data
+### Working with telemetry events
+The telemetry file is essentially a huge list of events that happen during a match. These are events for individual players as well as game events like care packages, circle movement, etc. You can easily filter these events with helper methods that make pulling player and game data easier.
 
 ```php
 // Get all telemetry events for a specific player
@@ -276,7 +259,8 @@ $telemetry->player($accountId)->weaponFireCountEvents();
 $telemetry->player($accountId)->wheelDestroyEvents();
 ```
 
-### Get match events from the telemetry data
+### Game events and match events from telemetry
+In addition to player events you can also easily access game events and match details.
 
 ```php
 // Get all care package events from the telemetry
@@ -303,6 +287,7 @@ $telemetry->match()->stateEvents();
 You can easily filter out events from the data using [Laravel Collection](https://laravel.com/docs/10.x/collections) methods. 
 
 For example:
+
 ```php
 use Bluezone\DTOs\TelemetryEvents\PlayerAttack;
 

@@ -7,6 +7,7 @@ namespace Bluezone\DTOs;
 use Bluezone\DTOs\Concerns\AccessesJsonDictionaries;
 use Bluezone\Requests\Telemetry\TelemetryRequest;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use Saloon\Contracts\DataObjects\WithResponse;
 use Saloon\Contracts\Response;
 
@@ -25,8 +26,8 @@ class PubgMatch extends PubgDTO
         public string $mapName,
         readonly public string $matchType,
         readonly public string $seasonState,
-        readonly public array $stats,
-        readonly public array $teams,
+        readonly public Collection $stats,
+        readonly public Collection $teams,
     ) {
         $this->mapName = $this->getValueFromJsonFile('telemetry/mapName.json', $this->mapName);
     }
@@ -94,8 +95,8 @@ class PubgMatch extends PubgDTO
             mapName: $data['attributes']['mapName'],
             matchType: $data['attributes']['matchType'],
             seasonState: $data['attributes']['seasonState'],
-            stats: $statsArray,
-            teams: $teamsArray,
+            stats: collect($statsArray),
+            teams: collect($teamsArray),
         );
     }
 
@@ -132,5 +133,46 @@ class PubgMatch extends PubgDTO
     public function isRanked(): bool
     {
         return $this->matchType === 'competitive';
+    }
+
+    /**
+     * Get the percent of players that are bots.
+     *
+     * @return float
+     */
+    public function botPercent(): float
+    {
+        $botCount = $this->totalBots();
+        return $botCount ? floatval(number_format(($botCount / $this->totalPlayers()) * 100, 2)) : floatval($botCount);
+    }
+
+    /**
+     * Get the total number of bots in the roster
+     *
+     * @return integer
+     */
+    public function totalBots(): int
+    {
+        return $this->stats->filter(fn ($stat) => str_starts_with($stat->playerId, 'ai.'))->count();
+    }
+
+    /**
+     * Get the total number of players in the roster
+     *
+     * @return integer
+     */
+    public function totalPlayers(): int
+    {
+        return $this->stats->count();
+    }
+
+    /**
+     * Get the total number of teams in the roster
+     *
+     * @return integer
+     */
+    public function totalTeams(): int
+    {
+        return $this->teams->count();
     }
 }

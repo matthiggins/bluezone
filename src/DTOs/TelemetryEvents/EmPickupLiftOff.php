@@ -6,24 +6,23 @@ namespace Bluezone\DTOs\TelemetryEvents;
 
 use Bluezone\DTOs\TelemetryObjects\Character;
 use Bluezone\DTOs\TelemetryObjects\Common;
-use Bluezone\DTOs\TelemetryObjects\Item;
+use Illuminate\Support\Collection;
 
-class ItemPickup extends AbstractEventDTO
+class EmPickupLiftOff extends AbstractEventDTO
 {
-    public string $type = 'item pickup';
+    public string $type = 'emergency pickup lift off';
 
     public function __construct(
-        readonly public Character $character,
-        readonly public Item $item,
+        readonly public Character $instigator,
+        readonly public Collection $riders,
         readonly public Common $common,
-    ) {
-    }
+    ) {}
 
     public static function fromEvent(array $data): self
     {
         return new static(
-            character: Character::fromEvent($data['character']),
-            item: Item::fromEvent($data['item']),
+            instigator: Character::fromEvent($data['instigator']),
+            riders: collect($data['riders'])->map(fn($rider) => Character::fromEvent($rider)),
             common: Common::fromEvent($data['common']),
         );
     }

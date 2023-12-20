@@ -6,6 +6,7 @@ namespace Bluezone\DTOs\TelemetryEvents;
 
 use Bluezone\DTOs\Concerns\AccessesJsonDictionaries;
 use Bluezone\DTOs\TelemetryObjects\Character;
+use Bluezone\DTOs\TelemetryObjects\Common;
 
 class PlayerTakeDamage extends AbstractEventDTO
 {
@@ -24,6 +25,7 @@ class PlayerTakeDamage extends AbstractEventDTO
         readonly public string $damageCauserName,
         readonly public float $damage,
         readonly public bool $isThroughPenetrableWall,
+        readonly public Common $common,
     ) {
         $this->damageCategoryName = $this->getValueFromJsonFile('telemetry/damageTypeCategory.json', $this->damageTypeCategory);
     }
@@ -39,6 +41,7 @@ class PlayerTakeDamage extends AbstractEventDTO
             damageCauserName: $data['damageCauserName'],
             damage: $data['damage'],
             isThroughPenetrableWall: $data['isThroughPenetrableWall'],
+            common: Common::fromEvent($data['common']),
         );
     }
 }

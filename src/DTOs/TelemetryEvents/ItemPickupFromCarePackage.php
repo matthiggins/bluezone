@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Bluezone\DTOs\TelemetryEvents;
 
 use Bluezone\DTOs\TelemetryObjects\Character;
+use Bluezone\DTOs\TelemetryObjects\Common;
 use Bluezone\DTOs\TelemetryObjects\Item;
 
 class ItemPickupFromCarePackage extends AbstractEventDTO
@@ -15,6 +16,7 @@ class ItemPickupFromCarePackage extends AbstractEventDTO
         readonly public Character $character,
         readonly public Item $item,
         readonly public float $carePackageUniqueId,
+        readonly public Common $common,
     ) {
     }
 
@@ -24,6 +26,7 @@ class ItemPickupFromCarePackage extends AbstractEventDTO
             character: Character::fromEvent($data['character']),
             item: Item::fromEvent($data['item']),
             carePackageUniqueId: $data['carePackageUniqueId'],
+            common: Common::fromEvent($data['common']),
         );
     }
 }

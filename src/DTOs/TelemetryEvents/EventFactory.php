@@ -18,6 +18,10 @@ class EventFactory
                 return CarePackageLand::fromEvent($data);
             case 'LogCarePackageSpawn':
                 return CarePackageSpawn::fromEvent($data);
+            case 'LogCharacterCarry':
+                return CharacterCarry::fromEvent($data);
+            case 'LogEmPickupLiftOff':
+                return EmPickupLiftOff::fromEvent($data);
             case 'LogGameStatePeriodic':
                 return GameStatePeriodic::fromEvent($data);
             case 'LogHeal':
@@ -32,12 +36,14 @@ class EventFactory
                 return ItemEquip::fromEvent($data);
             case 'LogItemPickup':
                 return ItemPickup::fromEvent($data);
-            case 'LogItemPickupFromCarePackage':
+            case 'LogItemPickupFromCarepackage':
                 return ItemPickupFromCarePackage::fromEvent($data);
             case 'LogItemPickupFromCustomPackage':
                 return ItemPickupFromCustomPackage::fromEvent($data);
             case 'LogItemPickupFromLootBox':
                 return ItemPickupFromLootBox::fromEvent($data);
+            case 'LogItemPutToVehicleTrunk':
+                return ItemPutToVehicleTrunk::fromEvent($data);
             case 'LogItemUnequip':
                 return ItemUnequip::fromEvent($data);
             case 'LogItemUse':
@@ -70,6 +76,8 @@ class EventFactory
                 return PlayerMakeGroggy::fromEvent($data);
             case 'LogPlayerPosition':
                 return PlayerPosition::fromEvent($data);
+            case 'LogPlayerRevive':
+                return PlayerRevive::fromEvent($data);
             case 'LogPlayerTakeDamage':
                 return PlayerTakeDamage::fromEvent($data);
             case 'LogPlayerUseThrowable':
@@ -93,6 +101,7 @@ class EventFactory
             case 'LogWheelDestroy':
                 return WheelDestroy::fromEvent($data);
             default:
+                // dd($data);
                 return $data;
         }
     }

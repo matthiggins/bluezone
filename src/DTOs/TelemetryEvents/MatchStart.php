@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Bluezone\DTOs\TelemetryEvents;
 
 use Bluezone\DTOs\TelemetryObjects\CharacterWrapper;
+use Bluezone\DTOs\TelemetryObjects\Common;
 
 class MatchStart extends AbstractEventDTO
 {
@@ -19,6 +20,7 @@ class MatchStart extends AbstractEventDTO
         readonly public bool $isCustomGame,
         readonly public bool $isEventMode,
         readonly public string $blueZoneCustomOptions,
+        readonly public Common $common,
     ) {
     }
 
@@ -33,6 +35,7 @@ class MatchStart extends AbstractEventDTO
             isCustomGame: $data['isCustomGame'],
             isEventMode: $data['isEventMode'],
             blueZoneCustomOptions: $data['blueZoneCustomOptions'],
+            common: Common::fromEvent($data['common']),
         );
     }
 }

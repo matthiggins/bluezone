@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Bluezone\DTOs\TelemetryEvents;
 
 use Bluezone\DTOs\TelemetryObjects\Character;
+use Bluezone\DTOs\TelemetryObjects\Common;
 use Bluezone\DTOs\TelemetryObjects\DamageInfo;
 use Bluezone\DTOs\TelemetryObjects\GameResult;
 
@@ -28,6 +29,7 @@ class PlayerKillV2 extends AbstractEventDTO
         readonly public array $assists_AccountId,
         readonly public array $teamKillers_AccountId,
         readonly public bool $isSuicide,
+        readonly public Common $common,
     ) {
     }
 
@@ -49,6 +51,7 @@ class PlayerKillV2 extends AbstractEventDTO
             assists_AccountId: $data['assists_AccountId'],
             teamKillers_AccountId: $data['teamKillers_AccountId'],
             isSuicide: $data['isSuicide'],
+            common: Common::fromEvent($data['common']),
         );
     }
 }

@@ -6,6 +6,7 @@ namespace Bluezone\DTOs\TelemetryEvents;
 
 use Bluezone\DTOs\TelemetryObjects\AllWeaponStats;
 use Bluezone\DTOs\TelemetryObjects\CharacterWrapper;
+use Bluezone\DTOs\TelemetryObjects\Common;
 use Bluezone\DTOs\TelemetryObjects\GameResultOnFinished;
 
 class MatchEnd extends AbstractEventDTO
@@ -16,6 +17,7 @@ class MatchEnd extends AbstractEventDTO
         readonly public array $characters,
         readonly public GameResultOnFinished $gameResultOnFinished,
         readonly public array $allWeaponStats,
+        readonly public Common $common,
     ) {
     }
 
@@ -25,6 +27,7 @@ class MatchEnd extends AbstractEventDTO
             characters: array_map(fn ($character) => CharacterWrapper::fromEvent($character), $data['characters']),
             gameResultOnFinished: GameResultOnFinished::fromEvent($data['gameResultOnFinished']),
             allWeaponStats: array_map(fn ($weaponStats) => AllWeaponStats::fromEvent($weaponStats), $data['allWeaponStats']),
+            common: Common::fromEvent($data['common']),
         );
     }
 }

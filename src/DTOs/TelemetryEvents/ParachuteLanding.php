@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Bluezone\DTOs\TelemetryEvents;
 
 use Bluezone\DTOs\TelemetryObjects\Character;
+use Bluezone\DTOs\TelemetryObjects\Common;
 
 class ParachuteLanding extends AbstractEventDTO
 {
@@ -13,6 +14,7 @@ class ParachuteLanding extends AbstractEventDTO
     public function __construct(
         readonly public Character $character,
         readonly public float $distance,
+        readonly public Common $common,
     ) {
     }
 
@@ -21,6 +23,7 @@ class ParachuteLanding extends AbstractEventDTO
         return new static(
             character: Character::fromEvent($data['character']),
             distance: $data['distance'],
+            common: Common::fromEvent($data['common']),
         );
     }
 }

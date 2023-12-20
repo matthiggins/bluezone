@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Bluezone\DTOs\TelemetryEvents;
 
 use Bluezone\DTOs\TelemetryObjects\Character;
+use Bluezone\DTOs\TelemetryObjects\Common;
 use Bluezone\DTOs\TelemetryObjects\Item;
 
 class ItemPickupFromLootBox extends AbstractEventDTO
@@ -16,6 +17,7 @@ class ItemPickupFromLootBox extends AbstractEventDTO
         readonly public Item $item,
         readonly public int $ownerTeamId,
         readonly public string $creatorAccountId,
+        readonly public Common $common,
     ) {
     }
 
@@ -26,6 +28,7 @@ class ItemPickupFromLootBox extends AbstractEventDTO
             item: Item::fromEvent($data['item']),
             ownerTeamId: $data['ownerTeamId'],
             creatorAccountId: $data['creatorAccountId'],
+            common: Common::fromEvent($data['common']),
         );
     }
 }

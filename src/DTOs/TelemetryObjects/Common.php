@@ -6,9 +6,18 @@ namespace Bluezone\DTOs\TelemetryObjects;
 
 class Common
 {
+    public string $name;
+    public bool $isPreGameLobby;
+    public bool $planeIsFlying;
+    public bool $circlesHaveStarted;
+
     public function __construct(
         readonly public float $isGame,
     ) {
+        $this->name = $this->phaseName();
+        $this->isPreGameLobby = $this->isGame < 0.1;
+        $this->planeIsFlying = $this->isGame >= 0.1 && $this->isGame < 0.5;
+        $this->circlesHaveStarted = $this->isGame >= 1;
     }
 
     public static function fromEvent(array $data): self
@@ -20,7 +29,7 @@ class Common
     {
         return match (true) {
             $this->isGame < 0.1 => 'Before lift off',
-            $this->isGame >= 0.1 && $this->isGame < 0.5 => 'On airplane',
+            $this->isGame >= 0.1 && $this->isGame < 0.5 => 'Airplane in flight',
             $this->isGame >= 0.5 && $this->isGame < 1.0 => 'Before 1st zone',
             $this->isGame >= 1.0 && $this->isGame < 1.5 => '1st zone appears',
             $this->isGame >= 1.5 && $this->isGame < 2.0 => '1st bluezone shrinks',

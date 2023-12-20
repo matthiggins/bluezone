@@ -42,6 +42,27 @@ class Telemetry
     }
 
     /**
+     * Get all telemetry events that occur during the game
+     *
+     * @return Collection<TelemetryEvents\TelemetryEvent>
+     */
+    public function eventsDuringGame(): Collection
+    {
+        return $this->events()->filter(fn ($e) => $e->common->isGame >= 1);
+    }
+
+    /**
+     * Get all telemetry events that occur during the game and exclude the given events
+     *
+     * @param  array  $excludedEvents
+     * @return Collection<TelemetryEvents\TelemetryEvent>
+     */
+    public function excludeEvents(array $excludedEvents): Collection
+    {
+        return $this->events()->filter(fn ($e) => !in_array(get_class($e), $excludedEvents));
+    }
+
+    /**
      * Get the raw telemetry events from the telemetry file
      */
     public function raw(): Collection
@@ -50,7 +71,7 @@ class Telemetry
     }
 
     /**
-     * Get a Player Telemetry Resource
+     * Get a Match Telemetry Resource
      *
      * @param  string  $ccountId
      */

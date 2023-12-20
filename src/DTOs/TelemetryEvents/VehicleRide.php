@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Bluezone\DTOs\TelemetryEvents;
 
 use Bluezone\DTOs\TelemetryObjects\Character;
+use Bluezone\DTOs\TelemetryObjects\Common;
 use Bluezone\DTOs\TelemetryObjects\Vehicle;
 
 class VehicleRide extends AbstractEventDTO
@@ -16,6 +17,7 @@ class VehicleRide extends AbstractEventDTO
         readonly public Vehicle $vehicle,
         readonly public int $seatIndex,
         readonly public array $fellowPassengers,
+        readonly public Common $common,
     ) {
     }
 
@@ -26,6 +28,7 @@ class VehicleRide extends AbstractEventDTO
             vehicle: Vehicle::fromEvent($data['vehicle']),
             seatIndex: $data['seatIndex'],
             fellowPassengers: array_map(fn ($passenger) => Character::fromEvent($passenger), $data['fellowPassengers']),
+            common: Common::fromEvent($data['common']),
         );
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Bluezone\DTOs\TelemetryEvents;
 
 use Bluezone\DTOs\TelemetryObjects\Character;
+use Bluezone\DTOs\TelemetryObjects\Common;
 
 class SwimEnd extends AbstractEventDTO
 {
@@ -14,6 +15,7 @@ class SwimEnd extends AbstractEventDTO
         readonly public Character $character,
         readonly public float $swimDistance,
         readonly public float $maxSwimDepthOfWater,
+        readonly public Common $common,
     ) {
     }
 
@@ -23,6 +25,7 @@ class SwimEnd extends AbstractEventDTO
             character: Character::fromEvent($data['character']),
             swimDistance: $data['swimDistance'],
             maxSwimDepthOfWater: $data['maxSwimDepthOfWater'],
+            common: Common::fromEvent($data['common']),
         );
     }
 }

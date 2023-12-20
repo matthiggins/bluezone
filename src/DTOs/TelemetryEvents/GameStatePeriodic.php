@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Bluezone\DTOs\TelemetryEvents;
 
+use Bluezone\DTOs\TelemetryObjects\Common;
 use Bluezone\DTOs\TelemetryObjects\GameState;
 
 class GameStatePeriodic extends AbstractEventDTO
@@ -12,6 +13,7 @@ class GameStatePeriodic extends AbstractEventDTO
 
     public function __construct(
         readonly public GameState $gameState,
+        readonly public Common $common,
     ) {
     }
 
@@ -19,6 +21,7 @@ class GameStatePeriodic extends AbstractEventDTO
     {
         return new static(
             gameState: GameState::fromEvent($data['gameState']),
+            common: Common::fromEvent($data['common']),
         );
     }
 }

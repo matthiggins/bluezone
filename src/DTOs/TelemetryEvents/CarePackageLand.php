@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Bluezone\DTOs\TelemetryEvents;
 
+use Bluezone\DTOs\TelemetryObjects\Common;
 use Bluezone\DTOs\TelemetryObjects\ItemPackage;
 
 class CarePackageLand extends AbstractEventDTO
@@ -12,6 +13,7 @@ class CarePackageLand extends AbstractEventDTO
 
     public function __construct(
         readonly public ItemPackage $itemPackage,
+        readonly public Common $common,
     ) {
     }
 
@@ -19,6 +21,7 @@ class CarePackageLand extends AbstractEventDTO
     {
         return new static(
             itemPackage: ItemPackage::fromEvent($data['itemPackage']),
+            common: Common::fromEvent($data['common']),
         );
     }
 }

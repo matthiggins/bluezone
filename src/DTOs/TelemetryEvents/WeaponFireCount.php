@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Bluezone\DTOs\TelemetryEvents;
 
 use Bluezone\DTOs\TelemetryObjects\Character;
+use Bluezone\DTOs\TelemetryObjects\Common;
 
 class WeaponFireCount extends AbstractEventDTO
 {
@@ -14,6 +15,7 @@ class WeaponFireCount extends AbstractEventDTO
         readonly public Character $character,
         readonly public string $weaponId,
         readonly public int $fireCount,
+        readonly public Common $common,
     ) {
     }
 
@@ -23,6 +25,7 @@ class WeaponFireCount extends AbstractEventDTO
             character: Character::fromEvent($data['character']),
             weaponId: $data['weaponId'],
             fireCount: $data['fireCount'],
+            common: Common::fromEvent($data['common']),
         );
     }
 }

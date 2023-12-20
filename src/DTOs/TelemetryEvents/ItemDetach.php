@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Bluezone\DTOs\TelemetryEvents;
 
 use Bluezone\DTOs\TelemetryObjects\Character;
+use Bluezone\DTOs\TelemetryObjects\Common;
 use Bluezone\DTOs\TelemetryObjects\Item;
 
 class ItemDetach extends AbstractEventDTO
@@ -15,6 +16,7 @@ class ItemDetach extends AbstractEventDTO
         readonly public Character $character,
         readonly public Item $parentItem,
         readonly public Item $childItem,
+        readonly public Common $common,
     ) {
     }
 
@@ -24,6 +26,7 @@ class ItemDetach extends AbstractEventDTO
             character: Character::fromEvent($data['character']),
             parentItem: Item::fromEvent($data['parentItem']),
             childItem: Item::fromEvent($data['childItem']),
+            common: Common::fromEvent($data['common']),
         );
     }
 }

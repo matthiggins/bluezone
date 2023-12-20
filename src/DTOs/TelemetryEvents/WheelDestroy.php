@@ -6,6 +6,7 @@ namespace Bluezone\DTOs\TelemetryEvents;
 
 use Bluezone\DTOs\Concerns\AccessesJsonDictionaries;
 use Bluezone\DTOs\TelemetryObjects\Character;
+use Bluezone\DTOs\TelemetryObjects\Common;
 use Bluezone\DTOs\TelemetryObjects\Vehicle;
 
 class WheelDestroy extends AbstractEventDTO
@@ -22,6 +23,7 @@ class WheelDestroy extends AbstractEventDTO
         readonly public Vehicle $vehicle,
         readonly public string $damageTypeCategory,
         readonly public string $damageCauserName,
+        readonly public Common $common,
     ) {
         $this->damageCategoryName = $this->getValueFromJsonFile('telemetry/damageTypeCategory.json', $this->damageTypeCategory);
     }
@@ -34,6 +36,7 @@ class WheelDestroy extends AbstractEventDTO
             vehicle: Vehicle::fromEvent($data['vehicle']),
             damageTypeCategory: $data['damageTypeCategory'],
             damageCauserName: $data['damageCauserName'],
+            common: Common::fromEvent($data['common']),
         );
     }
 }

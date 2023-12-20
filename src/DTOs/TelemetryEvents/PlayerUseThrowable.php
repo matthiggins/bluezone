@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Bluezone\DTOs\TelemetryEvents;
 
 use Bluezone\DTOs\TelemetryObjects\Character;
+use Bluezone\DTOs\TelemetryObjects\Common;
 use Bluezone\DTOs\TelemetryObjects\Item;
 
 class PlayerUseThrowable extends AbstractEventDTO
@@ -17,6 +18,7 @@ class PlayerUseThrowable extends AbstractEventDTO
         readonly public Character $attacker,
         readonly public string $attackType,
         readonly public Item $weapon,
+        readonly public Common $common,
     ) {
     }
 
@@ -28,6 +30,7 @@ class PlayerUseThrowable extends AbstractEventDTO
             attacker: Character::fromEvent($data['attacker']),
             attackType: $data['attackType'],
             weapon: Item::fromEvent($data['weapon']),
+            common: Common::fromEvent($data['common']),
         );
     }
 }

@@ -6,26 +6,22 @@ namespace Bluezone\DTOs\TelemetryEvents;
 
 use Bluezone\DTOs\TelemetryObjects\Character;
 use Bluezone\DTOs\TelemetryObjects\Common;
-use Bluezone\DTOs\TelemetryObjects\Item;
 
-class ItemAttach extends AbstractEventDTO
+class CharacterCarry extends AbstractEventDTO
 {
-    public string $type = 'item attach';
+    public string $type = 'player revive';
 
     public function __construct(
         readonly public Character $character,
-        readonly public Item $parentItem,
-        readonly public Item $childItem,
+        readonly public string $carryState,
         readonly public Common $common,
-    ) {
-    }
+    ) {}
 
     public static function fromEvent(array $data): self
     {
         return new static(
             character: Character::fromEvent($data['character']),
-            parentItem: Item::fromEvent($data['parentItem']),
-            childItem: Item::fromEvent($data['childItem']),
+            carryState: $data['carryState'],
             common: Common::fromEvent($data['common']),
         );
     }

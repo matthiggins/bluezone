@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Bluezone\Bluezone;
 use Bluezone\DTOs\PubgMatch;
 use Bluezone\DTOs\Telemetry;
+use Bluezone\DTOs\TelemetryEvents\AbstractEventDTO;
 use Bluezone\DTOs\TelemetryEvents\ArmorDestroy;
 use Bluezone\DTOs\TelemetryEvents\CarePackageLand;
 use Bluezone\DTOs\TelemetryEvents\CarePackageSpawn;
@@ -53,6 +54,11 @@ $telemetry = $match->getTelemetry();
 it('can get match telemetry', function () use ($match) {
     expect($match instanceof PubgMatch)->toBeTrue();
     expect($match->getTelemetry() instanceof Telemetry)->toBeTrue();
+});
+
+it('does not have unmapped events', function() use ($telemetry){
+    $unmappedEvents = $telemetry->events()->filter(fn ($event) => !($event instanceof AbstractEventDTO));
+    expect($unmappedEvents->count())->toBe(0);
 });
 
 it('has armor destroy event', function () use ($telemetry) {

@@ -9,9 +9,9 @@ use Bluezone\DTOs\TelemetryObjects\Common;
 use Bluezone\DTOs\TelemetryObjects\Item;
 use Bluezone\DTOs\TelemetryObjects\Vehicle;
 
-class ItemPutToVehicleTrunk extends AbstractEventDTO
+class ItemPickupFromVehicleTrunk extends AbstractEventDTO
 {
-    public string $type = 'item put into vehicle trunk';
+    public string $type = 'item pickup from vehicle trunk';
 
     public function __construct(
         readonly public Character $character,

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Bluezone\DTOs\TelemetryEvents;
 
-use Bluezone\DTOs\TelemetryEvents\PlayerDestroyProp;
-
 class EventFactory
 {
     /**

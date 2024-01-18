@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Bluezone\DTOs\TelemetryEvents;
 
+use Bluezone\DTOs\TelemetryEvents\PlayerDestroyProp;
+
 class EventFactory
 {
     /**
@@ -42,6 +44,8 @@ class EventFactory
                 return ItemPickupFromCustomPackage::fromEvent($data);
             case 'LogItemPickupFromLootBox':
                 return ItemPickupFromLootBox::fromEvent($data);
+            case 'LogItemPickupFromVehicleTrunk':
+                return ItemPickupFromVehicleTrunk::fromEvent($data);
             case 'LogItemPutToVehicleTrunk':
                 return ItemPutToVehicleTrunk::fromEvent($data);
             case 'LogItemUnequip':
@@ -70,6 +74,8 @@ class EventFactory
                 return PlayerLogout::fromEvent($data);
             case 'LogPlayerCreate':
                 return PlayerCreate::fromEvent($data);
+            case 'LogPlayerDestroyProp':
+                return PlayerDestroyProp::fromEvent($data);
             case 'LogPlayerKillV2':
                 return PlayerKillV2::fromEvent($data);
             case 'LogPlayerMakeGroggy':
@@ -80,6 +86,8 @@ class EventFactory
                 return PlayerRevive::fromEvent($data);
             case 'LogPlayerTakeDamage':
                 return PlayerTakeDamage::fromEvent($data);
+            case 'LogPlayerUseFlareGun':
+                return PlayerUseFlareGun::fromEvent($data);
             case 'LogPlayerUseThrowable':
                 return PlayerUseThrowable::fromEvent($data);
             case 'LogSwimEnd':

@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Bluezone\Responses;
 
-use Bluezone\Telemetry\Concerns\AccessesJsonDictionaries;
 use Bluezone\Requests\TelemetryRequest;
+use Bluezone\Telemetry\Concerns\AccessesJsonDictionaries;
+use Bluezone\Telemetry\Telemetry;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Saloon\Contracts\DataObjects\WithResponse;

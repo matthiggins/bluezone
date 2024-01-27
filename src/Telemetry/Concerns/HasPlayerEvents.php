@@ -36,15 +36,16 @@ trait HasPlayerEvents
 {
     /**
      * Get a list of events for a specific player
+     * These are events where the character was involved
      */
     public function all(): \Illuminate\Support\Collection
     {
         return $this->telemetry->filter(function ($event) {
             return (isset($event->character) && $event->character->accountId == $this->accountId) ||
             (isset($event->victim) && $event->victim->accountId == $this->accountId) ||
-            (isset($event->attacker) && $event->attacker->accountId == $this->accountId);
-            (isset($event->finisher) && $event->finisher->accountId == $this->accountId);
-            (isset($event->killer) && $event->killer->accountId == $this->accountId);
+            (isset($event->attacker) && $event->attacker->accountId == $this->accountId) ||
+            (isset($event->finisher) && $event->finisher->accountId == $this->accountId) ||
+            (isset($event->killer) && $event->killer->accountId == $this->accountId) ||
             (isset($event->dBNOMaker) && $event->dBNOMaker->accountId == $this->accountId);
         })->values();
     }

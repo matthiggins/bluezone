@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use Bluezone\Bluezone;
 use Bluezone\Responses\PubgMatch;
-use Bluezone\Telemetry\Telemetry;
+use Bluezone\Responses\Telemetry;
 use Bluezone\Telemetry\Events\TelemetryEvent;
 use Bluezone\Telemetry\Events\ArmorDestroy;
 use Bluezone\Telemetry\Events\CarePackageLand;

@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Bluezone\Responses;
 
-use Bluezone\Requests\TelemetryRequest;
-use Bluezone\Responses\PlayerMatchStats;
 use Bluezone\Telemetry\Concerns\AccessesJsonDictionaries;
-use Bluezone\Telemetry\Telemetry;
+use Bluezone\Requests\TelemetryRequest;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Saloon\Contracts\DataObjects\WithResponse;
@@ -118,9 +116,9 @@ class PubgMatch extends PubgResponse
      * Get the stats for a player.
      * 
      * @param string $playerId
-     * @return PlayerMatchStats|null
+     * @return PlayerMatchStats
      */
-    public function statsForPlayer(string $playerId): PlayerMatchStats|null
+    public function statsForPlayer(string $playerId): PlayerMatchStats
     {
         return collect($this->stats)
             ->where('playerId', $playerId)

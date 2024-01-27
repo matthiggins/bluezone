@@ -22,6 +22,7 @@ class Resource
 
         $response->throw();
 
+        // If the response is a collection, map the DTOs
         return $response->dto();
     }
 }

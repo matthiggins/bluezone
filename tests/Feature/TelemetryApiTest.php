@@ -61,6 +61,10 @@ it('does not have unmapped events', function() use ($telemetry){
     expect($unmappedEvents->count())->toBe(0);
 });
 
+it('does not have unmapped items', function() use ($telemetry){
+    $telemetry->events();
+})->throwsNoExceptions();
+
 it('has armor destroy event', function () use ($telemetry) {
     expect($telemetry->events()->contains(fn ($event) => $event instanceof ArmorDestroy))->toBeTrue();
 });

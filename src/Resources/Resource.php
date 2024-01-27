@@ -2,7 +2,7 @@
 
 namespace Bluezone\Resources;
 
-use Bluezone\DTOs\PubgDTO;
+use Bluezone\Responses\PubgResponse;
 use Illuminate\Support\Collection;
 use Saloon\Contracts\Connector;
 use Saloon\Contracts\Request;
@@ -16,7 +16,7 @@ class Resource
     /**
      * Send a request and return the response DTO.
      */
-    public function send(Request $request): PubgDTO|Collection
+    public function send(Request $request): PubgResponse|Collection
     {
         $response = $this->connector->send($request);
 

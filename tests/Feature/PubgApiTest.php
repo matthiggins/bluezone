@@ -3,11 +3,11 @@
 namespace Tests\Feature;
 
 use Bluezone\Bluezone;
-use Bluezone\DTOs\Player;
-use Bluezone\DTOs\PlayerMatchStats;
-use Bluezone\DTOs\PubgMatch;
-use Bluezone\DTOs\RankedSeasonStats;
-use Bluezone\DTOs\SeasonStats;
+use Bluezone\Responses\Player;
+use Bluezone\Responses\PlayerMatchStats;
+use Bluezone\Responses\PubgMatch;
+use Bluezone\Responses\RankedSeasonStats;
+use Bluezone\Responses\SeasonStats;
 use Illuminate\Support\Collection;
 
 $seasonId = env('PUBG_TEST_SEASON_ID');

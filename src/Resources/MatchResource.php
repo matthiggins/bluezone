@@ -2,9 +2,9 @@
 
 namespace Bluezone\Resources;
 
-use Bluezone\DTOs\PubgDTO;
 use Bluezone\Exceptions\MatchNotFoundException;
-use Bluezone\Requests\Matches\MatchRequest;
+use Bluezone\Requests\MatchRequest;
+use Bluezone\Responses\PubgMatch;
 use Saloon\Exceptions\Request\Statuses\NotFoundException;
 
 class MatchResource extends Resource
@@ -12,7 +12,7 @@ class MatchResource extends Resource
     /**
      * Get a single match
      */
-    public function find(string $shard, string $matchId): PubgDTO
+    public function find(string $shard, string $matchId): PubgMatch
     {
         try {
             return $this->send(new MatchRequest(

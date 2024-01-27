@@ -2,26 +2,26 @@
 
 namespace Bluezone\Resources;
 
-use Bluezone\DTOs\LifetimeStats;
-use Bluezone\DTOs\LifetimeStatsCollection;
-use Bluezone\DTOs\Player;
-use Bluezone\DTOs\PlayerCollection;
-use Bluezone\DTOs\RankedSeasonStats;
-use Bluezone\DTOs\RankedSeasonStatsCollection;
-use Bluezone\DTOs\SeasonStats;
-use Bluezone\DTOs\SeasonStatsCollection;
-use Bluezone\DTOs\SurvivalMastery;
-use Bluezone\DTOs\WeaponMastery;
-use Bluezone\Requests\Mastery\SurvivalMasteryRequest;
-use Bluezone\Requests\Mastery\WeaponMasteryRequest;
-use Bluezone\Requests\Players\PlayerAccountRequest;
-use Bluezone\Requests\Players\PlayerSearchManyRequest;
-use Bluezone\Requests\Players\PlayerSearchRequest;
-use Bluezone\Requests\Stats\LifetimeStatsManyRequest;
-use Bluezone\Requests\Stats\LifetimeStatsRequest;
-use Bluezone\Requests\Stats\RankedSeasonStatsRequest;
-use Bluezone\Requests\Stats\SeasonStatsManyRequest;
-use Bluezone\Requests\Stats\SeasonStatsRequest;
+use Bluezone\Responses\LifetimeStats;
+use Bluezone\Responses\LifetimeStatsCollection;
+use Bluezone\Responses\Player;
+use Bluezone\Responses\PlayerCollection;
+use Bluezone\Responses\RankedSeasonStats;
+use Bluezone\Responses\RankedSeasonStatsCollection;
+use Bluezone\Responses\SeasonStats;
+use Bluezone\Responses\SeasonStatsCollection;
+use Bluezone\Responses\SurvivalMastery;
+use Bluezone\Responses\WeaponMastery;
+use Bluezone\Requests\SurvivalMasteryRequest;
+use Bluezone\Requests\WeaponMasteryRequest;
+use Bluezone\Requests\PlayerAccountRequest;
+use Bluezone\Requests\PlayerSearchManyRequest;
+use Bluezone\Requests\PlayerSearchRequest;
+use Bluezone\Requests\LifetimeStatsManyRequest;
+use Bluezone\Requests\LifetimeStatsRequest;
+use Bluezone\Requests\RankedSeasonStatsRequest;
+use Bluezone\Requests\SeasonStatsManyRequest;
+use Bluezone\Requests\SeasonStatsRequest;
 use Illuminate\Support\Collection;
 
 class PlayerResource extends Resource

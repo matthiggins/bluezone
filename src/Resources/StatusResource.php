@@ -2,9 +2,9 @@
 
 namespace Bluezone\Resources;
 
-use Bluezone\DTOs\PubgDTO;
-use Bluezone\Requests\Clans\ClanRequest;
-use Bluezone\Requests\Status\StatusRequest;
+use Bluezone\Responses\PubgResponse;
+use Bluezone\Requests\ClanRequest;
+use Bluezone\Requests\StatusRequest;
 
 class StatusResource extends Resource
 {
@@ -13,7 +13,7 @@ class StatusResource extends Resource
      * 
      * @param string $clanId
      */
-    public function get(): PubgDTO
+    public function get(): PubgResponse
     {
         return $this->send(new StatusRequest());
     }

@@ -289,7 +289,7 @@ You can easily filter out events from the data using [Laravel Collection](https:
 For example:
 
 ```php
-use Bluezone\DTOs\TelemetryEvents\PlayerAttack;
+use Bluezone\Telemetry\Events\PlayerAttack;
 
 $playerAttackEvents = $telemetry->events()->filter(function ($event) use ($accountId) {
     return ($event instanceof PlayerAttack) && $event->attacker->accountId == $accountId;

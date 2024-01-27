@@ -2,8 +2,9 @@
 
 namespace Bluezone\Resources;
 
-use Bluezone\DTOs\PubgDTO;
-use Bluezone\Requests\Clans\ClanRequest;
+use Bluezone\Responses\PubgResponse;
+use Bluezone\Requests\ClanRequest;
+use Bluezone\Responses\Clan;
 
 class ClanResource extends Resource
 {
@@ -12,7 +13,7 @@ class ClanResource extends Resource
      * 
      * @param string $clanId
      */
-    public function find(string $shard, string $clanId): PubgDTO
+    public function find(string $shard, string $clanId): Clan
     {
         return $this->send(new ClanRequest(
             shard: $shard,

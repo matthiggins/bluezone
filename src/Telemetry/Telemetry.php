@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Bluezone\Responses;
+namespace Bluezone\Telemetry;
 
 use Bluezone\Telemetry\MatchTelemetry;
 use Bluezone\Telemetry\PlayerTelemetry;

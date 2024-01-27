@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Bluezone\Requests;
 
-use Bluezone\Responses\Telemetry;
+use Bluezone\Telemetry\Telemetry;
 use Saloon\Contracts\Response;
 use Saloon\Enums\Method;
 use Saloon\Http\SoloRequest;

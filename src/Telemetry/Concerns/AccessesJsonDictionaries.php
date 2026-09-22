@@ -4,28 +4,18 @@ declare(strict_types=1);
 
 namespace Bluezone\Telemetry\Concerns;
 
+use Bluezone\Support\Dictionary;
+
 trait AccessesJsonDictionaries
 {
-    /**
-     * Get json file from path
-     */
+    /** @return array<string, mixed> */
     public function getJsonFromFile(string $path): array
     {
-        $json = file_get_contents(__DIR__.'/../../assets/dictionaries/'.$path);
-
-        return json_decode($json, true);
+        return Dictionary::load($path);
     }
 
-    /**
-     * Get value from json file
-     */
     public function getValueFromJsonFile(string $path, string $key): string
     {
-        if (! $key) {
-            return '';
-        }
-        $json = $this->getJsonFromFile($path);
-
-        return $json[$key] ?? $key;
+        return Dictionary::get($path, $key);
     }
 }

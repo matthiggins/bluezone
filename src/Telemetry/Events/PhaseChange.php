@@ -32,11 +32,15 @@ class PhaseChange extends TelemetryEvent
         );
     }
 
-    /**
-     * Generate a phase name based on the common is game value and the phase number
-     */
+    /** Whole isGame steps are a new circle appearing; the half step after each is it shrinking. */
     public function phaseName(): string
     {
-        return 'Phase '.$this->phase.' circle '.($this->phase / $this->common->isGame === 1.0 ? 'appears' : 'shrinks');
+        if ($this->common->isGame < 1.0) {
+            return "Phase {$this->phase} lobby";
+        }
+
+        $shrinking = fmod($this->common->isGame, 1.0) >= 0.5;
+
+        return "Phase {$this->phase} circle ".($shrinking ? 'shrinks' : 'appears');
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Bluezone\Responses;
 
 use Bluezone\Telemetry\Events\EventFactory;
+use Bluezone\Telemetry\Events\TelemetryEvent;
 use Bluezone\Telemetry\MatchTelemetry;
 use Bluezone\Telemetry\PlayerTelemetry;
 use Illuminate\Support\Collection;
@@ -12,6 +13,11 @@ use Saloon\Http\Response;
 
 class Telemetry
 {
+    /** @var array<string, int> */
+    private array $unmapped = [];
+
+    private ?Collection $events = null;
+
     public function __construct(
         private Collection $telemetry,
     ) {}
@@ -27,29 +33,42 @@ class Telemetry
     }
 
     /**
-     * Map all of the raw telemetry events to Telemetry Event DTOs
+     * Map all of the raw telemetry events to Telemetry Event DTOs, dropping any whose `_T` has no DTO.
      *
-     * @return Collection<Events\TelemetryEvent>
+     * @return Collection<int, TelemetryEvent>
      */
     public function events(): Collection
     {
-        return $this->mapTelemetryToEvents();
+        return $this->events ??= $this->telemetry
+            ->map(function (array $raw): ?TelemetryEvent {
+                $event = EventFactory::make($raw);
+
+                if ($event === null) {
+                    $this->unmapped[$raw['_T'] ?? '?'] = ($this->unmapped[$raw['_T'] ?? '?'] ?? 0) + 1;
+                }
+
+                return $event;
+            })
+            ->filter()
+            ->values();
     }
 
     /**
-     * Map the raw telemetry events to Telemetry Event DTOs
+     * Count the raw events that events() dropped, keyed by `_T`.
      *
-     * @return Collection<Events\TelemetryEvent>
+     * @return array<string, int>
      */
-    protected function mapTelemetryToEvents(): Collection
+    public function unmappedTypes(): array
     {
-        return $this->telemetry->map(fn ($e) => EventFactory::make($e));
+        $this->events();
+
+        return $this->unmapped;
     }
 
     /**
      * Get all telemetry events that occur during the game
      *
-     * @return Collection<Events\TelemetryEvent>
+     * @return Collection<int, TelemetryEvent>
      */
     public function eventsDuringGame(): Collection
     {
@@ -59,7 +78,8 @@ class Telemetry
     /**
      * Get all telemetry events that occur during the game and exclude the given events
      *
-     * @return Collection<Events\TelemetryEvent>
+     * @param  array<int, class-string<TelemetryEvent>>  $excludedEvents
+     * @return Collection<int, TelemetryEvent>
      */
     public function excludeEvents(array $excludedEvents): Collection
     {
@@ -68,6 +88,8 @@ class Telemetry
 
     /**
      * Get the raw telemetry events from the telemetry file
+     *
+     * @return Collection<int, array<string, mixed>>
      */
     public function raw(): Collection
     {
@@ -76,8 +98,6 @@ class Telemetry
 
     /**
      * Get a Match Telemetry Resource
-     *
-     * @param  string  $ccountId
      */
     public function match(): MatchTelemetry
     {
@@ -86,8 +106,6 @@ class Telemetry
 
     /**
      * Get a Player Telemetry Resource
-     *
-     * @param  string  $ccountId
      */
     public function player(string $accountId): PlayerTelemetry
     {

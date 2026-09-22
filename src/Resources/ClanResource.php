@@ -10,9 +10,6 @@ use Bluezone\Responses\Clan;
 
 class ClanResource extends Resource
 {
-    /**
-     * Get a clan
-     */
     public function find(Shard|string $shard, string $clanId): Clan
     {
         return $this->send(new ClanRequest(

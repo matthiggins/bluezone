@@ -35,10 +35,7 @@ use Illuminate\Support\Collection;
 
 trait HasPlayerEvents
 {
-    /**
-     * Get a list of events for a specific player
-     * These are events where the character was involved
-     */
+    /** Every event the player appears in, as character, victim, attacker, finisher, killer or knocker. */
     public function all(): Collection
     {
         return $this->telemetry->filter(function ($event) {
@@ -51,9 +48,6 @@ trait HasPlayerEvents
         })->values();
     }
 
-    /**
-     * Get a list of attack events for a specific player
-     */
     public function attackEvents(): Collection
     {
         return $this->telemetry->filter(function ($event) {
@@ -62,17 +56,11 @@ trait HasPlayerEvents
         })->values();
     }
 
-    /**
-     * Get a list of attack events that happened from a vehicle for a specific player
-     */
     public function attackEventsFromVehicle(): Collection
     {
         return $this->attackEvents()->filter(fn ($e) => $e->vehicle != null)->values();
     }
 
-    /**
-     * Get a list of events where the player caused damage
-     */
     public function causeDamageEvents(): Collection
     {
         return $this->telemetry->filter(function ($event) {
@@ -81,9 +69,6 @@ trait HasPlayerEvents
         })->values();
     }
 
-    /**
-     * Get a list of downed events for a specific player
-     */
     public function downedEvents(): Collection
     {
         return $this->telemetry->filter(function ($event) {
@@ -92,9 +77,6 @@ trait HasPlayerEvents
         })->values();
     }
 
-    /**
-     * Get a list of heal events for a specific player
-     */
     public function healEvents(): Collection
     {
         return $this->telemetry->filter(function ($event) {
@@ -102,9 +84,6 @@ trait HasPlayerEvents
         })->values();
     }
 
-    /**
-     * Get a list of item attach events for a specific player
-     */
     public function itemAttachEvents(): Collection
     {
         return $this->telemetry->filter(function ($event) {
@@ -112,9 +91,6 @@ trait HasPlayerEvents
         })->values();
     }
 
-    /**
-     * Get a list of item detach events for a specific player
-     */
     public function itemDetachEvents(): Collection
     {
         return $this->telemetry->filter(function ($event) {
@@ -122,9 +98,6 @@ trait HasPlayerEvents
         })->values();
     }
 
-    /**
-     * Get a list of item drop events for a specific player
-     */
     public function itemDropEvents(): Collection
     {
         return $this->telemetry->filter(function ($event) {
@@ -132,9 +105,6 @@ trait HasPlayerEvents
         })->values();
     }
 
-    /**
-     * Get a list of item equip events for a specific player
-     */
     public function itemEquipEvents(): Collection
     {
         return $this->telemetry->filter(function ($event) {
@@ -142,9 +112,6 @@ trait HasPlayerEvents
         })->values();
     }
 
-    /**
-     * Get a list of item pickup events for a specific player
-     */
     public function itemPickupEvents(): Collection
     {
         return $this->telemetry->filter(function ($event) {
@@ -152,9 +119,6 @@ trait HasPlayerEvents
         })->values();
     }
 
-    /**
-     * Get a list of item pickup from care package events for a specific player
-     */
     public function itemPickupFromCarePackageEvents(): Collection
     {
         return $this->telemetry->filter(function ($event) {
@@ -162,9 +126,6 @@ trait HasPlayerEvents
         })->values();
     }
 
-    /**
-     * Get a list of item pickup from care package events for a specific player
-     */
     public function itemPickupFromCustomPackageEvents(): Collection
     {
         return $this->telemetry->filter(function ($event) {
@@ -172,9 +133,6 @@ trait HasPlayerEvents
         })->values();
     }
 
-    /**
-     * Get a list of item pickup from care package events for a specific player
-     */
     public function itemPickupFromLootBoxEvents(): Collection
     {
         return $this->telemetry->filter(function ($event) {
@@ -182,9 +140,6 @@ trait HasPlayerEvents
         })->values();
     }
 
-    /**
-     * Get a list of item unequip events for a specific player
-     */
     public function itemUnequipEvents(): Collection
     {
         return $this->telemetry->filter(function ($event) {
@@ -192,9 +147,6 @@ trait HasPlayerEvents
         })->values();
     }
 
-    /**
-     * Get a list of item use events for a specific player
-     */
     public function itemUseEvents(): Collection
     {
         return $this->telemetry->filter(function ($event) {
@@ -202,9 +154,6 @@ trait HasPlayerEvents
         })->values();
     }
 
-    /**
-     * Get a list of kill events for a specific player
-     */
     public function killEvents(): Collection
     {
         return $this->telemetry->filter(function ($event) {
@@ -213,9 +162,6 @@ trait HasPlayerEvents
         })->values();
     }
 
-    /**
-     * Get a list of attack events that happened from a vehicle for a specific player
-     */
     public function killEventsFromVehicle(): Collection
     {
         $attacksFromVehicle = $this->attackEvents()->filter(fn ($e) => $e->vehicle != null)->pluck('attackId');
@@ -223,9 +169,6 @@ trait HasPlayerEvents
         return $this->killEvents()->filter(fn ($e) => $attacksFromVehicle->contains($e->attackId))->values();
     }
 
-    /**
-     * Get a list of knock events for a specific player
-     */
     public function knockEvents(): Collection
     {
         return $this->telemetry->filter(function ($event) {
@@ -234,9 +177,6 @@ trait HasPlayerEvents
         })->values();
     }
 
-    /**
-     * Get a list of knock events from a vehicle for a specific player
-     */
     public function knockEventsFromVehicle(): Collection
     {
         $attacksFromVehicle = $this->attackEvents()->filter(fn ($e) => $e->vehicle != null)->pluck('attackId');
@@ -244,9 +184,6 @@ trait HasPlayerEvents
         return $this->knockEvents()->filter(fn ($e) => $attacksFromVehicle->contains($e->attackId))->values();
     }
 
-    /**
-     * Get a list of object destroy events for a specific player
-     */
     public function objectDestroyEvents(): Collection
     {
         return $this->telemetry->filter(function ($event) {
@@ -255,9 +192,6 @@ trait HasPlayerEvents
         })->values();
     }
 
-    /**
-     * Get a list of object interaction events for a specific player
-     */
     public function objectInteractionEvents(): Collection
     {
         return $this->telemetry->filter(function ($event) {
@@ -266,9 +200,6 @@ trait HasPlayerEvents
         })->values();
     }
 
-    /**
-     * Get a list of parachute events for a specific player
-     */
     public function parachuteLandingEvents(): Collection
     {
         return $this->telemetry->filter(function ($event) {
@@ -276,9 +207,6 @@ trait HasPlayerEvents
         })->values();
     }
 
-    /**
-     * Get a list of position events for a specific player
-     */
     public function positionEvents(): Collection
     {
         return $this->telemetry->filter(function ($event) {
@@ -286,9 +214,6 @@ trait HasPlayerEvents
         })->values();
     }
 
-    /**
-     * Get a list of take damage events for a specific player
-     */
     public function takeDamageEvents(): Collection
     {
         return $this->telemetry->filter(function ($event) {
@@ -296,9 +221,6 @@ trait HasPlayerEvents
         })->values();
     }
 
-    /**
-     * Get a list of use throwable events for a specific player
-     */
     public function useThrowableEvents(): Collection
     {
         return $this->telemetry->filter(function ($event) {
@@ -306,9 +228,6 @@ trait HasPlayerEvents
         })->values();
     }
 
-    /**
-     * Get a list of swim events for a specific player
-     */
     public function swimEvents(): Collection
     {
         return $this->telemetry->filter(function ($event) {
@@ -316,9 +235,6 @@ trait HasPlayerEvents
         })->values();
     }
 
-    /**
-     * Get a list of swim end events for a specific player
-     */
     public function swimEndEvents(): Collection
     {
         return $this->telemetry->filter(function ($event) {
@@ -326,9 +242,6 @@ trait HasPlayerEvents
         })->values();
     }
 
-    /**
-     * Get a list of swim start events for a specific player
-     */
     public function swimStartEvents(): Collection
     {
         return $this->telemetry->filter(function ($event) {
@@ -336,9 +249,6 @@ trait HasPlayerEvents
         })->values();
     }
 
-    /**
-     * Get a list of vault start events for a specific player
-     */
     public function vaultEvents(): Collection
     {
         return $this->telemetry->filter(function ($event) {
@@ -346,9 +256,6 @@ trait HasPlayerEvents
         })->values();
     }
 
-    /**
-     * Get a list of vehicle events for a specific player
-     */
     public function vehicleEvents(): Collection
     {
         return $this->telemetry->filter(function ($event) {
@@ -359,9 +266,6 @@ trait HasPlayerEvents
         })->values();
     }
 
-    /**
-     * Get a list of weapon fire count events for a specific player
-     */
     public function weaponFireCountEvents(): Collection
     {
         return $this->telemetry->filter(function ($event) {
@@ -369,9 +273,6 @@ trait HasPlayerEvents
         })->values();
     }
 
-    /**
-     * Get a list of wheel destroy events for a specific player
-     */
     public function wheelDestroyEvents(): Collection
     {
         return $this->telemetry->filter(function ($event) {

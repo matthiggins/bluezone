@@ -12,9 +12,6 @@ class Season
         public readonly bool $isOffSeason,
     ) {}
 
-    /**
-     * Is this the current season?
-     */
     public function isCurrentSeason(): bool
     {
         return $this->isCurrentSeason;

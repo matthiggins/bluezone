@@ -10,9 +10,6 @@ use Bluezone\Responses\Seasons;
 
 class SeasonResource extends Resource
 {
-    /**
-     * Get all seasons for a shard
-     */
     public function all(Shard|string $shard): Seasons
     {
         return $this->send(new SeasonsRequest(

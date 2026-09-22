@@ -41,9 +41,6 @@ final class Player extends PubgResponse
         );
     }
 
-    /**
-     * Load match data for recent matches for this player.
-     */
     public function recentMatches(Connector $connector, int $limit = 20): Collection
     {
         return $this->matches->take($limit)->map(fn ($matchId) => (new MatchResource($connector))->find($this->shard, $matchId));

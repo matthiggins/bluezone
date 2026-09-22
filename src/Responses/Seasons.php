@@ -25,9 +25,6 @@ final class Seasons extends PubgResponse
         return new self($seasons);
     }
 
-    /**
-     * Get the current season
-     */
     public function currentSeason(): ?Season
     {
         return $this->seasons->firstWhere('isCurrentSeason', true);

@@ -12,9 +12,6 @@ use Saloon\Exceptions\Request\Statuses\NotFoundException;
 
 class MatchResource extends Resource
 {
-    /**
-     * Get a single match
-     */
     public function find(Shard|string $shard, string $matchId): PubgMatch
     {
         $shard = Shard::resolve($shard);

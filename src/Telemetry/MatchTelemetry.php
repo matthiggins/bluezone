@@ -19,9 +19,6 @@ class MatchTelemetry
         protected Collection $telemetry,
     ) {}
 
-    /**
-     * Get the match care package events
-     */
     public function carePackageEvents(): Collection
     {
         return $this->telemetry->filter(function ($event) {
@@ -29,9 +26,6 @@ class MatchTelemetry
         })->values();
     }
 
-    /**
-     * Get the match definition event
-     */
     public function definition(): MatchDefinition
     {
         return $this->telemetry->filter(function ($event) {
@@ -39,9 +33,6 @@ class MatchTelemetry
         })->first();
     }
 
-    /**
-     * Get the match end event
-     */
     public function end(): MatchEnd
     {
         return $this->telemetry->filter(function ($event) {
@@ -49,9 +40,6 @@ class MatchTelemetry
         })->first();
     }
 
-    /**
-     * Get the phase change event
-     */
     public function phaseChanges(): Collection
     {
         return $this->telemetry->filter(function ($event) {
@@ -59,9 +47,6 @@ class MatchTelemetry
         })->values();
     }
 
-    /**
-     * Get the match start event
-     */
     public function start(): MatchStart
     {
         return $this->telemetry->filter(function ($event) {
@@ -69,9 +54,6 @@ class MatchTelemetry
         })->first();
     }
 
-    /**
-     * Get the match state events
-     */
     public function stateEvents(): Collection
     {
         return $this->telemetry->filter(function ($event) {

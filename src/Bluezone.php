@@ -20,10 +20,7 @@ use Saloon\RateLimitPlugin\Traits\HasRateLimits;
 use Saloon\Traits\Plugins\AlwaysThrowOnErrors;
 use Saloon\Traits\Plugins\HasTimeout;
 
-/**
- * The PUBG API connector. Rate limiting is enforced client-side, and the default memory store is
- * only correct for one process; pass a shared store (Predis, LaravelCache, File) in a multi-process app.
- */
+/** The PUBG API connector; the default memory store only tracks one process, so pass a shared store in a multi-process app. */
 class Bluezone extends Connector
 {
     use AlwaysThrowOnErrors;

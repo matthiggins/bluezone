@@ -23,9 +23,6 @@ final class Status extends PubgResponse
         );
     }
 
-    /**
-     * Check if the API is online
-     */
     public function isOnline(): bool
     {
         return $this->status === 'online';

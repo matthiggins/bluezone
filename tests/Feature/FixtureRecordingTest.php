@@ -40,7 +40,7 @@ afterAll(fn () => MockConfig::throwOnMissingFixtures());
 function record(string $name, string $requestClass, callable $send): void
 {
     $key = getenv('PUBG_API_KEY') ?: 'replay-only';
-    $bluezone = new Bluezone($key);
+    $bluezone = new Bluezone(apiKey: $key, requestsPerMinute: 1000);
     $bluezone->withMockClient(new MockClient([$requestClass => apiFixture($name)]));
 
     try {

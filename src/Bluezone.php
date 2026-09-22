@@ -9,75 +9,91 @@ use Bluezone\Resources\MatchResource;
 use Bluezone\Resources\PlayerResource;
 use Bluezone\Resources\SeasonResource;
 use Bluezone\Resources\StatusResource;
+use Saloon\Contracts\Authenticator;
+use Saloon\Http\Auth\TokenAuthenticator;
 use Saloon\Http\Connector;
+use Saloon\RateLimitPlugin\Contracts\RateLimitStore;
+use Saloon\RateLimitPlugin\Limit;
+use Saloon\RateLimitPlugin\Stores\MemoryStore;
+use Saloon\RateLimitPlugin\Traits\HasRateLimits;
 use Saloon\Traits\Plugins\AlwaysThrowOnErrors;
+use Saloon\Traits\Plugins\HasTimeout;
 
+/**
+ * The PUBG API connector.
+ *
+ * Rate limiting is enforced client-side so a burst never reaches the API's own
+ * limiter. The store defaults to memory, which is only correct for a single
+ * process; pass a shared store (PredisStore, LaravelCacheStore, FileStore) in
+ * any multi-process app.
+ */
 class Bluezone extends Connector
 {
     use AlwaysThrowOnErrors;
+    use HasRateLimits;
+    use HasTimeout;
 
-    /**
-     * Constructor
-     */
-    public function __construct(protected string $apiKey)
+    protected int $connectTimeout = 10;
+
+    protected int $requestTimeout = 15;
+
+    public function __construct(
+        protected string $apiKey,
+        protected ?RateLimitStore $store = null,
+        protected int $requestsPerMinute = 10,
+    ) {}
+
+    protected function defaultAuth(): ?Authenticator
     {
-        $this->withTokenAuth($this->apiKey);
+        return new TokenAuthenticator($this->apiKey);
     }
 
-    /**
-     * Resolve the base URL
-     */
     public function resolveBaseUrl(): string
     {
         return 'https://api.pubg.com';
     }
 
-    /**
-     * Resolve the default headers
-     */
+    /** @return array<string, string> */
     protected function defaultHeaders(): array
     {
         return [
-            'Content-Type' => 'application/json',
             'Accept' => 'application/vnd.api+json',
         ];
     }
 
-    /**
-     * Clan resource
-     */
+    /** @return array<int, Limit> */
+    protected function resolveLimits(): array
+    {
+        return [
+            Limit::allow($this->requestsPerMinute)->everyMinute(),
+        ];
+    }
+
+    protected function resolveRateLimitStore(): RateLimitStore
+    {
+        return $this->store ?? new MemoryStore;
+    }
+
     public function clan(): ClanResource
     {
         return new ClanResource($this);
     }
 
-    /**
-     * Match resource
-     */
     public function match(): MatchResource
     {
         return new MatchResource($this);
     }
 
-    /**
-     * Player resource
-     */
     public function player(): PlayerResource
     {
         return new PlayerResource($this);
     }
 
-    /**
-     * Season resource
-     */
     public function season(): SeasonResource
     {
         return new SeasonResource($this);
     }
 
-    /**
-     * Season resource
-     */
     public function status(): StatusResource
     {
         return new StatusResource($this);

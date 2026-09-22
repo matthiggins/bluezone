@@ -14,7 +14,7 @@ MockConfig::throwOnMissingFixtures();
 /** A Bluezone connector whose requests are answered by the given mocks. */
 function mockBluezone(array $mocks, int $requestsPerMinute = 1000): Bluezone
 {
-    $bluezone = new Bluezone('test-api-key');
+    $bluezone = new Bluezone(apiKey: 'test-api-key', requestsPerMinute: $requestsPerMinute);
     $bluezone->withMockClient(new MockClient($mocks));
 
     return $bluezone;
@@ -36,5 +36,5 @@ function recordingBluezone(): Bluezone
         test()->markTestSkipped('PUBG_API_KEY not set; cannot record fixtures.');
     }
 
-    return new Bluezone($key);
+    return new Bluezone(apiKey: $key, requestsPerMinute: 1000);
 }

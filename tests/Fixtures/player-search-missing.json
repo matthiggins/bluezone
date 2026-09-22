@@ -1,0 +1,19 @@
+{
+    "statusCode": 404,
+    "headers": {
+        "Content-Type": "application\/vnd.api+json",
+        "Content-Length": "80",
+        "Connection": "keep-alive",
+        "Date": "Tue, 22 Sep 2026 07:09:05 GMT",
+        "X-Request-Id": "2273c1ba-5920-445f-863c-73549a5dc823",
+        "X-Ratelimit-Limit": "1000",
+        "X-Ratelimit-Remaining": "987",
+        "X-Ratelimit-Reset": "1790060983",
+        "X-Cache": "Error from cloudfront",
+        "Via": "1.1 3b024f963310e80ecfd323d07d71b33c.cloudfront.net (CloudFront)",
+        "X-Amz-Cf-Pop": "IAH50-P5",
+        "X-Amz-Cf-Id": "n4TlAJx19izFRNR158OJ_OTcX3_FA2GArcGYV7Y2ppwusEoZRg44Iw=="
+    },
+    "data": "{\"errors\":[{\"title\":\"Not Found\",\"detail\":\"No Players Found Matching Criteria\"}]}",
+    "context": []
+}

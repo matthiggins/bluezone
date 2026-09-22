@@ -1,0 +1,16 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Content-Type": "application\/json",
+        "Content-Length": "42",
+        "Connection": "keep-alive",
+        "Date": "Tue, 22 Sep 2026 07:09:07 GMT",
+        "X-Request-Id": "74f93e23-14f1-4d4f-99a9-30bac1959c2e",
+        "X-Cache": "Miss from cloudfront",
+        "Via": "1.1 c4f73d20c22ffdf0271df0d9bfdb1f3a.cloudfront.net (CloudFront)",
+        "X-Amz-Cf-Pop": "IAH50-P5",
+        "X-Amz-Cf-Id": "sS-nKftPP6QXV86jL9o0dfnARfdHgIodqCAqf7qQN_llj3VLuVb1Sg=="
+    },
+    "data": "{\"data\":{\"type\":\"status\",\"id\":\"pubg-api\"}}",
+    "context": []
+}

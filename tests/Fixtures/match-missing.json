@@ -1,0 +1,16 @@
+{
+    "statusCode": 404,
+    "headers": {
+        "Content-Type": "application\/vnd.api+json",
+        "Content-Length": "68",
+        "Connection": "keep-alive",
+        "Date": "Tue, 22 Sep 2026 07:09:07 GMT",
+        "X-Request-Id": "4d222cbb-10c3-46a0-8731-d03eb441a349",
+        "X-Cache": "Error from cloudfront",
+        "Via": "1.1 54ae67d8f3f59db30ac4b86c8243836e.cloudfront.net (CloudFront)",
+        "X-Amz-Cf-Pop": "IAH50-P5",
+        "X-Amz-Cf-Id": "Ej96FJCXZG2E2O49OxQ5-3wAv8GTf2QxMNWuEZQsvneK-ozZUyuHSw=="
+    },
+    "data": "{\"errors\":[{\"title\":\"Not Found\",\"detail\":\"No match found with ID\"}]}",
+    "context": []
+}

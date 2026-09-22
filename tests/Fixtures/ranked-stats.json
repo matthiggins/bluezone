@@ -1,0 +1,19 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Content-Type": "application\/json",
+        "Content-Length": "944",
+        "Connection": "keep-alive",
+        "Date": "Tue, 22 Sep 2026 07:09:06 GMT",
+        "X-Request-Id": "7e61413c-45fd-43df-a90f-608c47ee913e",
+        "X-Ratelimit-Limit": "1000",
+        "X-Ratelimit-Remaining": "982",
+        "X-Ratelimit-Reset": "1790060983",
+        "X-Cache": "Miss from cloudfront",
+        "Via": "1.1 5851f0a51d7ba303dcd59c128603c8de.cloudfront.net (CloudFront)",
+        "X-Amz-Cf-Pop": "IAH50-P5",
+        "X-Amz-Cf-Id": "GCSV06XLCIP14PKpCFnJ05mgdPWbhYDYc3ryyLNAsoAtW328Av7oIw=="
+    },
+    "data": "{\"data\":{\"type\":\"rankedplayerstats\",\"attributes\":{\"rankedGameModeStats\":{\"squad\":{\"currentTier\":{\"tier\":\"Gold\",\"subTier\":\"4\"},\"currentRankPoint\":1849,\"bestTier\":{\"tier\":\"Gold\",\"subTier\":\"4\"},\"bestRankPoint\":1895,\"roundsPlayed\":10,\"avgRank\":11.5,\"avgSurvivalTime\":525.1,\"top10Ratio\":0.3,\"winRatio\":0,\"assists\":9,\"wins\":0,\"kda\":0,\"kdr\":0,\"avgKill\":1.8,\"kills\":18,\"deaths\":11,\"roundMostKills\":0,\"longestKill\":0,\"headshotKills\":3,\"headshotKillRatio\":0.16666667,\"damageDealt\":2771.957,\"dBNOs\":19,\"reviveRatio\":0,\"revives\":4,\"heals\":0,\"boosts\":0,\"weaponsAcquired\":0,\"teamKills\":0,\"playTime\":0,\"killStreak\":0}}},\"relationships\":{\"player\":{\"data\":{\"type\":\"player\",\"id\":\"account.82bad0072f31455d8d9f8d834da2f2f3\"}},\"season\":{\"data\":{\"type\":\"season\",\"id\":\"division.bro.official.pc-2018-43\"}}}},\"links\":{\"self\":\"https:\/\/api.pubg.com\/shards\/steam\/players\/account.82bad0072f31455d8d9f8d834da2f2f3\/seasons\/division.bro.official.pc-2018-43\/ranked\"},\"meta\":{}}",
+    "context": []
+}

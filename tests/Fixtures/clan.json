@@ -1,0 +1,19 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Content-Type": "application\/json",
+        "Content-Length": "271",
+        "Connection": "keep-alive",
+        "Date": "Tue, 22 Sep 2026 07:09:07 GMT",
+        "X-Request-Id": "7c113ef8-ea45-42d5-8405-c25ef96ee209",
+        "X-Ratelimit-Limit": "1000",
+        "X-Ratelimit-Remaining": "977",
+        "X-Ratelimit-Reset": "1790060983",
+        "X-Cache": "Miss from cloudfront",
+        "Via": "1.1 4ffc0a0ea99f8764475b9408a0fdca4a.cloudfront.net (CloudFront)",
+        "X-Amz-Cf-Pop": "IAH50-P5",
+        "X-Amz-Cf-Id": "h_CZrJPUwZw0ZfqhR3AeHeSOQS9SSp_kEaRDrkVOv3wQJ4Mqd5rV9A=="
+    },
+    "data": "{\"data\":{\"type\":\"clan\",\"id\":\"clan.7e41009b212341a5a62d46430b391533\",\"attributes\":{\"clanName\":\"[Team Falcons]\",\"clanTag\":\"FLC\",\"clanLevel\":20,\"clanMemberCount\":96}},\"links\":{\"self\":\"https:\/\/api.pubg.com\/shards\/steam\/clans\/clan.7e41009b212341a5a62d46430b391533\"},\"meta\":{}}",
+    "context": []
+}

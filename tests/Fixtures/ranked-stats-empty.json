@@ -1,0 +1,19 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Content-Type": "application\/json",
+        "Content-Length": "415",
+        "Connection": "keep-alive",
+        "Date": "Tue, 22 Sep 2026 07:09:06 GMT",
+        "X-Request-Id": "96b888c0-e59d-4d3e-93ff-36c17331c454",
+        "X-Ratelimit-Limit": "1000",
+        "X-Ratelimit-Remaining": "981",
+        "X-Ratelimit-Reset": "1790060983",
+        "X-Cache": "Miss from cloudfront",
+        "Via": "1.1 cdb27cf2afdd9e6a77395bc390dff594.cloudfront.net (CloudFront)",
+        "X-Amz-Cf-Pop": "IAH50-P5",
+        "X-Amz-Cf-Id": "x7XkdYdMFtokMMKBjlQgVKwspol_yMHVo6IbZraTUQEqtAQUURUzdw=="
+    },
+    "data": "{\"data\":{\"type\":\"rankedplayerstats\",\"attributes\":{\"rankedGameModeStats\":{}},\"relationships\":{\"player\":{\"data\":{\"type\":\"player\",\"id\":\"account.48cf00fd16c548ca9f6c6091d2c82d1c\"}},\"season\":{\"data\":{\"type\":\"season\",\"id\":\"division.bro.official.pc-2018-43\"}}}},\"links\":{\"self\":\"https:\/\/api.pubg.com\/shards\/steam\/players\/account.48cf00fd16c548ca9f6c6091d2c82d1c\/seasons\/division.bro.official.pc-2018-43\/ranked\"},\"meta\":{}}",
+    "context": []
+}

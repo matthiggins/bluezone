@@ -1,0 +1,19 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Content-Type": "application\/json",
+        "Content-Length": "1514",
+        "Connection": "keep-alive",
+        "Date": "Tue, 22 Sep 2026 07:09:07 GMT",
+        "X-Request-Id": "0b51cb07-886f-4b71-920a-cdd0c3705a5e",
+        "X-Ratelimit-Limit": "1000",
+        "X-Ratelimit-Remaining": "978",
+        "X-Ratelimit-Reset": "1790060983",
+        "X-Cache": "Miss from cloudfront",
+        "Via": "1.1 e9560116508023b1150b869325390bb6.cloudfront.net (CloudFront)",
+        "X-Amz-Cf-Pop": "IAH50-P5",
+        "X-Amz-Cf-Id": "ssRA3hbF_EFPFdntGqbnAJgUpH207GjDy0lkyD1Ix16xV2eWjAAqVg=="
+    },
+    "data": "{\"data\":{\"type\":\"survivalMasterySummary\",\"id\":\"account.48cf00fd16c548ca9f6c6091d2c82d1c\",\"attributes\":{\"totalMatchesPlayed\":72894,\"stats\":{\"airDropsCalled\":{\"total\":0,\"average\":0,\"careerBest\":0,\"lastMatchValue\":0},\"damageDealt\":{\"total\":0,\"average\":0,\"careerBest\":0,\"lastMatchValue\":0},\"damageTaken\":{\"total\":0,\"average\":0,\"careerBest\":0,\"lastMatchValue\":0},\"distanceBySwimming\":{\"total\":0,\"average\":0,\"careerBest\":0,\"lastMatchValue\":0},\"distanceByVehicle\":{\"total\":0,\"average\":0,\"careerBest\":0,\"lastMatchValue\":0},\"distanceOnFoot\":{\"total\":0,\"average\":0,\"careerBest\":0,\"lastMatchValue\":0},\"distanceTotal\":{\"total\":0,\"average\":0,\"careerBest\":0,\"lastMatchValue\":0},\"healed\":{\"total\":0,\"average\":0,\"careerBest\":0,\"lastMatchValue\":0},\"hotDropLandings\":{\"total\":0},\"enemyCratesLooted\":{\"total\":0,\"average\":0,\"careerBest\":0,\"lastMatchValue\":0},\"uniqueItemsLooted\":{\"total\":0,\"average\":0,\"careerBest\":0,\"lastMatchValue\":0},\"position\":{\"average\":0,\"careerBest\":0,\"lastMatchValue\":0},\"revived\":{\"total\":0,\"average\":0,\"careerBest\":0,\"lastMatchValue\":0},\"teammatesRevived\":{\"total\":0,\"average\":0,\"careerBest\":0,\"lastMatchValue\":0},\"timeSurvived\":{\"total\":0,\"average\":0,\"careerBest\":0,\"lastMatchValue\":1686},\"throwablesThrown\":{\"total\":0,\"average\":0,\"careerBest\":0,\"lastMatchValue\":0},\"top10\":{\"total\":0}},\"xp\":27691950,\"tier\":5,\"level\":500,\"lastMatchId\":\"01b62afe-b83a-4e40-9640-802b2ccd0df6\"}},\"links\":{\"self\":\"https:\/\/api.pubg.com\/shards\/steam\/players\/account.48cf00fd16c548ca9f6c6091d2c82d1c\/survival_mastery\"},\"meta\":{}}",
+    "context": []
+}

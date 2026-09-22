@@ -8,7 +8,7 @@ use Bluezone\Telemetry\Objects\Character;
 use Bluezone\Telemetry\Objects\Common;
 use Bluezone\Telemetry\Objects\Vehicle;
 
-class PlayerPosition extends TelemetryEvent
+final class PlayerPosition extends TelemetryEvent
 {
     public string $type = 'player position';
 
@@ -23,7 +23,7 @@ class PlayerPosition extends TelemetryEvent
     public static function make(array $data): self
     {
         // dd($data);
-        return new static(
+        return new self(
             character: Character::make($data['character']),
             vehicle: $data['vehicle'] ? Vehicle::make($data['vehicle']) : null,
             elapsedTime: $data['elapsedTime'],

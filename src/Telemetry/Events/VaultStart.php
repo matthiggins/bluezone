@@ -7,7 +7,7 @@ namespace Bluezone\Telemetry\Events;
 use Bluezone\Telemetry\Objects\Character;
 use Bluezone\Telemetry\Objects\Common;
 
-class VaultStart extends TelemetryEvent
+final class VaultStart extends TelemetryEvent
 {
     public string $type = 'vault start';
 
@@ -19,7 +19,7 @@ class VaultStart extends TelemetryEvent
 
     public static function make(array $data): self
     {
-        return new static(
+        return new self(
             character: Character::make($data['character']),
             isLedgeGrab: $data['isLedgeGrab'],
             common: Common::make($data['common']),

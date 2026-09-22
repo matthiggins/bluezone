@@ -9,7 +9,7 @@ use Illuminate\Support\Collection;
 use Saloon\Http\Connector;
 use Saloon\Http\Response;
 
-class Player extends PubgResponse
+final class Player extends PubgResponse
 {
     public function __construct(
         public readonly string $id,
@@ -31,7 +31,7 @@ class Player extends PubgResponse
     {
         $matches = collect($data['relationships']['matches']['data'])->map(fn ($match) => $match['id']);
 
-        return new static(
+        return new self(
             id: $data['id'],
             name: $data['attributes']['name'],
             shard: $data['attributes']['shardId'],

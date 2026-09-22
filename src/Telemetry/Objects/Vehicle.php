@@ -6,7 +6,7 @@ namespace Bluezone\Telemetry\Objects;
 
 use Bluezone\Telemetry\Concerns\AccessesJsonDictionaries;
 
-class Vehicle
+final class Vehicle
 {
     use AccessesJsonDictionaries;
 
@@ -32,7 +32,7 @@ class Vehicle
     public static function make(array $data): self
     {
         // dd($data)
-        return new static(
+        return new self(
             vehicleType: $data['vehicleType'],
             vehicleId: $data['vehicleId'],
             vehicleUniqueId: $data['vehicleUniqueId'] ?? null,

@@ -7,7 +7,7 @@ namespace Bluezone\Telemetry\Events;
 use Bluezone\Telemetry\Objects\Character;
 use Bluezone\Telemetry\Objects\Common;
 
-class CharacterCarry extends TelemetryEvent
+final class CharacterCarry extends TelemetryEvent
 {
     public string $type = 'player revive';
 
@@ -19,7 +19,7 @@ class CharacterCarry extends TelemetryEvent
 
     public static function make(array $data): self
     {
-        return new static(
+        return new self(
             character: Character::make($data['character']),
             carryState: $data['carryState'],
             common: Common::make($data['common']),

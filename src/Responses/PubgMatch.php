@@ -11,7 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Saloon\Http\Response;
 
-class PubgMatch extends PubgResponse
+final class PubgMatch extends PubgResponse
 {
     /**
      * @param  Collection<string, PlayerMatchStats>  $stats
@@ -62,7 +62,7 @@ class PubgMatch extends PubgResponse
             ->where('type', 'asset')
             ->first();
 
-        return new static(
+        return new self(
             id: $data['id'],
             shard: $data['attributes']['shardId'],
             assetId: $asset['id'],

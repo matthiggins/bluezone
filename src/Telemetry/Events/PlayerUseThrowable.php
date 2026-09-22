@@ -8,7 +8,7 @@ use Bluezone\Telemetry\Objects\Character;
 use Bluezone\Telemetry\Objects\Common;
 use Bluezone\Telemetry\Objects\Item;
 
-class PlayerUseThrowable extends TelemetryEvent
+final class PlayerUseThrowable extends TelemetryEvent
 {
     public string $type = 'player use throwable';
 
@@ -23,7 +23,7 @@ class PlayerUseThrowable extends TelemetryEvent
 
     public static function make(array $data): self
     {
-        return new static(
+        return new self(
             attackId: $data['attackId'],
             fireWeaponStackCount: $data['fireWeaponStackCount'],
             attacker: Character::make($data['attacker']),

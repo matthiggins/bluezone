@@ -7,7 +7,7 @@ namespace Bluezone\Telemetry\Events;
 use Bluezone\Telemetry\Objects\Common;
 use Bluezone\Telemetry\Objects\GameState;
 
-class GameStatePeriodic extends TelemetryEvent
+final class GameStatePeriodic extends TelemetryEvent
 {
     public string $type = 'game state periodic';
 
@@ -18,7 +18,7 @@ class GameStatePeriodic extends TelemetryEvent
 
     public static function make(array $data): self
     {
-        return new static(
+        return new self(
             gameState: GameState::make($data['gameState']),
             common: Common::make($data['common']),
         );

@@ -7,7 +7,7 @@ namespace Bluezone\Telemetry\Events;
 use Bluezone\Telemetry\Objects\Common;
 use Bluezone\Telemetry\Objects\ItemPackage;
 
-class CarePackageSpawn extends TelemetryEvent
+final class CarePackageSpawn extends TelemetryEvent
 {
     public string $type = 'care package spawn';
 
@@ -18,7 +18,7 @@ class CarePackageSpawn extends TelemetryEvent
 
     public static function make(array $data): self
     {
-        return new static(
+        return new self(
             itemPackage: ItemPackage::make($data['itemPackage']),
             common: Common::make($data['common']),
         );

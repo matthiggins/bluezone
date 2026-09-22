@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Bluezone\Telemetry\Objects;
 
-class Stats
+final class Stats
 {
     public function __construct(
         public readonly int $killCount,
@@ -17,6 +17,6 @@ class Stats
 
     public static function make(array $data): self
     {
-        return new static($data['killCount'], $data['distanceOnFoot'], $data['distanceOnSwim'], $data['distanceOnVehicle'], $data['distanceOnParachute'], $data['distanceOnFreefall']);
+        return new self($data['killCount'], $data['distanceOnFoot'], $data['distanceOnSwim'], $data['distanceOnVehicle'], $data['distanceOnParachute'], $data['distanceOnFreefall']);
     }
 }

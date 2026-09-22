@@ -6,7 +6,7 @@ namespace Bluezone\Telemetry\Objects;
 
 use Bluezone\Telemetry\Concerns\AccessesJsonDictionaries;
 
-class DamageInfo
+final class DamageInfo
 {
     use AccessesJsonDictionaries;
 
@@ -28,7 +28,7 @@ class DamageInfo
 
     public static function make(array $data): self
     {
-        return new static(
+        return new self(
             reason: $data['damageReason'],
             typeCategory: $data['damageTypeCategory'],
             causerName: $data['damageCauserName'],

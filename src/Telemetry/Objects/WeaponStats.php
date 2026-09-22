@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Bluezone\Telemetry\Objects;
 
-class WeaponStats
+final class WeaponStats
 {
     public function __construct(
         public readonly string $weapon,
@@ -19,7 +19,7 @@ class WeaponStats
 
     public static function make(array $data): self
     {
-        return new static(
+        return new self(
             weapon: $data['weapon'],
             damage: $data['damage'],
             dBNODamage: $data['dBNODamage'],

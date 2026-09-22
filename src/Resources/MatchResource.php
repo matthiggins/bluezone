@@ -20,7 +20,7 @@ class MatchResource extends Resource
         $shard = Shard::resolve($shard);
 
         try {
-            return $this->send(new MatchRequest(shard: $shard, matchId: $matchId));
+            return $this->send(new MatchRequest(shard: $shard, matchId: $matchId), PubgMatch::class);
         } catch (NotFoundException) {
             throw MatchNotFoundException::forId($shard, $matchId);
         }

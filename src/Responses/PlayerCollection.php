@@ -7,7 +7,7 @@ namespace Bluezone\Responses;
 use Illuminate\Support\Collection;
 use Saloon\Http\Response;
 
-class PlayerCollection extends PubgResponse
+final class PlayerCollection extends PubgResponse
 {
     public function __construct(
         public readonly Collection $players,
@@ -15,7 +15,7 @@ class PlayerCollection extends PubgResponse
 
     public static function make(Response $response): self
     {
-        return new static(
+        return new self(
             players: collect($response->json()['data'])->map(fn ($p) => Player::fromArray($p))
         );
     }

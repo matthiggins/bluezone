@@ -9,7 +9,7 @@ use Bluezone\Telemetry\Objects\Common;
 use Bluezone\Telemetry\Objects\Item;
 use Carbon\Carbon;
 
-class PlayerUseFlareGun extends TelemetryEvent
+final class PlayerUseFlareGun extends TelemetryEvent
 {
     public string $type = 'player use flare gun';
 
@@ -25,7 +25,7 @@ class PlayerUseFlareGun extends TelemetryEvent
 
     public static function make(array $data): self
     {
-        return new static(
+        return new self(
             attackId: $data['attackId'],
             fireWeaponStackCount: $data['fireWeaponStackCount'],
             attacker: Character::make($data['attacker']),

@@ -40,7 +40,7 @@ class PlayerResource extends Resource
         $shard = Shard::resolve($shard);
 
         try {
-            return $this->send(new PlayerAccountRequest(shard: $shard, accountId: $accountId));
+            return $this->send(new PlayerAccountRequest(shard: $shard, accountId: $accountId), Player::class);
         } catch (NotFoundException) {
             throw PlayerNotFoundException::forAccountId($shard, $accountId);
         }
@@ -84,7 +84,7 @@ class PlayerResource extends Resource
         $shard = Shard::resolve($shard);
 
         try {
-            return $this->send(new PlayerSearchRequest(shard: $shard, playerName: $playerName));
+            return $this->send(new PlayerSearchRequest(shard: $shard, playerName: $playerName), Player::class);
         } catch (NotFoundException) {
             throw PlayerNotFoundException::forName($shard, $playerName);
         }
@@ -98,7 +98,7 @@ class PlayerResource extends Resource
         $shard = Shard::resolve($shard);
 
         try {
-            return $this->send(new PlayerSearchManyRequest(shard: $shard, playerNames: $playerNames));
+            return $this->send(new PlayerSearchManyRequest(shard: $shard, playerNames: $playerNames), PlayerCollection::class);
         } catch (NotFoundException) {
             throw PlayerNotFoundException::forName($shard, implode(',', $playerNames));
         }
@@ -113,7 +113,7 @@ class PlayerResource extends Resource
             shard: Shard::resolve($shard),
             seasonId: $seasonId,
             accountId: $accountId,
-        ));
+        ), SeasonStats::class);
     }
 
     /**
@@ -126,7 +126,7 @@ class PlayerResource extends Resource
             seasonId: $seasonId,
             gameMode: GameMode::resolve($gameMode),
             accountIds: $accountIds,
-        ));
+        ), SeasonStatsCollection::class);
     }
 
     /**
@@ -138,7 +138,7 @@ class PlayerResource extends Resource
             shard: Shard::resolve($shard),
             seasonId: $seasonId,
             accountId: $accountId,
-        ));
+        ), RankedSeasonStats::class);
     }
 
     /**
@@ -170,7 +170,7 @@ class PlayerResource extends Resource
         return $this->send(new LifetimeStatsRequest(
             shard: Shard::resolve($shard),
             accountId: $accountId,
-        ));
+        ), LifetimeStats::class);
     }
 
     /**
@@ -182,7 +182,7 @@ class PlayerResource extends Resource
             shard: Shard::resolve($shard),
             gameMode: GameMode::resolve($gameMode),
             playerIds: $playerIds,
-        ));
+        ), LifetimeStatsCollection::class);
     }
 
     /**
@@ -193,7 +193,7 @@ class PlayerResource extends Resource
         return $this->send(new WeaponMasteryRequest(
             shard: Shard::resolve($shard),
             accountId: $accountId,
-        ));
+        ), WeaponMastery::class);
     }
 
     /**
@@ -204,6 +204,6 @@ class PlayerResource extends Resource
         return $this->send(new SurvivalMasteryRequest(
             shard: Shard::resolve($shard),
             accountId: $accountId,
-        ));
+        ), SurvivalMastery::class);
     }
 }

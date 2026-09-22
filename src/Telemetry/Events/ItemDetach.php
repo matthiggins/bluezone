@@ -8,7 +8,7 @@ use Bluezone\Telemetry\Objects\Character;
 use Bluezone\Telemetry\Objects\Common;
 use Bluezone\Telemetry\Objects\Item;
 
-class ItemDetach extends TelemetryEvent
+final class ItemDetach extends TelemetryEvent
 {
     public string $type = 'item detach';
 
@@ -21,7 +21,7 @@ class ItemDetach extends TelemetryEvent
 
     public static function make(array $data): self
     {
-        return new static(
+        return new self(
             character: Character::make($data['character']),
             parentItem: Item::make($data['parentItem']),
             childItem: Item::make($data['childItem']),

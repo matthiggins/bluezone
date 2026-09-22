@@ -7,7 +7,7 @@ namespace Bluezone\Telemetry\Events;
 use Bluezone\Telemetry\Objects\Character;
 use Bluezone\Telemetry\Objects\Common;
 
-class SwimEnd extends TelemetryEvent
+final class SwimEnd extends TelemetryEvent
 {
     public string $type = 'swim end';
 
@@ -20,7 +20,7 @@ class SwimEnd extends TelemetryEvent
 
     public static function make(array $data): self
     {
-        return new static(
+        return new self(
             character: Character::make($data['character']),
             swimDistance: $data['swimDistance'],
             maxSwimDepthOfWater: $data['maxSwimDepthOfWater'],

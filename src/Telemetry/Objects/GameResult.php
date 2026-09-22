@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Bluezone\Telemetry\Objects;
 
-class GameResult
+final class GameResult
 {
     public function __construct(
         public readonly int $rank,
@@ -16,7 +16,7 @@ class GameResult
 
     public static function make(array $data): self
     {
-        return new static(
+        return new self(
             rank: $data['rank'],
             gameResult: $data['gameResult'],
             teamId: $data['teamId'],

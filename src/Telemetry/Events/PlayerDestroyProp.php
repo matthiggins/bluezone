@@ -10,7 +10,7 @@ use Bluezone\Telemetry\Objects\Common;
 use Bluezone\Telemetry\Objects\Location;
 use Carbon\Carbon;
 
-class PlayerDestroyProp extends TelemetryEvent
+final class PlayerDestroyProp extends TelemetryEvent
 {
     use AccessesJsonDictionaries;
 
@@ -26,7 +26,7 @@ class PlayerDestroyProp extends TelemetryEvent
 
     public static function make(array $data): self
     {
-        return new static(
+        return new self(
             attacker: Character::make($data['attacker']),
             objectType: $data['objectType'],
             objectLocation: Location::make($data['objectLocation']),

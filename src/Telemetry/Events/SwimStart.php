@@ -7,7 +7,7 @@ namespace Bluezone\Telemetry\Events;
 use Bluezone\Telemetry\Objects\Character;
 use Bluezone\Telemetry\Objects\Common;
 
-class SwimStart extends TelemetryEvent
+final class SwimStart extends TelemetryEvent
 {
     public string $type = 'swim start';
 
@@ -18,7 +18,7 @@ class SwimStart extends TelemetryEvent
 
     public static function make(array $data): self
     {
-        return new static(
+        return new self(
             character: Character::make($data['character']),
             common: Common::make($data['common']),
         );

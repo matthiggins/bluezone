@@ -8,7 +8,7 @@ use Bluezone\Telemetry\Objects\Character;
 use Bluezone\Telemetry\Objects\Common;
 use Bluezone\Telemetry\Objects\Item;
 
-class ItemUse extends TelemetryEvent
+final class ItemUse extends TelemetryEvent
 {
     public string $type = 'item use';
 
@@ -20,7 +20,7 @@ class ItemUse extends TelemetryEvent
 
     public static function make(array $data): self
     {
-        return new static(
+        return new self(
             character: Character::make($data['character']),
             item: Item::make($data['item']),
             common: Common::make($data['common']),

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Bluezone\Telemetry\Objects;
 
-class GameState
+final class GameState
 {
     public function __construct(
         public readonly int $elapsedTime,
@@ -25,7 +25,7 @@ class GameState
 
     public static function make(array $data): self
     {
-        return new static(
+        return new self(
             elapsedTime: $data['elapsedTime'],
             numAliveTeams: $data['numAliveTeams'],
             numJoinPlayers: $data['numJoinPlayers'],

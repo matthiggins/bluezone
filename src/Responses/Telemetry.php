@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Bluezone\Responses;
 
+use Bluezone\Exceptions\InvalidTelemetryException;
 use Bluezone\Telemetry\Events\EventFactory;
 use Bluezone\Telemetry\Events\TelemetryEvent;
 use Bluezone\Telemetry\MatchTelemetry;
 use Bluezone\Telemetry\PlayerTelemetry;
 use Illuminate\Support\Collection;
+use JsonException;
 use Saloon\Http\Response;
 
 class Telemetry
@@ -16,6 +18,7 @@ class Telemetry
     /** @var array<string, int> */
     private array $unmapped = [];
 
+    /** @var Collection<int, TelemetryEvent>|null */
     private ?Collection $events = null;
 
     public function __construct(
@@ -29,7 +32,17 @@ class Telemetry
 
     public static function fromJson(string $json): self
     {
-        return new self(collect(json_decode($json, true, flags: JSON_THROW_ON_ERROR)));
+        try {
+            $decoded = json_decode($json, true, flags: JSON_THROW_ON_ERROR);
+        } catch (JsonException $e) {
+            throw InvalidTelemetryException::notDecodable($e->getMessage());
+        }
+
+        if (! is_array($decoded)) {
+            throw InvalidTelemetryException::notDecodable('the body did not decode to a list of events');
+        }
+
+        return new self(collect($decoded));
     }
 
     /**
@@ -39,18 +52,22 @@ class Telemetry
      */
     public function events(): Collection
     {
-        return $this->events ??= $this->telemetry
+        $this->events ??= $this->telemetry
             ->map(function (array $raw): ?TelemetryEvent {
                 $event = EventFactory::make($raw);
 
                 if ($event === null) {
-                    $this->unmapped[$raw['_T'] ?? '?'] = ($this->unmapped[$raw['_T'] ?? '?'] ?? 0) + 1;
+                    $type = $raw['_T'] ?? '?';
+                    $this->unmapped[$type] = ($this->unmapped[$type] ?? 0) + 1;
                 }
 
                 return $event;
             })
             ->filter()
             ->values();
+
+        // A copy, so a caller popping or pushing cannot corrupt the memoised events.
+        return $this->events->collect();
     }
 
     /**

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Bluezone\Bluezone;
+use Bluezone\Exceptions\InvalidTelemetryException;
 use Bluezone\Exceptions\InvalidTelemetryUrlException;
 use Bluezone\Requests\TelemetryDownloadRequest;
 use Bluezone\Responses\Telemetry;
@@ -31,6 +32,12 @@ it('requests the path on the cdn without auth and asks for gzip', function () {
         ->and($pending->config()->get('decode_content'))->toBeFalse();
 });
 
+it('keeps a query string on the telemetry url', function () {
+    $request = new TelemetryDownloadRequest(TELEMETRY_URL.'?token=abc');
+
+    expect($request->resolveEndpoint())->toEndWith('-telemetry.json?token=abc');
+});
+
 it('downloads a stream and fetches a decoded telemetry dto', function () {
     $sample = file_get_contents(__DIR__.'/../Fixtures/telemetry-sample.json');
     MockClient::global([TelemetryDownloadRequest::class => MockResponse::make($sample)]);
@@ -44,4 +51,15 @@ it('downloads a stream and fetches a decoded telemetry dto', function () {
         ->and($telemetry->match()->start())->toBeInstanceOf(MatchStart::class);
 
     MockClient::destroyGlobal();
+});
+
+it('throws a bluezone exception when the telemetry body is not json', function () {
+    MockClient::global([TelemetryDownloadRequest::class => MockResponse::make('')]);
+
+    try {
+        expect(fn () => (new Bluezone('key'))->telemetry()->fetch(TELEMETRY_URL))
+            ->toThrow(InvalidTelemetryException::class);
+    } finally {
+        MockClient::destroyGlobal();
+    }
 });

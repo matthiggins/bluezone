@@ -7,7 +7,7 @@ namespace Bluezone\Telemetry\Events;
 use Bluezone\Telemetry\Objects\Character;
 use Bluezone\Telemetry\Objects\Common;
 
-class WeaponFireCount extends TelemetryEvent
+final class WeaponFireCount extends TelemetryEvent
 {
     public string $type = 'weapon fire count';
 
@@ -20,7 +20,7 @@ class WeaponFireCount extends TelemetryEvent
 
     public static function make(array $data): self
     {
-        return new static(
+        return new self(
             character: Character::make($data['character']),
             weaponId: $data['weaponId'],
             fireCount: $data['fireCount'],

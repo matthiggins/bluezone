@@ -6,7 +6,7 @@ namespace Bluezone\Responses;
 
 use Saloon\Http\Response;
 
-class Clan extends PubgResponse
+final class Clan extends PubgResponse
 {
     public function __construct(
         public readonly string $id,
@@ -27,7 +27,7 @@ class Clan extends PubgResponse
 
     public static function fromArray(string $shard, array $data): self
     {
-        return new static(
+        return new self(
             id: $data['id'],
             shard: $shard,
             name: $data['attributes']['clanName'],

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Bluezone\Telemetry\Objects;
 
-class Common
+final class Common
 {
     public string $name;
 
@@ -25,7 +25,7 @@ class Common
 
     public static function make(array $data): self
     {
-        return new static($data['isGame']);
+        return new self($data['isGame']);
     }
 
     public function phaseName(): string

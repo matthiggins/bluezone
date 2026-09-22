@@ -8,7 +8,7 @@ use Bluezone\Telemetry\Objects\Character;
 use Bluezone\Telemetry\Objects\Common;
 use Bluezone\Telemetry\Objects\Item;
 
-class ItemPickupFromCustomPackage extends TelemetryEvent
+final class ItemPickupFromCustomPackage extends TelemetryEvent
 {
     public string $type = 'item pickup from custom package';
 
@@ -20,7 +20,7 @@ class ItemPickupFromCustomPackage extends TelemetryEvent
 
     public static function make(array $data): self
     {
-        return new static(
+        return new self(
             character: Character::make($data['character']),
             item: Item::make($data['item']),
             common: Common::make($data['common']),

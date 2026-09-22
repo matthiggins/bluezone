@@ -7,7 +7,7 @@ namespace Bluezone\Telemetry\Events;
 use Bluezone\Telemetry\Objects\Common;
 use Carbon\Carbon;
 
-class PhaseChange extends TelemetryEvent
+final class PhaseChange extends TelemetryEvent
 {
     public string $type = 'phase change';
 
@@ -24,7 +24,7 @@ class PhaseChange extends TelemetryEvent
 
     public static function make(array $data): self
     {
-        return new static(
+        return new self(
             phase: $data['phase'],
             elapsedTime: isset($data['elapsedTime']) ? (float) $data['elapsedTime'] : 0,
             common: Common::make($data['common']),

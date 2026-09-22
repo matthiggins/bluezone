@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Bluezone\Responses;
 
-class PlayerMatchStats extends PubgResponse
+final class PlayerMatchStats extends PubgResponse
 {
     public function __construct(
         public readonly int $assists,
@@ -35,7 +35,7 @@ class PlayerMatchStats extends PubgResponse
     /** @param array<string, mixed> $data */
     public static function fromArray(array $data): self
     {
-        return new static(
+        return new self(
             assists: (int) ($data['assists'] ?? 0),
             boosts: (int) ($data['boosts'] ?? 0),
             damageDealt: (float) ($data['damageDealt'] ?? 0),

@@ -8,7 +8,7 @@ use Bluezone\Telemetry\Objects\Character;
 use Bluezone\Telemetry\Objects\Common;
 use Bluezone\Telemetry\Objects\Location;
 
-class ObjectInteraction extends TelemetryEvent
+final class ObjectInteraction extends TelemetryEvent
 {
     public string $type = 'object interaction';
 
@@ -21,7 +21,7 @@ class ObjectInteraction extends TelemetryEvent
 
     public static function make(array $data): self
     {
-        return new static(
+        return new self(
             character: Character::make($data['character']),
             objectType: $data['objectType'],
             objectLocation: isset($data['objectLocation']) ? Location::make($data['objectLocation']) : null,

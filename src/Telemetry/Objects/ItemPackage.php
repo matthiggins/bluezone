@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Bluezone\Telemetry\Objects;
 
-class ItemPackage
+final class ItemPackage
 {
     public function __construct(
         public readonly string $itemPackageId,
@@ -14,7 +14,7 @@ class ItemPackage
 
     public static function make(array $data): self
     {
-        return new static(
+        return new self(
             itemPackageId: $data['itemPackageId'],
             location: Location::make($data['location']),
             items: array_map(fn ($item) => Item::make($item), $data['items']),

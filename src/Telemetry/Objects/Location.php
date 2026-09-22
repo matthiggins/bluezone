@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Bluezone\Telemetry\Objects;
 
-class Location
+final class Location
 {
     public function __construct(
         public readonly float $x,
@@ -14,6 +14,6 @@ class Location
 
     public static function make(array $data): self
     {
-        return new static($data['x'], $data['y'], $data['z']);
+        return new self($data['x'], $data['y'], $data['z']);
     }
 }

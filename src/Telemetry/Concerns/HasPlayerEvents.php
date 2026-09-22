@@ -58,7 +58,7 @@ trait HasPlayerEvents
     {
         return $this->telemetry->filter(function ($event) {
             return ($event instanceof PlayerAttack) &&
-                ($event->attacker && $event->attacker->accountId == $this->accountId);
+                $event->attacker->accountId == $this->accountId;
         })->values();
     }
 
@@ -88,7 +88,7 @@ trait HasPlayerEvents
     {
         return $this->telemetry->filter(function ($event) {
             return ($event instanceof PlayerMakeGroggy) &&
-                ($event->victim && $event->victim->accountId == $this->accountId);
+                $event->victim->accountId == $this->accountId;
         })->values();
     }
 
@@ -230,7 +230,7 @@ trait HasPlayerEvents
     {
         return $this->telemetry->filter(function ($event) {
             return ($event instanceof PlayerMakeGroggy) &&
-                ($event->attacker && $event->attacker->accountId == $this->accountId);
+                $event->attacker->accountId == $this->accountId;
         })->values();
     }
 
@@ -251,7 +251,7 @@ trait HasPlayerEvents
     {
         return $this->telemetry->filter(function ($event) {
             return ($event instanceof ObjectDestroy) &&
-                ($event->character && $event->character->accountId == $this->accountId);
+                $event->character->accountId == $this->accountId;
         })->values();
     }
 
@@ -262,7 +262,7 @@ trait HasPlayerEvents
     {
         return $this->telemetry->filter(function ($event) {
             return ($event instanceof ObjectInteraction) &&
-                ($event->character && $event->character->accountId == $this->accountId);
+                $event->character->accountId == $this->accountId;
         })->values();
     }
 

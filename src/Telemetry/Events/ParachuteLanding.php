@@ -7,7 +7,7 @@ namespace Bluezone\Telemetry\Events;
 use Bluezone\Telemetry\Objects\Character;
 use Bluezone\Telemetry\Objects\Common;
 
-class ParachuteLanding extends TelemetryEvent
+final class ParachuteLanding extends TelemetryEvent
 {
     public string $type = 'parachute landing';
 
@@ -19,7 +19,7 @@ class ParachuteLanding extends TelemetryEvent
 
     public static function make(array $data): self
     {
-        return new static(
+        return new self(
             character: Character::make($data['character']),
             distance: $data['distance'],
             common: Common::make($data['common']),

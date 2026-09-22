@@ -9,7 +9,7 @@ use Bluezone\Telemetry\Objects\CharacterWrapper;
 use Bluezone\Telemetry\Objects\Common;
 use Bluezone\Telemetry\Objects\GameResultOnFinished;
 
-class MatchEnd extends TelemetryEvent
+final class MatchEnd extends TelemetryEvent
 {
     public string $type = 'match end';
 
@@ -22,7 +22,7 @@ class MatchEnd extends TelemetryEvent
 
     public static function make(array $data): self
     {
-        return new static(
+        return new self(
             characters: array_map(fn ($character) => CharacterWrapper::make($character), $data['characters']),
             gameResultOnFinished: GameResultOnFinished::make($data['gameResultOnFinished']),
             allWeaponStats: array_map(fn ($weaponStats) => AllWeaponStats::make($weaponStats), $data['allWeaponStats']),

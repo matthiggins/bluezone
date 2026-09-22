@@ -8,7 +8,7 @@ use Bluezone\Telemetry\Objects\Character;
 use Bluezone\Telemetry\Objects\Common;
 use Bluezone\Telemetry\Objects\Vehicle;
 
-class VehicleLeave extends TelemetryEvent
+final class VehicleLeave extends TelemetryEvent
 {
     public string $type = 'vehicle leave';
 
@@ -24,7 +24,7 @@ class VehicleLeave extends TelemetryEvent
 
     public static function make(array $data): self
     {
-        return new static(
+        return new self(
             character: Character::make($data['character']),
             vehicle: Vehicle::make($data['vehicle']),
             rideDistance: $data['rideDistance'],

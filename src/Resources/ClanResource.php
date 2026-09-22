@@ -18,6 +18,6 @@ class ClanResource extends Resource
         return $this->send(new ClanRequest(
             shard: Shard::resolve($shard),
             clanId: $clanId,
-        ));
+        ), Clan::class);
     }
 }

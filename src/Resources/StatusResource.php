@@ -5,17 +5,15 @@ declare(strict_types=1);
 namespace Bluezone\Resources;
 
 use Bluezone\Requests\StatusRequest;
-use Bluezone\Responses\PubgResponse;
+use Bluezone\Responses\Status;
 
 class StatusResource extends Resource
 {
     /**
-     * Get a clan
-     *
-     * @param  string  $clanId
+     * Get the current status of the PUBG API
      */
-    public function get(): PubgResponse
+    public function get(): Status
     {
-        return $this->send(new StatusRequest);
+        return $this->send(new StatusRequest, Status::class);
     }
 }

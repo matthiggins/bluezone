@@ -7,7 +7,7 @@ namespace Bluezone\Telemetry\Events;
 use Bluezone\Telemetry\Objects\Character;
 use Bluezone\Telemetry\Objects\Common;
 
-class PlayerCreate extends TelemetryEvent
+final class PlayerCreate extends TelemetryEvent
 {
     public string $type = 'player create';
 
@@ -18,7 +18,7 @@ class PlayerCreate extends TelemetryEvent
 
     public static function make(array $data): self
     {
-        return new static(
+        return new self(
             character: Character::make($data['character']),
             common: Common::make($data['common']),
         );

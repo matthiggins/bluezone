@@ -30,15 +30,3 @@ function apiFixture(string $name): Fixture
 {
     return MockResponse::fixture($name);
 }
-
-/** A real connector for recording fixtures. Skips the test when no key is set. */
-function recordingBluezone(): Bluezone
-{
-    $key = getenv('PUBG_API_KEY');
-
-    if ($key === false || $key === '') {
-        test()->markTestSkipped('PUBG_API_KEY not set; cannot record fixtures.');
-    }
-
-    return new Bluezone(apiKey: $key, requestsPerMinute: 1000);
-}

@@ -20,7 +20,7 @@ final class SpecialZoneInCharacters extends TelemetryEvent
     ) {}
 
     /** @param  array<string, mixed>  $data */
-    public static function make(array $data): static
+    public static function make(array $data): self
     {
         return new self(
             zoneInfo: SpecialZone::make($data['zoneInfo']),

@@ -9,7 +9,7 @@ use Bluezone\Telemetry\Objects\Common;
 use Bluezone\Telemetry\Objects\DamageInfo;
 use Bluezone\Telemetry\Objects\GameResult;
 
-class PlayerKillV2 extends TelemetryEvent
+final class PlayerKillV2 extends TelemetryEvent
 {
     public string $type = 'player kill';
 
@@ -34,7 +34,7 @@ class PlayerKillV2 extends TelemetryEvent
 
     public static function make(array $data): self
     {
-        return new static(
+        return new self(
             attackId: $data['attackId'],
             dBNOId: $data['dBNOId'],
             victimGameResult: GameResult::make($data['victimGameResult']),

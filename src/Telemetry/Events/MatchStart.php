@@ -7,7 +7,7 @@ namespace Bluezone\Telemetry\Events;
 use Bluezone\Telemetry\Objects\CharacterWrapper;
 use Bluezone\Telemetry\Objects\Common;
 
-class MatchStart extends TelemetryEvent
+final class MatchStart extends TelemetryEvent
 {
     public string $type = 'match start';
 
@@ -25,7 +25,7 @@ class MatchStart extends TelemetryEvent
 
     public static function make(array $data): self
     {
-        return new static(
+        return new self(
             mapName: $data['mapName'],
             weatherId: $data['weatherId'],
             characters: array_map(fn ($character) => CharacterWrapper::make($character), $data['characters']),

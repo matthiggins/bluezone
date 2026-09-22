@@ -6,7 +6,7 @@ namespace Bluezone\Telemetry\Events;
 
 use Bluezone\Telemetry\Objects\Common;
 
-class MatchDefinition extends TelemetryEvent
+final class MatchDefinition extends TelemetryEvent
 {
     public string $type = 'match definition';
 
@@ -19,7 +19,7 @@ class MatchDefinition extends TelemetryEvent
 
     public static function make(array $data): self
     {
-        return new static(
+        return new self(
             matchId: $data['MatchId'],
             pingQuality: $data['PingQuality'] ?? null,
             seasonState: $data['SeasonState'] ?? null,

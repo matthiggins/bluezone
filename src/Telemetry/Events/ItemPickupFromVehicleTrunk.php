@@ -9,7 +9,7 @@ use Bluezone\Telemetry\Objects\Common;
 use Bluezone\Telemetry\Objects\Item;
 use Bluezone\Telemetry\Objects\Vehicle;
 
-class ItemPickupFromVehicleTrunk extends TelemetryEvent
+final class ItemPickupFromVehicleTrunk extends TelemetryEvent
 {
     public string $type = 'item pickup from vehicle trunk';
 
@@ -22,7 +22,7 @@ class ItemPickupFromVehicleTrunk extends TelemetryEvent
 
     public static function make(array $data): self
     {
-        return new static(
+        return new self(
             character: Character::make($data['character']),
             vehicle: Vehicle::make($data['vehicle']),
             item: Item::make($data['item']),

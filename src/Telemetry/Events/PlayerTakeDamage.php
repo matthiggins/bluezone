@@ -8,7 +8,7 @@ use Bluezone\Telemetry\Concerns\AccessesJsonDictionaries;
 use Bluezone\Telemetry\Objects\Character;
 use Bluezone\Telemetry\Objects\Common;
 
-class PlayerTakeDamage extends TelemetryEvent
+final class PlayerTakeDamage extends TelemetryEvent
 {
     use AccessesJsonDictionaries;
 
@@ -32,7 +32,7 @@ class PlayerTakeDamage extends TelemetryEvent
 
     public static function make(array $data): self
     {
-        return new static(
+        return new self(
             attackId: $data['attackId'],
             attacker: $data['attacker'] ? Character::make($data['attacker']) : null,
             victim: Character::make($data['victim']),

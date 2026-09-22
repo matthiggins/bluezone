@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Bluezone\Telemetry\Objects;
 
-class Character
+final class Character
 {
     public function __construct(
         public readonly string $name,
@@ -20,7 +20,7 @@ class Character
 
     public static function make(array $data): self
     {
-        return new static(
+        return new self(
             name: $data['name'],
             teamId: $data['teamId'],
             health: $data['health'],

@@ -19,12 +19,13 @@ final class TelemetryDownloadRequest extends Request
     {
         $host = parse_url($url, PHP_URL_HOST);
         $path = parse_url($url, PHP_URL_PATH);
+        $query = parse_url($url, PHP_URL_QUERY);
 
         if ($host !== 'telemetry-cdn.pubg.com' || ! is_string($path) || $path === '') {
             throw InvalidTelemetryUrlException::forUrl($url);
         }
 
-        $this->path = $path;
+        $this->path = is_string($query) && $query !== '' ? $path.'?'.$query : $path;
     }
 
     public function resolveEndpoint(): string

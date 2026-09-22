@@ -18,7 +18,12 @@ class Telemetry
 
     public static function make(Response $response): self
     {
-        return new static(collect($response->json()));
+        return self::fromJson($response->body());
+    }
+
+    public static function fromJson(string $json): self
+    {
+        return new self(collect(json_decode($json, true, flags: JSON_THROW_ON_ERROR)));
     }
 
     /**

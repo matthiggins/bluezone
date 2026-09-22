@@ -9,6 +9,7 @@ use Bluezone\Resources\MatchResource;
 use Bluezone\Resources\PlayerResource;
 use Bluezone\Resources\SeasonResource;
 use Bluezone\Resources\StatusResource;
+use Bluezone\Resources\TelemetryResource;
 use Saloon\Contracts\Authenticator;
 use Saloon\Http\Auth\TokenAuthenticator;
 use Saloon\Http\Connector;
@@ -20,12 +21,8 @@ use Saloon\Traits\Plugins\AlwaysThrowOnErrors;
 use Saloon\Traits\Plugins\HasTimeout;
 
 /**
- * The PUBG API connector.
- *
- * Rate limiting is enforced client-side so a burst never reaches the API's own
- * limiter. The store defaults to memory, which is only correct for a single
- * process; pass a shared store (PredisStore, LaravelCacheStore, FileStore) in
- * any multi-process app.
+ * The PUBG API connector. Rate limiting is enforced client-side, and the default memory store is
+ * only correct for one process; pass a shared store (Predis, LaravelCache, File) in a multi-process app.
  */
 class Bluezone extends Connector
 {
@@ -97,5 +94,10 @@ class Bluezone extends Connector
     public function status(): StatusResource
     {
         return new StatusResource($this);
+    }
+
+    public function telemetry(): TelemetryResource
+    {
+        return new TelemetryResource(new TelemetryConnector);
     }
 }

@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Bluezone\Responses;
 
-use Bluezone\Requests\TelemetryRequest;
+use Bluezone\Resources\TelemetryResource;
 use Bluezone\Support\Dictionary;
+use Bluezone\TelemetryConnector;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Saloon\Http\Response;
@@ -83,9 +84,7 @@ class PubgMatch extends PubgResponse
      */
     public function getTelemetry(): Telemetry
     {
-        $response = (new TelemetryRequest($this->assetUrl))->send();
-
-        return $response->dto();
+        return (new TelemetryResource(new TelemetryConnector))->fetch($this->assetUrl);
     }
 
     /**

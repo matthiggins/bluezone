@@ -35,9 +35,10 @@ it('builds rosters with boolean won and participant ids', function () {
         ->and($winner->participantIds)->not->toBeEmpty()
         ->and($match->isCustomMatch)->toBeFalse()
         ->and($match->totalTeams())->toBe(52)
-        ->and($match->stats->first()->dBNOs)->toBeInt();
+        ->and($match->stats->first()->dBNOs)->toBe(4);
 
     $someone = $match->stats->first()->playerId;
     expect($match->rosterForPlayer($someone)?->participantIds)->toContain($match->stats->keys()->first())
+        ->and($match->teammatesOf($someone))->toHaveCount(1)
         ->and($match->teammatesOf($someone)->pluck('playerId'))->not->toContain($someone);
 });

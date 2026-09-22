@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Bluezone\Requests;
 
+use Bluezone\Enums\Shard;
 use Bluezone\Responses\Player;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -17,7 +18,7 @@ class PlayerSearchRequest extends Request
     protected Method $method = Method::GET;
 
     public function __construct(
-        protected string $shard,
+        protected Shard $shard,
         protected string $playerName,
     ) {}
 
@@ -26,7 +27,7 @@ class PlayerSearchRequest extends Request
      */
     public function resolveEndpoint(): string
     {
-        return 'shards/'.$this->shard.'/players?filter[playerNames]='.$this->playerName;
+        return 'shards/'.$this->shard->value.'/players?filter[playerNames]='.$this->playerName;
     }
 
     public function createDtoFromResponse(Response $response): mixed

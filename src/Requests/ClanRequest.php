@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Bluezone\Requests;
 
+use Bluezone\Enums\Shard;
 use Bluezone\Responses\Clan;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -17,19 +18,19 @@ class ClanRequest extends Request
     protected Method $method = Method::GET;
 
     public function __construct(
-        protected string $shard,
+        protected Shard $shard,
         protected string $clanId,
     ) {}
 
     public function resolveEndpoint(): string
     {
-        return 'shards/'.$this->shard.'/clans/'.$this->clanId;
+        return 'shards/'.$this->shard->value.'/clans/'.$this->clanId;
     }
 
     public function createDtoFromResponse(Response $response): mixed
     {
         return Clan::make(
-            shard: $this->shard,
+            shard: $this->shard->value,
             response: $response
         );
     }

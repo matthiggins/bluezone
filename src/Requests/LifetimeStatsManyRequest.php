@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Bluezone\Requests;
 
+use Bluezone\Enums\GameMode;
+use Bluezone\Enums\Shard;
 use Bluezone\Responses\LifetimeStatsCollection;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -17,14 +19,14 @@ class LifetimeStatsManyRequest extends Request
     protected Method $method = Method::GET;
 
     public function __construct(
-        protected string $shard,
-        protected string $gameMode,
+        protected Shard $shard,
+        protected GameMode $gameMode,
         protected array $playerIds,
     ) {}
 
     public function resolveEndpoint(): string
     {
-        return 'shards/'.$this->shard.'/seasons/lifetime/gameMode/'.$this->gameMode.'/players';
+        return 'shards/'.$this->shard->value.'/seasons/lifetime/gameMode/'.$this->gameMode->value.'/players';
     }
 
     protected function defaultQuery(): array

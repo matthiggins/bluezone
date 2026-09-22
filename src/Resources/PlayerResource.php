@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Bluezone\Resources;
 
+use Bluezone\Enums\GameMode;
+use Bluezone\Enums\Shard;
 use Bluezone\Requests\LifetimeStatsManyRequest;
 use Bluezone\Requests\LifetimeStatsRequest;
 use Bluezone\Requests\PlayerAccountRequest;
@@ -31,10 +33,10 @@ class PlayerResource extends Resource
     /**
      * Find a player by account id
      */
-    public function find(string $shard, string $accountId): Player
+    public function find(Shard|string $shard, string $accountId): Player
     {
         return $this->send(new PlayerAccountRequest(
-            shard: $shard,
+            shard: Shard::resolve($shard),
             accountId: $accountId,
         ));
     }
@@ -72,10 +74,10 @@ class PlayerResource extends Resource
     /**
      * Search for a player by name
      */
-    public function search(string $shard, string $playerName): Player
+    public function search(Shard|string $shard, string $playerName): Player
     {
         return $this->send(new PlayerSearchRequest(
-            shard: $shard,
+            shard: Shard::resolve($shard),
             playerName: $playerName,
         ));
     }
@@ -83,10 +85,10 @@ class PlayerResource extends Resource
     /**
      * Search for multiple players by name
      */
-    public function searchMany(string $shard, array $playerNames): PlayerCollection
+    public function searchMany(Shard|string $shard, array $playerNames): PlayerCollection
     {
         return $this->send(new PlayerSearchManyRequest(
-            shard: $shard,
+            shard: Shard::resolve($shard),
             playerNames: $playerNames,
         ));
     }
@@ -94,10 +96,10 @@ class PlayerResource extends Resource
     /**
      * Get season stats for a player
      */
-    public function seasonStats(string $shard, string $seasonId, string $accountId): SeasonStats
+    public function seasonStats(Shard|string $shard, string $seasonId, string $accountId): SeasonStats
     {
         return $this->send(new SeasonStatsRequest(
-            shard: $shard,
+            shard: Shard::resolve($shard),
             seasonId: $seasonId,
             accountId: $accountId,
         ));
@@ -106,12 +108,12 @@ class PlayerResource extends Resource
     /**
      * Get season stats for multiple players
      */
-    public function seasonStatsMany(string $shard, string $seasonId, string $gameMode, array $accountIds): SeasonStatsCollection
+    public function seasonStatsMany(Shard|string $shard, string $seasonId, GameMode|string $gameMode, array $accountIds): SeasonStatsCollection
     {
         return $this->send(new SeasonStatsManyRequest(
-            shard: $shard,
+            shard: Shard::resolve($shard),
             seasonId: $seasonId,
-            gameMode: $gameMode,
+            gameMode: GameMode::resolve($gameMode),
             accountIds: $accountIds,
         ));
     }
@@ -119,10 +121,10 @@ class PlayerResource extends Resource
     /**
      * Get ranked season stats for a player
      */
-    public function rankedSeasonStats(string $shard, string $seasonId, string $accountId): RankedSeasonStats
+    public function rankedSeasonStats(Shard|string $shard, string $seasonId, string $accountId): RankedSeasonStats
     {
         return $this->send(new RankedSeasonStatsRequest(
-            shard: $shard,
+            shard: Shard::resolve($shard),
             seasonId: $seasonId,
             accountId: $accountId,
         ));
@@ -134,8 +136,10 @@ class PlayerResource extends Resource
      * in a single request... because of that we are cycling
      * through the account ids and making a request for each
      */
-    public function rankedSeasonStatsMany(string $shard, string $seasonId, array $accountIds): RankedSeasonStatsCollection
+    public function rankedSeasonStatsMany(Shard|string $shard, string $seasonId, array $accountIds): RankedSeasonStatsCollection
     {
+        $shard = Shard::resolve($shard);
+
         $statsResponseCollection = collect($accountIds)->map(function ($id) use ($shard, $seasonId) {
             return $this->rankedSeasonStats(
                 shard: $shard,
@@ -150,10 +154,10 @@ class PlayerResource extends Resource
     /**
      * Get lifetime stats for a player
      */
-    public function lifetimeStats(string $shard, string $accountId): LifetimeStats
+    public function lifetimeStats(Shard|string $shard, string $accountId): LifetimeStats
     {
         return $this->send(new LifetimeStatsRequest(
-            shard: $shard,
+            shard: Shard::resolve($shard),
             accountId: $accountId,
         ));
     }
@@ -161,11 +165,11 @@ class PlayerResource extends Resource
     /**
      * Get lifetime stats for multiple players
      */
-    public function lifetimeStatsMany(string $shard, string $gameMode, array $playerIds): LifetimeStatsCollection
+    public function lifetimeStatsMany(Shard|string $shard, GameMode|string $gameMode, array $playerIds): LifetimeStatsCollection
     {
         return $this->send(new LifetimeStatsManyRequest(
-            shard: $shard,
-            gameMode: $gameMode,
+            shard: Shard::resolve($shard),
+            gameMode: GameMode::resolve($gameMode),
             playerIds: $playerIds,
         ));
     }
@@ -173,10 +177,10 @@ class PlayerResource extends Resource
     /**
      * Get all weapon mastery for a player
      */
-    public function weaponMastery(string $shard, string $accountId): WeaponMastery
+    public function weaponMastery(Shard|string $shard, string $accountId): WeaponMastery
     {
         return $this->send(new WeaponMasteryRequest(
-            shard: $shard,
+            shard: Shard::resolve($shard),
             accountId: $accountId,
         ));
     }
@@ -184,10 +188,10 @@ class PlayerResource extends Resource
     /**
      * Get all survival mastery for a player
      */
-    public function survivalMastery(string $shard, string $accountId): SurvivalMastery
+    public function survivalMastery(Shard|string $shard, string $accountId): SurvivalMastery
     {
         return $this->send(new SurvivalMasteryRequest(
-            shard: $shard,
+            shard: Shard::resolve($shard),
             accountId: $accountId,
         ));
     }

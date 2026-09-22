@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Bluezone\Requests;
 
+use Bluezone\Enums\Shard;
 use Bluezone\Responses\SurvivalMastery;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -17,13 +18,13 @@ class SurvivalMasteryRequest extends Request
     protected Method $method = Method::GET;
 
     public function __construct(
-        protected string $shard,
+        protected Shard $shard,
         protected string $accountId,
     ) {}
 
     public function resolveEndpoint(): string
     {
-        return 'shards/'.$this->shard.'/players/'.$this->accountId.'/survival_mastery';
+        return 'shards/'.$this->shard->value.'/players/'.$this->accountId.'/survival_mastery';
     }
 
     public function createDtoFromResponse(Response $response): mixed

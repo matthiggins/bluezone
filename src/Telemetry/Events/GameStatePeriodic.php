@@ -12,10 +12,9 @@ class GameStatePeriodic extends TelemetryEvent
     public string $type = 'game state periodic';
 
     public function __construct(
-        readonly public GameState $gameState,
-        readonly public Common $common,
-    ) {
-    }
+        public readonly GameState $gameState,
+        public readonly Common $common,
+    ) {}
 
     public static function make(array $data): self
     {

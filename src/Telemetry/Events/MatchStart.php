@@ -12,17 +12,16 @@ class MatchStart extends TelemetryEvent
     public string $type = 'match start';
 
     public function __construct(
-        readonly public string $mapName,
-        readonly public string $weatherId,
-        readonly public array $characters,
-        readonly public string $cameraViewBehaviour,
-        readonly public int $teamSize,
-        readonly public bool $isCustomGame,
-        readonly public bool $isEventMode,
-        readonly public string $blueZoneCustomOptions,
-        readonly public Common $common,
-    ) {
-    }
+        public readonly string $mapName,
+        public readonly string $weatherId,
+        public readonly array $characters,
+        public readonly string $cameraViewBehaviour,
+        public readonly int $teamSize,
+        public readonly bool $isCustomGame,
+        public readonly bool $isEventMode,
+        public readonly string $blueZoneCustomOptions,
+        public readonly Common $common,
+    ) {}
 
     public static function make(array $data): self
     {

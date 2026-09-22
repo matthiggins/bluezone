@@ -11,7 +11,7 @@ class EventFactory
      */
     public static function make(array $data): TelemetryEvent|array
     {
-        switch($data['_T']) {
+        switch ($data['_T']) {
             case 'LogArmorDestroy':
                 return ArmorDestroy::make($data)->setDate($data['_D']);
             case 'LogCarePackageLand':

@@ -12,10 +12,9 @@ class CarePackageSpawn extends TelemetryEvent
     public string $type = 'care package spawn';
 
     public function __construct(
-        readonly public ItemPackage $itemPackage,
-        readonly public Common $common,
-    ) {
-    }
+        public readonly ItemPackage $itemPackage,
+        public readonly Common $common,
+    ) {}
 
     public static function make(array $data): self
     {

@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Bluezone\Requests;
 
 use Bluezone\Responses\Status;
-use Saloon\Contracts\Response;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
+use Saloon\Http\Response;
 use Saloon\Traits\Request\HasConnector;
 
 class StatusRequest extends Request
@@ -16,8 +16,7 @@ class StatusRequest extends Request
 
     protected Method $method = Method::GET;
 
-    public function __construct() {
-    }
+    public function __construct() {}
 
     public function resolveEndpoint(): string
     {

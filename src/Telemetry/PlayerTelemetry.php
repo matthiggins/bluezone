@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bluezone\Telemetry;
 
 use Bluezone\Telemetry\Concerns\HasEnvironmentInteractionEvents;
@@ -10,14 +12,13 @@ use Illuminate\Support\Collection;
 
 class PlayerTelemetry
 {
+    use HasEnvironmentInteractionEvents;
     use HasPlayerEvents;
     use HasPlayerInteractionEvents;
-    use HasEnvironmentInteractionEvents;
     use HasWeaponEvents;
 
     public function __construct(
         protected string $accountId,
         protected Collection $telemetry,
-    ) {
-    }
+    ) {}
 }

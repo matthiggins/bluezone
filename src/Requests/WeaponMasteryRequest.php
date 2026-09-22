@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Bluezone\Requests;
 
 use Bluezone\Responses\WeaponMastery;
-use Saloon\Contracts\Response;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
+use Saloon\Http\Response;
 use Saloon\Traits\Request\HasConnector;
 
 class WeaponMasteryRequest extends Request
@@ -19,8 +19,7 @@ class WeaponMasteryRequest extends Request
     public function __construct(
         protected string $shard,
         protected string $accountId,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bluezone\Telemetry;
 
 use Bluezone\Telemetry\Events\CarePackageLand;
@@ -15,8 +17,7 @@ class MatchTelemetry
 {
     public function __construct(
         protected Collection $telemetry,
-    ) {
-    }
+    ) {}
 
     /**
      * Get the match care package events

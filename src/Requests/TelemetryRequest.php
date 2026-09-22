@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Bluezone\Requests;
 
 use Bluezone\Responses\Telemetry;
-use Saloon\Contracts\Response;
 use Saloon\Enums\Method;
+use Saloon\Http\Response;
 use Saloon\Http\SoloRequest;
 
 class TelemetryRequest extends SoloRequest
@@ -15,8 +15,7 @@ class TelemetryRequest extends SoloRequest
 
     public function __construct(
         protected string $url,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

@@ -27,7 +27,7 @@ trait AccessesJsonDictionaries
             return '';
         }
         $json = $this->getJsonFromFile($path);
-        
+
         // if( ! $json[$key]) {
         //     throw new ItemNotFoundException("Item could not be found in {$path}", $key);
         // }

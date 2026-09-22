@@ -13,12 +13,11 @@ class ItemPickupFromCarePackage extends TelemetryEvent
     public string $type = 'item pickup from care package';
 
     public function __construct(
-        readonly public Character $character,
-        readonly public Item $item,
-        readonly public float $carePackageUniqueId,
-        readonly public Common $common,
-    ) {
-    }
+        public readonly Character $character,
+        public readonly Item $item,
+        public readonly float $carePackageUniqueId,
+        public readonly Common $common,
+    ) {}
 
     public static function make(array $data): self
     {

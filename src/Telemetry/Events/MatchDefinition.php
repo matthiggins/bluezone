@@ -11,12 +11,11 @@ class MatchDefinition extends TelemetryEvent
     public string $type = 'match definition';
 
     public function __construct(
-        readonly public string $matchId,
-        readonly public string|null $pingQuality,
-        readonly public string|null $seasonState,
-        readonly public Common $common,
-    ) {
-    }
+        public readonly string $matchId,
+        public readonly ?string $pingQuality,
+        public readonly ?string $seasonState,
+        public readonly Common $common,
+    ) {}
 
     public static function make(array $data): self
     {

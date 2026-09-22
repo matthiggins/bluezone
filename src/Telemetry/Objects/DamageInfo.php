@@ -15,12 +15,12 @@ class DamageInfo
     public string $damageCategoryName;
 
     public function __construct(
-        readonly public string $reason,
-        readonly public string $typeCategory,
-        readonly public string $causerName,
-        readonly public array $additionalInfo,
-        readonly public float $distance,
-        readonly public bool|null $isThroughPentrableWall,
+        public readonly string $reason,
+        public readonly string $typeCategory,
+        public readonly string $causerName,
+        public readonly array $additionalInfo,
+        public readonly float $distance,
+        public readonly ?bool $isThroughPentrableWall,
     ) {
         $this->causer = $this->getValueFromJsonFile('telemetry/damageCauserName.json', $this->causerName);
         $this->damageCategoryName = $this->getValueFromJsonFile('telemetry/damageTypeCategory.json', $this->typeCategory);

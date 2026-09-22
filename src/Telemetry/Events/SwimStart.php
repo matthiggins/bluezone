@@ -12,10 +12,9 @@ class SwimStart extends TelemetryEvent
     public string $type = 'swim start';
 
     public function __construct(
-        readonly public Character $character,
-        readonly public Common $common,
-    ) {
-    }
+        public readonly Character $character,
+        public readonly Common $common,
+    ) {}
 
     public static function make(array $data): self
     {

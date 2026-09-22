@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bluezone\Resources;
 
 use Bluezone\Exceptions\MatchNotFoundException;
@@ -19,7 +21,7 @@ class MatchResource extends Resource
                 shard: $shard,
                 matchId: $matchId,
             ));
-        } catch(NotFoundException $e) {
+        } catch (NotFoundException $e) {
             throw new MatchNotFoundException(
                 message: 'This match is not available in the PUBG API.',
                 matchId: $matchId

@@ -7,22 +7,21 @@ namespace Bluezone\Telemetry\Objects;
 class GameState
 {
     public function __construct(
-        readonly public int $elapsedTime,
-        readonly public int $numAliveTeams,
-        readonly public int $numJoinPlayers,
-        readonly public int $numStartPlayers,
-        readonly public int $numAlivePlayers,
-        readonly public Location|null $safeZonePosition,
-        readonly public float|null $safeZoneRadius,
-        readonly public Location $poisonGasWarningPosition,
-        readonly public float $poisonGasWarningRadius,
-        readonly public Location $redZonePosition,
-        readonly public float $redZoneRadius,
-        readonly public Location $blackZonePosition,
-        readonly public float $blackZoneRadius,
+        public readonly int $elapsedTime,
+        public readonly int $numAliveTeams,
+        public readonly int $numJoinPlayers,
+        public readonly int $numStartPlayers,
+        public readonly int $numAlivePlayers,
+        public readonly ?Location $safeZonePosition,
+        public readonly ?float $safeZoneRadius,
+        public readonly Location $poisonGasWarningPosition,
+        public readonly float $poisonGasWarningRadius,
+        public readonly Location $redZonePosition,
+        public readonly float $redZoneRadius,
+        public readonly Location $blackZonePosition,
+        public readonly float $blackZoneRadius,
 
-    ) {
-    }
+    ) {}
 
     public static function make(array $data): self
     {

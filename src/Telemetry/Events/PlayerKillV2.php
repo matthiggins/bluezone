@@ -14,24 +14,23 @@ class PlayerKillV2 extends TelemetryEvent
     public string $type = 'player kill';
 
     public function __construct(
-        readonly public int $attackId,
-        readonly public int $dBNOId,
-        readonly public GameResult $victimGameResult,
-        readonly public Character $victim,
-        readonly public string $victimWeapon,
-        readonly public array $victimWeaponAdditionalInfo,
-        readonly public Character|null $dBNOMaker,
-        readonly public DamageInfo|null $dBNODamageInfo,
-        readonly public Character|null $finisher,
-        readonly public DamageInfo $finishDamageInfo,
-        readonly public Character|null $killer,
-        readonly public DamageInfo $killerDamageInfo,
-        readonly public array $assists_AccountId,
-        readonly public array $teamKillers_AccountId,
-        readonly public bool $isSuicide,
-        readonly public Common $common,
-    ) {
-    }
+        public readonly int $attackId,
+        public readonly int $dBNOId,
+        public readonly GameResult $victimGameResult,
+        public readonly Character $victim,
+        public readonly string $victimWeapon,
+        public readonly array $victimWeaponAdditionalInfo,
+        public readonly ?Character $dBNOMaker,
+        public readonly ?DamageInfo $dBNODamageInfo,
+        public readonly ?Character $finisher,
+        public readonly DamageInfo $finishDamageInfo,
+        public readonly ?Character $killer,
+        public readonly DamageInfo $killerDamageInfo,
+        public readonly array $assists_AccountId,
+        public readonly array $teamKillers_AccountId,
+        public readonly bool $isSuicide,
+        public readonly Common $common,
+    ) {}
 
     public static function make(array $data): self
     {

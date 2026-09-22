@@ -7,11 +7,10 @@ namespace Bluezone\Telemetry\Objects;
 class ItemPackage
 {
     public function __construct(
-        readonly public string $itemPackageId,
-        readonly public Location $location,
-        readonly public array $items,
-    ) {
-    }
+        public readonly string $itemPackageId,
+        public readonly Location $location,
+        public readonly array $items,
+    ) {}
 
     public static function make(array $data): self
     {

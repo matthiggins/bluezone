@@ -7,11 +7,10 @@ namespace Bluezone\Telemetry\Objects;
 class Location
 {
     public function __construct(
-        readonly public float $x,
-        readonly public float $y,
-        readonly public float $z,
-    ) {
-    }
+        public readonly float $x,
+        public readonly float $y,
+        public readonly float $z,
+    ) {}
 
     public static function make(array $data): self
     {

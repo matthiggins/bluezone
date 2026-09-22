@@ -13,12 +13,11 @@ class Heal extends TelemetryEvent
     public string $type = 'heal';
 
     public function __construct(
-        readonly public Character $character,
-        readonly public Item $item,
-        readonly public float $healAmount,
-        readonly public Common $common,
-    ) {
-    }
+        public readonly Character $character,
+        public readonly Item $item,
+        public readonly float $healAmount,
+        public readonly Common $common,
+    ) {}
 
     public static function make(array $data): self
     {

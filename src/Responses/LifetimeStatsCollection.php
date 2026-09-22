@@ -5,15 +5,13 @@ declare(strict_types=1);
 namespace Bluezone\Responses;
 
 use Illuminate\Support\Collection;
-use Saloon\Contracts\DataObjects\WithResponse;
-use Saloon\Contracts\Response;
+use Saloon\Http\Response;
 
 class LifetimeStatsCollection extends PubgResponse
 {
     public function __construct(
-        readonly public Collection $stats,
-    ) {
-    }
+        public readonly Collection $stats,
+    ) {}
 
     public static function make(Response $response): self
     {

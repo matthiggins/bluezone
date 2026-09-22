@@ -14,10 +14,10 @@ class PhaseChange extends TelemetryEvent
     public string $name;
 
     public function __construct(
-        readonly public int $phase,
-        readonly public float $elapsedTime,
-        readonly public Common $common,
-        readonly public Carbon|null $timestamp,
+        public readonly int $phase,
+        public readonly float $elapsedTime,
+        public readonly Common $common,
+        public readonly ?Carbon $timestamp,
     ) {
         $this->name = $this->phaseName();
     }

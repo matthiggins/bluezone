@@ -13,12 +13,11 @@ class ItemAttach extends TelemetryEvent
     public string $type = 'item attach';
 
     public function __construct(
-        readonly public Character $character,
-        readonly public Item $parentItem,
-        readonly public Item $childItem,
-        readonly public Common $common,
-    ) {
-    }
+        public readonly Character $character,
+        public readonly Item $parentItem,
+        public readonly Item $childItem,
+        public readonly Common $common,
+    ) {}
 
     public static function make(array $data): self
     {

@@ -12,9 +12,9 @@ class CharacterCarry extends TelemetryEvent
     public string $type = 'player revive';
 
     public function __construct(
-        readonly public Character $character,
-        readonly public string $carryState,
-        readonly public Common $common,
+        public readonly Character $character,
+        public readonly string $carryState,
+        public readonly Common $common,
     ) {}
 
     public static function make(array $data): self

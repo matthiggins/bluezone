@@ -4,18 +4,17 @@ declare(strict_types=1);
 
 namespace Bluezone\Responses;
 
+use Bluezone\Telemetry\Events\EventFactory;
 use Bluezone\Telemetry\MatchTelemetry;
 use Bluezone\Telemetry\PlayerTelemetry;
-use Bluezone\Telemetry\Events\EventFactory;
 use Illuminate\Support\Collection;
-use Saloon\Contracts\Response;
+use Saloon\Http\Response;
 
 class Telemetry
 {
     public function __construct(
         private Collection $telemetry,
-    ) {
-    }
+    ) {}
 
     public static function make(Response $response): self
     {
@@ -55,12 +54,11 @@ class Telemetry
     /**
      * Get all telemetry events that occur during the game and exclude the given events
      *
-     * @param  array  $excludedEvents
      * @return Collection<Events\TelemetryEvent>
      */
     public function excludeEvents(array $excludedEvents): Collection
     {
-        return $this->events()->filter(fn ($e) => !in_array(get_class($e), $excludedEvents));
+        return $this->events()->filter(fn ($e) => ! in_array(get_class($e), $excludedEvents));
     }
 
     /**

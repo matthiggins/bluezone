@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Bluezone\Exceptions;
 
 use Exception;
-use Throwable;
 
-class MatchNotFoundException extends Exception 
+class MatchNotFoundException extends Exception
 {
     public string $matchId;
 
@@ -21,11 +20,9 @@ class MatchNotFoundException extends Exception
 
     /**
      * Format the exception message
-     *
-     * @return string
      */
     public function formatMessage(): string
     {
-        return $this->message . ' (' . $this->matchId . ')';
+        return $this->message.' ('.$this->matchId.')';
     }
 }

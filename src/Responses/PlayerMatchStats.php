@@ -7,30 +7,29 @@ namespace Bluezone\Responses;
 class PlayerMatchStats extends PubgResponse
 {
     public function __construct(
-        readonly public int $assists,
-        readonly public int $boosts,
-        readonly public float $damageDealt,
-        readonly public string $deathType,
-        readonly public int $headshotKills,
-        readonly public int $heals,
-        readonly public int $killPlace,
-        readonly public int $killStreaks,
-        readonly public int $kills,
-        readonly public float $longestKill,
-        readonly public string $name,
-        readonly public string $playerId,
-        readonly public int $revives,
-        readonly public float $rideDistance,
-        readonly public int $roadKills,
-        readonly public float $swimDistance,
-        readonly public int $teamKills,
-        readonly public int $timeSurvived,
-        readonly public int $vehicleDestroys,
-        readonly public float $walkDistance,
-        readonly public int $weaponsAcquired,
-        readonly public int $winPlace,
-    ) {
-    }
+        public readonly int $assists,
+        public readonly int $boosts,
+        public readonly float $damageDealt,
+        public readonly string $deathType,
+        public readonly int $headshotKills,
+        public readonly int $heals,
+        public readonly int $killPlace,
+        public readonly int $killStreaks,
+        public readonly int $kills,
+        public readonly float $longestKill,
+        public readonly string $name,
+        public readonly string $playerId,
+        public readonly int $revives,
+        public readonly float $rideDistance,
+        public readonly int $roadKills,
+        public readonly float $swimDistance,
+        public readonly int $teamKills,
+        public readonly int $timeSurvived,
+        public readonly int $vehicleDestroys,
+        public readonly float $walkDistance,
+        public readonly int $weaponsAcquired,
+        public readonly int $winPlace,
+    ) {}
 
     public static function fromArray(array $data): self
     {

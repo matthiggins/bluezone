@@ -7,9 +7,8 @@ namespace Bluezone\Telemetry\Objects;
 class GameResultOnFinished
 {
     public function __construct(
-        readonly public array $results,
-    ) {
-    }
+        public readonly array $results,
+    ) {}
 
     public static function make(array $data): self
     {

@@ -17,11 +17,11 @@ class PlayerDestroyProp extends TelemetryEvent
     public string $type = 'player destroy prop';
 
     public function __construct(
-        readonly public Character $attacker,
-        readonly public string $objectType,
-        readonly public Location $objectLocation,
-        readonly public Common $common,
-        readonly public Carbon $timestamp,
+        public readonly Character $attacker,
+        public readonly string $objectType,
+        public readonly Location $objectLocation,
+        public readonly Common $common,
+        public readonly Carbon $timestamp,
     ) {}
 
     public static function make(array $data): self

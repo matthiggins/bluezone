@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bluezone\Resources;
 
-use Bluezone\Responses\PubgResponse;
 use Bluezone\Requests\TelemetryRequest;
+use Bluezone\Responses\PubgResponse;
 
 class TelemetryResource extends Resource
 {

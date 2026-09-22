@@ -12,12 +12,11 @@ class WeaponFireCount extends TelemetryEvent
     public string $type = 'weapon fire count';
 
     public function __construct(
-        readonly public Character $character,
-        readonly public string $weaponId,
-        readonly public int $fireCount,
-        readonly public Common $common,
-    ) {
-    }
+        public readonly Character $character,
+        public readonly string $weaponId,
+        public readonly int $fireCount,
+        public readonly Common $common,
+    ) {}
 
     public static function make(array $data): self
     {

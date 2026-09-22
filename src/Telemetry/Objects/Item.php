@@ -13,11 +13,11 @@ class Item
     public string $itemName;
 
     public function __construct(
-        readonly public string $itemId,
-        readonly public int $stackCount,
-        readonly public string $category,
-        readonly public string $subCategory,
-        readonly public array $attachedItems,
+        public readonly string $itemId,
+        public readonly int $stackCount,
+        public readonly string $category,
+        public readonly string $subCategory,
+        public readonly array $attachedItems,
     ) {
         $this->itemName = $this->getValueFromJsonFile('telemetry/item/itemId.json', $this->itemId);
     }

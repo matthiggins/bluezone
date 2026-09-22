@@ -17,15 +17,15 @@ class PlayerTakeDamage extends TelemetryEvent
     public string $damageCategoryName;
 
     public function __construct(
-        readonly public int $attackId,
-        readonly public Character|null $attacker,
-        readonly public Character $victim,
-        readonly public string $damageTypeCategory,
-        readonly public string $damageReason,
-        readonly public string $damageCauserName,
-        readonly public float $damage,
-        readonly public bool $isThroughPenetrableWall,
-        readonly public Common $common,
+        public readonly int $attackId,
+        public readonly ?Character $attacker,
+        public readonly Character $victim,
+        public readonly string $damageTypeCategory,
+        public readonly string $damageReason,
+        public readonly string $damageCauserName,
+        public readonly float $damage,
+        public readonly bool $isThroughPenetrableWall,
+        public readonly Common $common,
     ) {
         $this->damageCategoryName = $this->getValueFromJsonFile('telemetry/damageTypeCategory.json', $this->damageTypeCategory);
     }

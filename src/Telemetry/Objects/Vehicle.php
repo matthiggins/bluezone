@@ -13,18 +13,18 @@ class Vehicle
     public string $vehicleName;
 
     public function __construct(
-        readonly public string $vehicleType,
-        readonly public string $vehicleId,
-        readonly public int|null $vehicleUniqueId,
-        readonly public float $healthPercent,
-        readonly public float|null $fuelPercent,
-        readonly public float $altitudeAbs,
-        readonly public float $altitudeRel,
-        readonly public float $velocity,
-        readonly public int $seatIndex,
-        readonly public bool $isWheelsInAir,
-        readonly public bool $isInWaterVolume,
-        readonly public bool $isEngineOn,
+        public readonly string $vehicleType,
+        public readonly string $vehicleId,
+        public readonly ?int $vehicleUniqueId,
+        public readonly float $healthPercent,
+        public readonly ?float $fuelPercent,
+        public readonly float $altitudeAbs,
+        public readonly float $altitudeRel,
+        public readonly float $velocity,
+        public readonly int $seatIndex,
+        public readonly bool $isWheelsInAir,
+        public readonly bool $isInWaterVolume,
+        public readonly bool $isEngineOn,
     ) {
         $this->vehicleName = $this->getValueFromJsonFile('telemetry/vehicle/vehicleId.json', $this->vehicleId);
     }

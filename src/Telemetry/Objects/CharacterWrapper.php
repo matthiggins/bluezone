@@ -7,13 +7,12 @@ namespace Bluezone\Telemetry\Objects;
 class CharacterWrapper
 {
     public function __construct(
-        readonly public Character $character,
-        readonly public string $primaryWeaponFirst,
-        readonly public string $primaryWeaponSecond,
-        readonly public string $secondaryWeapon,
-        readonly public int $spawnKitIndex,
-    ) {
-    }
+        public readonly Character $character,
+        public readonly string $primaryWeaponFirst,
+        public readonly string $primaryWeaponSecond,
+        public readonly string $secondaryWeapon,
+        public readonly int $spawnKitIndex,
+    ) {}
 
     public static function make(array $data): self
     {

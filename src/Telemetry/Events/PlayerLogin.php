@@ -11,10 +11,9 @@ class PlayerLogin extends TelemetryEvent
     public string $type = 'player login';
 
     public function __construct(
-        readonly public string $accountId,
-        readonly public Common $common,
-    ) {
-    }
+        public readonly string $accountId,
+        public readonly Common $common,
+    ) {}
 
     public static function make(array $data): self
     {

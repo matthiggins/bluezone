@@ -13,12 +13,11 @@ class ObjectDestroy extends TelemetryEvent
     public string $type = 'object destroy';
 
     public function __construct(
-        readonly public Character $character,
-        readonly public string $objectType,
-        readonly public Location|null $objectLocation,
-        readonly public Common $common,
-    ) {
-    }
+        public readonly Character $character,
+        public readonly string $objectType,
+        public readonly ?Location $objectLocation,
+        public readonly Common $common,
+    ) {}
 
     public static function make(array $data): self
     {

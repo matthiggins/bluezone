@@ -12,10 +12,9 @@ class ItemPickupFromCustomPackage extends TelemetryEvent
     public string $type = 'item pickup from custom package';
 
     public function __construct(
-        readonly public Character $character,
-        readonly public Item $item,
-    ) {
-    }
+        public readonly Character $character,
+        public readonly Item $item,
+    ) {}
 
     public static function make(array $data): self
     {

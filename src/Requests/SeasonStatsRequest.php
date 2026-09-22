@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Bluezone\Requests;
 
 use Bluezone\Responses\SeasonStats;
-use Saloon\Contracts\Response;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
+use Saloon\Http\Response;
 use Saloon\Traits\Request\HasConnector;
 
 class SeasonStatsRequest extends Request
@@ -20,8 +20,7 @@ class SeasonStatsRequest extends Request
         protected string $shard,
         protected string $seasonId,
         protected string $accountId,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

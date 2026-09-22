@@ -14,10 +14,10 @@ class ItemPickupFromVehicleTrunk extends TelemetryEvent
     public string $type = 'item pickup from vehicle trunk';
 
     public function __construct(
-        readonly public Character $character,
-        readonly public Vehicle $vehicle,
-        readonly public Item $item,
-        readonly public Common $common,
+        public readonly Character $character,
+        public readonly Vehicle $vehicle,
+        public readonly Item $item,
+        public readonly Common $common,
     ) {}
 
     public static function make(array $data): self

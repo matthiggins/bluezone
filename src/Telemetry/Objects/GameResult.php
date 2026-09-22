@@ -7,13 +7,12 @@ namespace Bluezone\Telemetry\Objects;
 class GameResult
 {
     public function __construct(
-        readonly public int $rank,
-        readonly public string $gameResult,
-        readonly public int $teamId,
-        readonly public Stats $stats,
-        readonly public string $accountId,
-    ) {
-    }
+        public readonly int $rank,
+        public readonly string $gameResult,
+        public readonly int $teamId,
+        public readonly Stats $stats,
+        public readonly string $accountId,
+    ) {}
 
     public static function make(array $data): self
     {

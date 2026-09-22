@@ -7,10 +7,9 @@ namespace Bluezone\Telemetry\Objects;
 class AllWeaponStats
 {
     public function __construct(
-        readonly public string $accountId,
-        readonly public array $stats,
-    ) {
-    }
+        public readonly string $accountId,
+        public readonly array $stats,
+    ) {}
 
     public static function make(array $data): self
     {

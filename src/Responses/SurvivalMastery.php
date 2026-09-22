@@ -4,20 +4,18 @@ declare(strict_types=1);
 
 namespace Bluezone\Responses;
 
-use Saloon\Contracts\DataObjects\WithResponse;
-use Saloon\Contracts\Response;
+use Saloon\Http\Response;
 
 class SurvivalMastery extends PubgResponse
 {
     public function __construct(
-        readonly public string $accountId,
-        readonly public int $xp,
-        readonly public int $level,
-        readonly public string $lastMatchId,
-        readonly public int $totalMatchesPlayed,
-        readonly public array $stats,
-    ) {
-    }
+        public readonly string $accountId,
+        public readonly int $xp,
+        public readonly int $level,
+        public readonly string $lastMatchId,
+        public readonly int $totalMatchesPlayed,
+        public readonly array $stats,
+    ) {}
 
     public static function make(Response $response): self
     {

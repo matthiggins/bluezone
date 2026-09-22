@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bluezone\Responses;
 
 use Saloon\Traits\Responses\HasResponse;
@@ -12,8 +14,7 @@ class PubgResponse
     use HasResponse;
 
     public function __construct(
-    ) {
-    }
+    ) {}
 
     /**
      * Get the DTO as an array.

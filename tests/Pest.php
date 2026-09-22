@@ -1,45 +1,40 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Test Case
-|--------------------------------------------------------------------------
-|
-| The closure you provide to your test functions is always bound to a specific PHPUnit test
-| case class. By default, that class is "PHPUnit\Framework\TestCase". Of course, you may
-| need to change it using the "uses()" function to bind a different classes or traits.
-|
-*/
+declare(strict_types=1);
 
-// uses(Tests\TestCase::class)->in('Feature');
+use Bluezone\Bluezone;
+use Saloon\Http\Faking\Fixture;
+use Saloon\Http\Faking\MockClient;
+use Saloon\Http\Faking\MockResponse;
+use Saloon\MockConfig;
 
-/*
-|--------------------------------------------------------------------------
-| Expectations
-|--------------------------------------------------------------------------
-|
-| When you're writing tests, you often need to check that values meet certain conditions. The
-| "expect()" function gives you access to a set of "expectations" methods that you can use
-| to assert different things. Of course, you may extend the Expectation API at any time.
-|
-*/
+MockConfig::setFixturePath(__DIR__.'/Fixtures');
+MockConfig::throwOnMissingFixtures();
 
-expect()->extend('toBeOne', function () {
-    return $this->toBe(1);
-});
-
-/*
-|--------------------------------------------------------------------------
-| Functions
-|--------------------------------------------------------------------------
-|
-| While Pest is very powerful out-of-the-box, you may have some testing code specific to your
-| project that you don't want to repeat in every file. Here you can also expose helpers as
-| global functions to help you to reduce the number of lines of code in your test files.
-|
-*/
-
-function something()
+/** A Bluezone connector whose requests are answered by the given mocks. */
+function mockBluezone(array $mocks, int $requestsPerMinute = 1000): Bluezone
 {
-    // ..
+    $bluezone = new Bluezone('test-api-key');
+    $bluezone->withMockClient(new MockClient($mocks));
+
+    return $bluezone;
+}
+
+// Named apiFixture, not fixture: Pest 5 core already declares a global fixture() (browser testing), which fatally collides.
+/** A recorded fixture under tests/Fixtures; records on first run when PUBG_API_KEY is set, replays afterwards. */
+function apiFixture(string $name): Fixture
+{
+    return MockResponse::fixture($name);
+}
+
+/** A real connector for recording fixtures. Skips the test when no key is set. */
+function recordingBluezone(): Bluezone
+{
+    $key = getenv('PUBG_API_KEY');
+
+    if ($key === false || $key === '') {
+        test()->markTestSkipped('PUBG_API_KEY not set; cannot record fixtures.');
+    }
+
+    return new Bluezone($key);
 }

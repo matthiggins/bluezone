@@ -18,12 +18,12 @@ class WheelDestroy extends TelemetryEvent
     public string $damageCategoryName;
 
     public function __construct(
-        readonly public int $attackId,
-        readonly public Character $attacker,
-        readonly public Vehicle $vehicle,
-        readonly public string $damageTypeCategory,
-        readonly public string $damageCauserName,
-        readonly public Common $common,
+        public readonly int $attackId,
+        public readonly Character $attacker,
+        public readonly Vehicle $vehicle,
+        public readonly string $damageTypeCategory,
+        public readonly string $damageCauserName,
+        public readonly Common $common,
     ) {
         $this->damageCategoryName = $this->getValueFromJsonFile('telemetry/damageTypeCategory.json', $this->damageTypeCategory);
     }

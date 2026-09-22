@@ -13,15 +13,14 @@ class VehicleLeave extends TelemetryEvent
     public string $type = 'vehicle leave';
 
     public function __construct(
-        readonly public Character $character,
-        readonly public Vehicle $vehicle,
-        readonly public float $rideDistance,
-        readonly public int $seatIndex,
-        readonly public float $maxSpeed,
-        readonly public array $fellowPassengers,
-        readonly public Common $common,
-    ) {
-    }
+        public readonly Character $character,
+        public readonly Vehicle $vehicle,
+        public readonly float $rideDistance,
+        public readonly int $seatIndex,
+        public readonly float $maxSpeed,
+        public readonly array $fellowPassengers,
+        public readonly Common $common,
+    ) {}
 
     public static function make(array $data): self
     {

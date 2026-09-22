@@ -4,25 +4,23 @@ declare(strict_types=1);
 
 namespace Bluezone\Responses;
 
-use Saloon\Contracts\DataObjects\WithResponse;
-use Saloon\Contracts\Response;
+use Saloon\Http\Response;
 
 class Clan extends PubgResponse
 {
     public function __construct(
-        readonly public string $id,
-        readonly public string $shard,
-        readonly public string $name,
-        readonly public string $tag,
-        readonly public int $level,
-        readonly public int $memberCount,
-    ) {
-    }
+        public readonly string $id,
+        public readonly string $shard,
+        public readonly string $name,
+        public readonly string $tag,
+        public readonly int $level,
+        public readonly int $memberCount,
+    ) {}
 
     public static function make(string $shard, Response $response): self
     {
         return self::fromArray(
-            shard: $shard, 
+            shard: $shard,
             data: $response->json()['data']
         );
     }
@@ -30,10 +28,10 @@ class Clan extends PubgResponse
     public static function fromArray(string $shard, array $data): self
     {
         return new static(
-            id: $data['id'], 
+            id: $data['id'],
             shard: $shard,
-            name: $data['attributes']['clanName'], 
-            tag: $data['attributes']['clanTag'], 
+            name: $data['attributes']['clanName'],
+            tag: $data['attributes']['clanTag'],
             level: $data['attributes']['clanLevel'],
             memberCount: $data['attributes']['clanMemberCount'],
         );

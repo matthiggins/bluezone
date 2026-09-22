@@ -7,17 +7,16 @@ namespace Bluezone\Telemetry\Objects;
 class Character
 {
     public function __construct(
-        readonly public string $name,
-        readonly public int $teamId,
-        readonly public float $health,
-        readonly public Location $location,
-        readonly public int $ranking,
-        readonly public string $accountId,
-        readonly public bool $isInBlueZone,
-        readonly public bool $isInRedZone,
-        readonly public array $zone,
-    ) {
-    }
+        public readonly string $name,
+        public readonly int $teamId,
+        public readonly float $health,
+        public readonly Location $location,
+        public readonly int $ranking,
+        public readonly string $accountId,
+        public readonly bool $isInBlueZone,
+        public readonly bool $isInRedZone,
+        public readonly array $zone,
+    ) {}
 
     public static function make(array $data): self
     {

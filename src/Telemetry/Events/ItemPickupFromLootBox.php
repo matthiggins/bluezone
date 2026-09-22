@@ -13,13 +13,12 @@ class ItemPickupFromLootBox extends TelemetryEvent
     public string $type = 'item pickup from loot box';
 
     public function __construct(
-        readonly public Character $character,
-        readonly public Item $item,
-        readonly public int $ownerTeamId,
-        readonly public string $creatorAccountId,
-        readonly public Common $common,
-    ) {
-    }
+        public readonly Character $character,
+        public readonly Item $item,
+        public readonly int $ownerTeamId,
+        public readonly string $creatorAccountId,
+        public readonly Common $common,
+    ) {}
 
     public static function make(array $data): self
     {

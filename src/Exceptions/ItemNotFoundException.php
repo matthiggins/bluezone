@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Bluezone\Exceptions;
 
 use Exception;
-use Throwable;
 
-class ItemNotFoundException extends Exception 
+class ItemNotFoundException extends Exception
 {
     public string $itemId;
 
@@ -21,11 +20,9 @@ class ItemNotFoundException extends Exception
 
     /**
      * Format the exception message
-     *
-     * @return string
      */
     public function formatMessage(): string
     {
-        return $this->message . ' (' . $this->itemId . ')';
+        return $this->message.' ('.$this->itemId.')';
     }
 }

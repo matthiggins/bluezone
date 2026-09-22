@@ -7,15 +7,14 @@ namespace Bluezone\Telemetry\Objects;
 class WeaponHitDetails
 {
     public function __construct(
-        readonly public string $bodyPart,
-        readonly public int $kills,
-        readonly public int $dBNOs,
-        readonly public int $hits,
-        readonly public int $dBNOHits,
-        readonly public int $damage,
-        readonly public int $dBNODamage,
-    ) {
-    }
+        public readonly string $bodyPart,
+        public readonly int $kills,
+        public readonly int $dBNOs,
+        public readonly int $hits,
+        public readonly int $dBNOHits,
+        public readonly int $damage,
+        public readonly int $dBNODamage,
+    ) {}
 
     public static function make(array $data): self
     {

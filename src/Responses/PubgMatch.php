@@ -4,30 +4,29 @@ declare(strict_types=1);
 
 namespace Bluezone\Responses;
 
-use Bluezone\Telemetry\Concerns\AccessesJsonDictionaries;
 use Bluezone\Requests\TelemetryRequest;
+use Bluezone\Telemetry\Concerns\AccessesJsonDictionaries;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
-use Saloon\Contracts\DataObjects\WithResponse;
-use Saloon\Contracts\Response;
+use Saloon\Http\Response;
 
 class PubgMatch extends PubgResponse
 {
     use AccessesJsonDictionaries;
 
     public function __construct(
-        readonly public string $id,
-        readonly public string $shard,
-        readonly public string $assetId,
-        readonly public string $assetUrl,
-        readonly public Carbon $createdAt,
-        readonly public int $duration,
-        readonly public string $gameMode,
+        public readonly string $id,
+        public readonly string $shard,
+        public readonly string $assetId,
+        public readonly string $assetUrl,
+        public readonly Carbon $createdAt,
+        public readonly int $duration,
+        public readonly string $gameMode,
         public string $mapName,
-        readonly public string $matchType,
-        readonly public string $seasonState,
-        readonly public Collection $stats,
-        readonly public Collection $teams,
+        public readonly string $matchType,
+        public readonly string $seasonState,
+        public readonly Collection $stats,
+        public readonly Collection $teams,
     ) {
         $this->mapName = $this->getValueFromJsonFile('telemetry/mapName.json', $this->mapName);
     }
@@ -45,9 +44,8 @@ class PubgMatch extends PubgResponse
 
     /**
      * Create a DTO from an array.
-     * 
-     * @param array $data
-     * @param array $included "included" data from the PUBG API to get stats and teams
+     *
+     * @param  array  $included  "included" data from the PUBG API to get stats and teams
      */
     public static function fromArray(array $data, array $included): self
     {
@@ -102,8 +100,6 @@ class PubgMatch extends PubgResponse
 
     /**
      * Get the telemetry DTO from the telemetry file for this match.
-     * 
-     * @return Telemetry
      */
     public function getTelemetry(): Telemetry
     {
@@ -114,9 +110,6 @@ class PubgMatch extends PubgResponse
 
     /**
      * Get the stats for a player.
-     * 
-     * @param string $playerId
-     * @return PlayerMatchStats
      */
     public function statsForPlayer(string $playerId): PlayerMatchStats
     {
@@ -127,8 +120,6 @@ class PubgMatch extends PubgResponse
 
     /**
      * Is this a ranked match?
-     *
-     * @return boolean
      */
     public function isRanked(): bool
     {
@@ -137,19 +128,16 @@ class PubgMatch extends PubgResponse
 
     /**
      * Get the percent of players that are bots.
-     *
-     * @return float
      */
     public function botPercent(): float
     {
         $botCount = $this->totalBots();
+
         return $botCount ? floatval(number_format(($botCount / $this->totalPlayers()) * 100, 2)) : floatval($botCount);
     }
 
     /**
      * Get the total number of bots in the roster
-     *
-     * @return integer
      */
     public function totalBots(): int
     {
@@ -158,8 +146,6 @@ class PubgMatch extends PubgResponse
 
     /**
      * Get the total number of players in the roster
-     *
-     * @return integer
      */
     public function totalPlayers(): int
     {
@@ -168,8 +154,6 @@ class PubgMatch extends PubgResponse
 
     /**
      * Get the total number of teams in the roster
-     *
-     * @return integer
      */
     public function totalTeams(): int
     {

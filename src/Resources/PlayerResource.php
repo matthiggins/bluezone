@@ -1,7 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bluezone\Resources;
 
+use Bluezone\Requests\LifetimeStatsManyRequest;
+use Bluezone\Requests\LifetimeStatsRequest;
+use Bluezone\Requests\PlayerAccountRequest;
+use Bluezone\Requests\PlayerSearchManyRequest;
+use Bluezone\Requests\PlayerSearchRequest;
+use Bluezone\Requests\RankedSeasonStatsRequest;
+use Bluezone\Requests\SeasonStatsManyRequest;
+use Bluezone\Requests\SeasonStatsRequest;
+use Bluezone\Requests\SurvivalMasteryRequest;
+use Bluezone\Requests\WeaponMasteryRequest;
 use Bluezone\Responses\LifetimeStats;
 use Bluezone\Responses\LifetimeStatsCollection;
 use Bluezone\Responses\Player;
@@ -12,26 +24,12 @@ use Bluezone\Responses\SeasonStats;
 use Bluezone\Responses\SeasonStatsCollection;
 use Bluezone\Responses\SurvivalMastery;
 use Bluezone\Responses\WeaponMastery;
-use Bluezone\Requests\SurvivalMasteryRequest;
-use Bluezone\Requests\WeaponMasteryRequest;
-use Bluezone\Requests\PlayerAccountRequest;
-use Bluezone\Requests\PlayerSearchManyRequest;
-use Bluezone\Requests\PlayerSearchRequest;
-use Bluezone\Requests\LifetimeStatsManyRequest;
-use Bluezone\Requests\LifetimeStatsRequest;
-use Bluezone\Requests\RankedSeasonStatsRequest;
-use Bluezone\Requests\SeasonStatsManyRequest;
-use Bluezone\Requests\SeasonStatsRequest;
 use Illuminate\Support\Collection;
 
 class PlayerResource extends Resource
 {
     /**
      * Find a player by account id
-     * 
-     * @param string $shard
-     * @param string $accountId
-     * @return Player
      */
     public function find(string $shard, string $accountId): Player
     {
@@ -43,10 +41,6 @@ class PlayerResource extends Resource
 
     /**
      * Get recent matches for a player
-     *
-     * @param Player $player
-     * @param integer $limit
-     * @return Collection
      */
     public function recentMatches(Player $player, int $limit = 20): Collection
     {
@@ -55,40 +49,28 @@ class PlayerResource extends Resource
 
     /**
      * Get recent casual matches for a player
-     *
-     * @param Player $player
-     * @param integer $limit
-     * @return Collection
      */
     public function recentCasualMatches(Player $player, int $limit = 20): Collection
     {
         return $this->recentMatches(
             player: $player,
             limit: $limit,
-        )->filter(fn($match) => ! $match->isRanked());
+        )->filter(fn ($match) => ! $match->isRanked());
     }
 
     /**
      * Get recent ranked matches for a player
-     *
-     * @param Player $player
-     * @param integer $limit
-     * @return Collection
      */
     public function recentRankedMatches(Player $player, int $limit = 20): Collection
     {
         return $this->recentMatches(
             player: $player,
             limit: $limit,
-        )->filter(fn($match) => $match->isRanked());
+        )->filter(fn ($match) => $match->isRanked());
     }
 
     /**
      * Search for a player by name
-     * 
-     * @param string $shard
-     * @param string $playerName
-     * @return Player
      */
     public function search(string $shard, string $playerName): Player
     {
@@ -100,10 +82,6 @@ class PlayerResource extends Resource
 
     /**
      * Search for multiple players by name
-     * 
-     * @param string $shard
-     * @param array $playerNames
-     * @return PlayerCollection
      */
     public function searchMany(string $shard, array $playerNames): PlayerCollection
     {
@@ -115,11 +93,6 @@ class PlayerResource extends Resource
 
     /**
      * Get season stats for a player
-     * 
-     * @param string $shard
-     * @param string $seasonId
-     * @param string $accountId
-     * @return SeasonStats
      */
     public function seasonStats(string $shard, string $seasonId, string $accountId): SeasonStats
     {
@@ -132,12 +105,6 @@ class PlayerResource extends Resource
 
     /**
      * Get season stats for multiple players
-     * 
-     * @param string $shard
-     * @param string $seasonId
-     * @param string $gameMode
-     * @param array $accountIds
-     * @return SeasonStatsCollection
      */
     public function seasonStatsMany(string $shard, string $seasonId, string $gameMode, array $accountIds): SeasonStatsCollection
     {
@@ -151,11 +118,6 @@ class PlayerResource extends Resource
 
     /**
      * Get ranked season stats for a player
-     * 
-     * @param string $shard 
-     * @param string $seasonId
-     * @param string $accountId
-     * @return RankedSeasonStats
      */
     public function rankedSeasonStats(string $shard, string $seasonId, string $accountId): RankedSeasonStats
     {
@@ -166,21 +128,15 @@ class PlayerResource extends Resource
         ));
     }
 
-
     /**
      * Get ranked season stats for many players. The PUBG API
-     * does not support getting multiple ranked season stats 
+     * does not support getting multiple ranked season stats
      * in a single request... because of that we are cycling
      * through the account ids and making a request for each
-     * 
-     * @param string $shard
-     * @param string $seasonId
-     * @param array $accountIds
-     * @return RankedSeasonStatsCollection
      */
     public function rankedSeasonStatsMany(string $shard, string $seasonId, array $accountIds): RankedSeasonStatsCollection
     {
-        $statsResponseCollection = collect($accountIds)->map(function($id) use ($shard, $seasonId) {
+        $statsResponseCollection = collect($accountIds)->map(function ($id) use ($shard, $seasonId) {
             return $this->rankedSeasonStats(
                 shard: $shard,
                 seasonId: $seasonId,
@@ -193,10 +149,6 @@ class PlayerResource extends Resource
 
     /**
      * Get lifetime stats for a player
-     * 
-     * @param string $shard
-     * @param string $accountId
-     * @return LifetimeStats
      */
     public function lifetimeStats(string $shard, string $accountId): LifetimeStats
     {
@@ -208,11 +160,6 @@ class PlayerResource extends Resource
 
     /**
      * Get lifetime stats for multiple players
-     * 
-     * @param string $shard
-     * @param string $gameMode
-     * @param array $playerIds
-     * @return LifetimeStatsCollection
      */
     public function lifetimeStatsMany(string $shard, string $gameMode, array $playerIds): LifetimeStatsCollection
     {
@@ -225,10 +172,6 @@ class PlayerResource extends Resource
 
     /**
      * Get all weapon mastery for a player
-     * 
-     * @param string $shard
-     * @param string $accountId
-     * @return WeaponMastery
      */
     public function weaponMastery(string $shard, string $accountId): WeaponMastery
     {
@@ -240,10 +183,6 @@ class PlayerResource extends Resource
 
     /**
      * Get all survival mastery for a player
-     * 
-     * @param string $shard
-     * @param string $accountId
-     * @return SurvivalMastery
      */
     public function survivalMastery(string $shard, string $accountId): SurvivalMastery
     {

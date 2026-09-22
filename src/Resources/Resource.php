@@ -1,28 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bluezone\Resources;
 
 use Bluezone\Responses\PubgResponse;
 use Illuminate\Support\Collection;
-use Saloon\Contracts\Connector;
-use Saloon\Contracts\Request;
+use Saloon\Http\BaseResource;
+use Saloon\Http\Request;
 
-class Resource
+abstract class Resource extends BaseResource
 {
-    public function __construct(protected Connector $connector)
-    {
-    }
-
     /**
-     * Send a request and return the response DTO.
+     * Send a request and return its DTO; AlwaysThrowOnErrors makes non-2xx responses throw before dto().
      */
-    public function send(Request $request): PubgResponse|Collection
+    protected function send(Request $request): PubgResponse|Collection
     {
-        $response = $this->connector->send($request);
-
-        $response->throw();
-
-        // If the response is a collection, map the DTOs
-        return $response->dto();
+        return $this->connector->send($request)->dto();
     }
 }

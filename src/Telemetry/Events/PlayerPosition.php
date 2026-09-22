@@ -13,13 +13,12 @@ class PlayerPosition extends TelemetryEvent
     public string $type = 'player position';
 
     public function __construct(
-        readonly public Character $character,
-        readonly public Vehicle|null $vehicle,
-        readonly public float $elapsedTime,
-        readonly public int $numAlivePlayers,
-        readonly public Common $common,
-    ) {
-    }
+        public readonly Character $character,
+        public readonly ?Vehicle $vehicle,
+        public readonly float $elapsedTime,
+        public readonly int $numAlivePlayers,
+        public readonly Common $common,
+    ) {}
 
     public static function make(array $data): self
     {

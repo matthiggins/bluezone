@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Bluezone\Requests;
 
 use Bluezone\Responses\Clan;
-use Saloon\Contracts\Response;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
+use Saloon\Http\Response;
 use Saloon\Traits\Request\HasConnector;
 
 class ClanRequest extends Request
@@ -19,8 +19,7 @@ class ClanRequest extends Request
     public function __construct(
         protected string $shard,
         protected string $clanId,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {
@@ -30,7 +29,7 @@ class ClanRequest extends Request
     public function createDtoFromResponse(Response $response): mixed
     {
         return Clan::make(
-            shard: $this->shard, 
+            shard: $this->shard,
             response: $response
         );
     }

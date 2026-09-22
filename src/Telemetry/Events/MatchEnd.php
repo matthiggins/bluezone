@@ -14,12 +14,11 @@ class MatchEnd extends TelemetryEvent
     public string $type = 'match end';
 
     public function __construct(
-        readonly public array $characters,
-        readonly public GameResultOnFinished $gameResultOnFinished,
-        readonly public array $allWeaponStats,
-        readonly public Common $common,
-    ) {
-    }
+        public readonly array $characters,
+        public readonly GameResultOnFinished $gameResultOnFinished,
+        public readonly array $allWeaponStats,
+        public readonly Common $common,
+    ) {}
 
     public static function make(array $data): self
     {

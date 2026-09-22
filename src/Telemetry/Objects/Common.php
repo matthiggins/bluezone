@@ -7,12 +7,15 @@ namespace Bluezone\Telemetry\Objects;
 class Common
 {
     public string $name;
+
     public bool $isPreGameLobby;
+
     public bool $planeIsFlying;
+
     public bool $circlesHaveStarted;
 
     public function __construct(
-        readonly public float $isGame,
+        public readonly float $isGame,
     ) {
         $this->name = $this->phaseName();
         $this->isPreGameLobby = $this->isGame < 0.1;

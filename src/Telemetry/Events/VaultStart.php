@@ -12,11 +12,10 @@ class VaultStart extends TelemetryEvent
     public string $type = 'vault start';
 
     public function __construct(
-        readonly public Character $character,
-        readonly public bool $isLedgeGrab,
-        readonly public Common $common,
-    ) {
-    }
+        public readonly Character $character,
+        public readonly bool $isLedgeGrab,
+        public readonly Common $common,
+    ) {}
 
     public static function make(array $data): self
     {

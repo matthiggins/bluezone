@@ -12,11 +12,10 @@ class ParachuteLanding extends TelemetryEvent
     public string $type = 'parachute landing';
 
     public function __construct(
-        readonly public Character $character,
-        readonly public float $distance,
-        readonly public Common $common,
-    ) {
-    }
+        public readonly Character $character,
+        public readonly float $distance,
+        public readonly Common $common,
+    ) {}
 
     public static function make(array $data): self
     {

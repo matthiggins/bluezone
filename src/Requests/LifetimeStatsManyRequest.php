@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Bluezone\Requests;
 
 use Bluezone\Responses\LifetimeStatsCollection;
-use Saloon\Contracts\Response;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
+use Saloon\Http\Response;
 use Saloon\Traits\Request\HasConnector;
 
 class LifetimeStatsManyRequest extends Request
@@ -20,8 +20,7 @@ class LifetimeStatsManyRequest extends Request
         protected string $shard,
         protected string $gameMode,
         protected array $playerIds,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

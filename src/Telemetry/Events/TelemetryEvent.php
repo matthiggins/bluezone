@@ -9,6 +9,7 @@ use Carbon\Carbon;
 class TelemetryEvent
 {
     public string $eventType;
+
     public ?Carbon $date = null;
 
     public function setEventType(string $type): self
@@ -18,7 +19,7 @@ class TelemetryEvent
         return $this;
     }
 
-    public function setDate(string|null $date): self
+    public function setDate(?string $date): self
     {
         $this->date = $date ? Carbon::parse($date) : null;
 

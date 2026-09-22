@@ -4,23 +4,21 @@ declare(strict_types=1);
 
 namespace Bluezone\Responses;
 
-use Bluezone\Bluezone;
 use Bluezone\Resources\MatchResource;
 use Illuminate\Support\Collection;
-use Saloon\Contracts\DataObjects\WithResponse;
-use Saloon\Contracts\Response;
+use Saloon\Http\Connector;
+use Saloon\Http\Response;
 
 class Player extends PubgResponse
 {
     public function __construct(
-        readonly public string $id,
-        readonly public string $name,
-        readonly public string $shard,
-        readonly public string|null $clanId,
-        readonly public string|null $banType,
-        readonly public Collection $matches,
-    ) {
-    }
+        public readonly string $id,
+        public readonly string $name,
+        public readonly string $shard,
+        public readonly ?string $clanId,
+        public readonly ?string $banType,
+        public readonly Collection $matches,
+    ) {}
 
     public static function make(Response $response): self
     {
@@ -31,12 +29,12 @@ class Player extends PubgResponse
 
     public static function fromArray(array $data): self
     {
-        $matches = collect($data['relationships']['matches']['data'])->map(fn($match) => $match['id']);
+        $matches = collect($data['relationships']['matches']['data'])->map(fn ($match) => $match['id']);
 
         return new static(
-            id: $data['id'], 
-            name: $data['attributes']['name'], 
-            shard: $data['attributes']['shardId'], 
+            id: $data['id'],
+            name: $data['attributes']['name'],
+            shard: $data['attributes']['shardId'],
             clanId: $data['attributes']['clanId'] ?? null,
             banType: $data['attributes']['banType'] ?? null,
             matches: $matches
@@ -44,13 +42,10 @@ class Player extends PubgResponse
     }
 
     /**
-     * Load match data for recent matches for this player
-     *
-     * @param Bluezone $bluezone
-     * @return Collection
+     * Load match data for recent matches for this player.
      */
-    public function recentMatches(Bluezone $bluezone, int $limit = 20): Collection
+    public function recentMatches(Connector $connector, int $limit = 20): Collection
     {
-        return $this->matches->take($limit)->map(fn($matchId) => $bluezone->match()->find($this->shard, $matchId));
+        return $this->matches->take($limit)->map(fn ($matchId) => (new MatchResource($connector))->find($this->shard, $matchId));
     }
 }

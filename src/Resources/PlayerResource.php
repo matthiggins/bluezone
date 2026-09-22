@@ -6,6 +6,7 @@ namespace Bluezone\Resources;
 
 use Bluezone\Enums\GameMode;
 use Bluezone\Enums\Shard;
+use Bluezone\Exceptions\PlayerNotFoundException;
 use Bluezone\Requests\LifetimeStatsManyRequest;
 use Bluezone\Requests\LifetimeStatsRequest;
 use Bluezone\Requests\PlayerAccountRequest;
@@ -27,6 +28,7 @@ use Bluezone\Responses\SeasonStatsCollection;
 use Bluezone\Responses\SurvivalMastery;
 use Bluezone\Responses\WeaponMastery;
 use Illuminate\Support\Collection;
+use Saloon\Exceptions\Request\Statuses\NotFoundException;
 
 class PlayerResource extends Resource
 {
@@ -35,10 +37,13 @@ class PlayerResource extends Resource
      */
     public function find(Shard|string $shard, string $accountId): Player
     {
-        return $this->send(new PlayerAccountRequest(
-            shard: Shard::resolve($shard),
-            accountId: $accountId,
-        ));
+        $shard = Shard::resolve($shard);
+
+        try {
+            return $this->send(new PlayerAccountRequest(shard: $shard, accountId: $accountId));
+        } catch (NotFoundException) {
+            throw PlayerNotFoundException::forAccountId($shard, $accountId);
+        }
     }
 
     /**
@@ -76,10 +81,13 @@ class PlayerResource extends Resource
      */
     public function search(Shard|string $shard, string $playerName): Player
     {
-        return $this->send(new PlayerSearchRequest(
-            shard: Shard::resolve($shard),
-            playerName: $playerName,
-        ));
+        $shard = Shard::resolve($shard);
+
+        try {
+            return $this->send(new PlayerSearchRequest(shard: $shard, playerName: $playerName));
+        } catch (NotFoundException) {
+            throw PlayerNotFoundException::forName($shard, $playerName);
+        }
     }
 
     /**
@@ -87,10 +95,13 @@ class PlayerResource extends Resource
      */
     public function searchMany(Shard|string $shard, array $playerNames): PlayerCollection
     {
-        return $this->send(new PlayerSearchManyRequest(
-            shard: Shard::resolve($shard),
-            playerNames: $playerNames,
-        ));
+        $shard = Shard::resolve($shard);
+
+        try {
+            return $this->send(new PlayerSearchManyRequest(shard: $shard, playerNames: $playerNames));
+        } catch (NotFoundException) {
+            throw PlayerNotFoundException::forName($shard, implode(',', $playerNames));
+        }
     }
 
     /**

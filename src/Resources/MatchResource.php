@@ -17,16 +17,12 @@ class MatchResource extends Resource
      */
     public function find(Shard|string $shard, string $matchId): PubgMatch
     {
+        $shard = Shard::resolve($shard);
+
         try {
-            return $this->send(new MatchRequest(
-                shard: Shard::resolve($shard),
-                matchId: $matchId,
-            ));
-        } catch (NotFoundException $e) {
-            throw new MatchNotFoundException(
-                message: 'This match is not available in the PUBG API.',
-                matchId: $matchId
-            );
+            return $this->send(new MatchRequest(shard: $shard, matchId: $matchId));
+        } catch (NotFoundException) {
+            throw MatchNotFoundException::forId($shard, $matchId);
         }
     }
 }

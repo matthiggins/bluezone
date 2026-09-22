@@ -4,25 +4,17 @@ declare(strict_types=1);
 
 namespace Bluezone\Exceptions;
 
-use Exception;
+use Bluezone\Enums\Shard;
 
-class MatchNotFoundException extends Exception
+final class MatchNotFoundException extends BluezoneException
 {
-    public string $matchId;
-
-    public function __construct(string $message, string $matchId)
+    private function __construct(public readonly Shard $shard, public readonly string $matchId)
     {
-        $this->matchId = $matchId;
-        $this->message = $message;
-
-        parent::__construct($this->formatMessage(), 404);
+        parent::__construct("Match [{$matchId}] is not available on shard [{$shard->value}]; PUBG keeps matches for about 14 days.", 404);
     }
 
-    /**
-     * Format the exception message
-     */
-    public function formatMessage(): string
+    public static function forId(Shard $shard, string $matchId): self
     {
-        return $this->message.' ('.$this->matchId.')';
+        return new self($shard, $matchId);
     }
 }

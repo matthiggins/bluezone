@@ -9,9 +9,6 @@ use Saloon\Http\Faking\MockResponse;
 use Saloon\RateLimitPlugin\Exceptions\RateLimitReachedException;
 use Saloon\RateLimitPlugin\Stores\MemoryStore;
 
-// MemoryStore is static, so state leaks between tests/files unless cleared.
-afterEach(fn () => MemoryStore::clear());
-
 it('stops sending once the per-minute budget is spent', function () {
     $bluezone = new Bluezone('key', new MemoryStore, requestsPerMinute: 2);
     $bluezone->withMockClient(new MockClient([StatusRequest::class => MockResponse::make(['data' => ['type' => 'status', 'id' => 'pubg-api', 'attributes' => ['releasedAt' => '2026-01-01T00:00:00Z', 'version' => '1']]])]));

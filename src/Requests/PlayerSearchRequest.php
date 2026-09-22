@@ -27,7 +27,13 @@ class PlayerSearchRequest extends Request
      */
     public function resolveEndpoint(): string
     {
-        return 'shards/'.$this->shard->value.'/players?filter[playerNames]='.$this->playerName;
+        return 'shards/'.$this->shard->value.'/players';
+    }
+
+    /** @return array<string, string> */
+    protected function defaultQuery(): array
+    {
+        return ['filter[playerNames]' => $this->playerName];
     }
 
     public function createDtoFromResponse(Response $response): mixed

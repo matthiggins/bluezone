@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Bluezone\Telemetry\Concerns;
 
-use Bluezone\Exceptions\ItemNotFoundException;
-
 trait AccessesJsonDictionaries
 {
     /**
@@ -27,10 +25,6 @@ trait AccessesJsonDictionaries
             return '';
         }
         $json = $this->getJsonFromFile($path);
-
-        // if( ! $json[$key]) {
-        //     throw new ItemNotFoundException("Item could not be found in {$path}", $key);
-        // }
 
         return $json[$key] ?? $key;
     }

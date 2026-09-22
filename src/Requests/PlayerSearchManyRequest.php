@@ -24,7 +24,13 @@ class PlayerSearchManyRequest extends Request
 
     public function resolveEndpoint(): string
     {
-        return 'shards/'.$this->shard->value.'/players?filter[playerNames]='.implode(',', $this->playerNames);
+        return 'shards/'.$this->shard->value.'/players';
+    }
+
+    /** @return array<string, string> */
+    protected function defaultQuery(): array
+    {
+        return ['filter[playerNames]' => implode(',', $this->playerNames)];
     }
 
     public function createDtoFromResponse(Response $response): PlayerCollection

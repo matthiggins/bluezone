@@ -32,11 +32,11 @@ final class PlayerKillV2 extends TelemetryEvent
         public readonly Common $common,
     ) {}
 
-    public static function make(array $data): self
+    public static function make(array $data): static
     {
         return new self(
-            attackId: $data['attackId'],
-            dBNOId: $data['dBNOId'],
+            attackId: (int) $data['attackId'],
+            dBNOId: (int) $data['dBNOId'],
             victimGameResult: GameResult::make($data['victimGameResult']),
             victim: Character::make($data['victim']),
             victimWeapon: $data['victimWeapon'],
@@ -49,7 +49,7 @@ final class PlayerKillV2 extends TelemetryEvent
             killerDamageInfo: DamageInfo::make($data['killerDamageInfo']),
             assists_AccountId: $data['assists_AccountId'],
             teamKillers_AccountId: $data['teamKillers_AccountId'],
-            isSuicide: $data['isSuicide'],
+            isSuicide: (bool) $data['isSuicide'],
             common: Common::make($data['common']),
         );
     }

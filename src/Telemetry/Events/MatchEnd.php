@@ -20,7 +20,7 @@ final class MatchEnd extends TelemetryEvent
         public readonly Common $common,
     ) {}
 
-    public static function make(array $data): self
+    public static function make(array $data): static
     {
         return new self(
             characters: array_map(fn ($character) => CharacterWrapper::make($character), $data['characters']),

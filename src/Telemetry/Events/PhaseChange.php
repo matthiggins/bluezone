@@ -22,10 +22,10 @@ final class PhaseChange extends TelemetryEvent
         $this->name = $this->phaseName();
     }
 
-    public static function make(array $data): self
+    public static function make(array $data): static
     {
         return new self(
-            phase: $data['phase'],
+            phase: (int) $data['phase'],
             elapsedTime: isset($data['elapsedTime']) ? (float) $data['elapsedTime'] : 0,
             common: Common::make($data['common']),
             timestamp: isset($data['timestamp']) ? Carbon::createFromTimestamp($data['timestamp']) : null,

@@ -16,7 +16,7 @@ final class PlayerCollection extends PubgResponse
     public static function make(Response $response): self
     {
         return new self(
-            players: collect($response->json()['data'])->map(fn ($p) => Player::fromArray($p))
+            players: collect($response->json()['data'] ?? [])->map(fn ($p) => Player::fromArray($p))
         );
     }
 }

@@ -30,17 +30,17 @@ final class PlayerTakeDamage extends TelemetryEvent
         $this->damageCategoryName = $this->getValueFromJsonFile('telemetry/damageTypeCategory.json', $this->damageTypeCategory);
     }
 
-    public static function make(array $data): self
+    public static function make(array $data): static
     {
         return new self(
-            attackId: $data['attackId'],
+            attackId: (int) $data['attackId'],
             attacker: $data['attacker'] ? Character::make($data['attacker']) : null,
             victim: Character::make($data['victim']),
             damageTypeCategory: $data['damageTypeCategory'],
             damageReason: $data['damageReason'],
             damageCauserName: $data['damageCauserName'],
-            damage: $data['damage'],
-            isThroughPenetrableWall: $data['isThroughPenetrableWall'],
+            damage: (float) $data['damage'],
+            isThroughPenetrableWall: (bool) $data['isThroughPenetrableWall'],
             common: Common::make($data['common']),
         );
     }

@@ -25,7 +25,7 @@ final class Common
 
     public static function make(array $data): self
     {
-        return new self($data['isGame']);
+        return new self((float) $data['isGame']);
     }
 
     public function phaseName(): string

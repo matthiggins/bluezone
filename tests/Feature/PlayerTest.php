@@ -65,3 +65,13 @@ it('url-encodes player names in the query string', function () {
     expect((string) $bluezone->getMockClient()->getLastResponse()->getPsrRequest()->getUri())
         ->toContain('filter%5BplayerNames%5D=a+b%2Cc%26d');
 });
+
+it('throws PlayerNotFoundException when a search returns an empty data array', function () {
+    mockBluezone([PlayerSearchRequest::class => MockResponse::make(['data' => []])])
+        ->player()->search('steam', 'NoSuchPlayer');
+})->throws(PlayerNotFoundException::class, 'No player named [NoSuchPlayer] on shard [steam].');
+
+it('throws PlayerNotFoundException when a multi search returns an empty data array', function () {
+    mockBluezone([PlayerSearchManyRequest::class => MockResponse::make(['data' => []])])
+        ->player()->searchMany('steam', ['NoSuchPlayer', 'AlsoMissing']);
+})->throws(PlayerNotFoundException::class, 'No player named [NoSuchPlayer,AlsoMissing] on shard [steam].');

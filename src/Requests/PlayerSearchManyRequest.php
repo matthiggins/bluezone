@@ -33,8 +33,9 @@ class PlayerSearchManyRequest extends Request
         return ['filter[playerNames]' => implode(',', $this->playerNames)];
     }
 
-    public function createDtoFromResponse(Response $response): PlayerCollection
+    /** Null when none of the names exist on the shard; PlayerResource::searchMany() turns that into a PlayerNotFoundException. */
+    public function createDtoFromResponse(Response $response): ?PlayerCollection
     {
-        return PlayerCollection::make($response);
+        return ($response->json()['data'] ?? []) === [] ? null : PlayerCollection::make($response);
     }
 }

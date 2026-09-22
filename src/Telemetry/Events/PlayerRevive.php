@@ -18,12 +18,12 @@ final class PlayerRevive extends TelemetryEvent
         public readonly Common $common,
     ) {}
 
-    public static function make(array $data): self
+    public static function make(array $data): static
     {
         return new self(
             reviver: $data['reviver'] ? Character::make($data['reviver']) : null,
             victim: Character::make($data['victim']),
-            dBNOId: $data['dBNOId'],
+            dBNOId: (int) $data['dBNOId'],
             common: Common::make($data['common']),
         );
     }

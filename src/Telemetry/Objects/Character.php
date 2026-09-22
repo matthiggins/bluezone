@@ -22,13 +22,13 @@ final class Character
     {
         return new self(
             name: $data['name'],
-            teamId: $data['teamId'],
-            health: $data['health'],
+            teamId: (int) $data['teamId'],
+            health: (float) $data['health'],
             location: Location::make($data['location']),
-            ranking: $data['ranking'],
+            ranking: (int) $data['ranking'],
             accountId: $data['accountId'],
-            isInBlueZone: $data['isInBlueZone'],
-            isInRedZone: $data['isInRedZone'],
+            isInBlueZone: (bool) $data['isInBlueZone'],
+            isInRedZone: (bool) $data['isInRedZone'],
             zone: $data['zone'],
         );
     }

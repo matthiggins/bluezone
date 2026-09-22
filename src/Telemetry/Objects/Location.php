@@ -14,6 +14,6 @@ final class Location
 
     public static function make(array $data): self
     {
-        return new self($data['x'], $data['y'], $data['z']);
+        return new self((float) $data['x'], (float) $data['y'], (float) $data['z']);
     }
 }

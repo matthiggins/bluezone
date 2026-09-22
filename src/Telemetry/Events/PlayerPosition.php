@@ -20,14 +20,13 @@ final class PlayerPosition extends TelemetryEvent
         public readonly Common $common,
     ) {}
 
-    public static function make(array $data): self
+    public static function make(array $data): static
     {
-        // dd($data);
         return new self(
             character: Character::make($data['character']),
             vehicle: $data['vehicle'] ? Vehicle::make($data['vehicle']) : null,
-            elapsedTime: $data['elapsedTime'],
-            numAlivePlayers: $data['numAlivePlayers'],
+            elapsedTime: (float) $data['elapsedTime'],
+            numAlivePlayers: (int) $data['numAlivePlayers'],
             common: Common::make($data['common']),
         );
     }

@@ -18,7 +18,7 @@ final class ItemDrop extends TelemetryEvent
         public readonly Common $common,
     ) {}
 
-    public static function make(array $data): self
+    public static function make(array $data): static
     {
         return new self(
             character: Character::make($data['character']),

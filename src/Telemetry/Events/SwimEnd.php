@@ -18,12 +18,12 @@ final class SwimEnd extends TelemetryEvent
         public readonly Common $common,
     ) {}
 
-    public static function make(array $data): self
+    public static function make(array $data): static
     {
         return new self(
             character: Character::make($data['character']),
-            swimDistance: $data['swimDistance'],
-            maxSwimDepthOfWater: $data['maxSwimDepthOfWater'],
+            swimDistance: (float) $data['swimDistance'],
+            maxSwimDepthOfWater: (float) $data['maxSwimDepthOfWater'],
             common: Common::make($data['common']),
         );
     }

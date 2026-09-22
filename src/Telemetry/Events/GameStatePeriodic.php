@@ -16,7 +16,7 @@ final class GameStatePeriodic extends TelemetryEvent
         public readonly Common $common,
     ) {}
 
-    public static function make(array $data): self
+    public static function make(array $data): static
     {
         return new self(
             gameState: GameState::make($data['gameState']),

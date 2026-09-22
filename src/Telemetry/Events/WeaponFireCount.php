@@ -18,12 +18,12 @@ final class WeaponFireCount extends TelemetryEvent
         public readonly Common $common,
     ) {}
 
-    public static function make(array $data): self
+    public static function make(array $data): static
     {
         return new self(
             character: Character::make($data['character']),
             weaponId: $data['weaponId'],
-            fireCount: $data['fireCount'],
+            fireCount: (int) $data['fireCount'],
             common: Common::make($data['common']),
         );
     }

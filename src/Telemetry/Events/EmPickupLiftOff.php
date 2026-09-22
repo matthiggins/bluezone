@@ -18,7 +18,7 @@ final class EmPickupLiftOff extends TelemetryEvent
         public readonly Common $common,
     ) {}
 
-    public static function make(array $data): self
+    public static function make(array $data): static
     {
         return new self(
             instigator: Character::make($data['instigator']),

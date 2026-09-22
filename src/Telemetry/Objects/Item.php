@@ -26,7 +26,7 @@ final class Item
     {
         return new self(
             itemId: $data['itemId'],
-            stackCount: $data['stackCount'],
+            stackCount: (int) $data['stackCount'],
             category: $data['category'],
             subCategory: $data['subCategory'],
             attachedItems: $data['attachedItems'],

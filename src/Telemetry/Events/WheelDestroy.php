@@ -28,10 +28,10 @@ final class WheelDestroy extends TelemetryEvent
         $this->damageCategoryName = $this->getValueFromJsonFile('telemetry/damageTypeCategory.json', $this->damageTypeCategory);
     }
 
-    public static function make(array $data): self
+    public static function make(array $data): static
     {
         return new self(
-            attackId: $data['attackId'],
+            attackId: (int) $data['attackId'],
             attacker: Character::make($data['attacker']),
             vehicle: Vehicle::make($data['vehicle']),
             damageTypeCategory: $data['damageTypeCategory'],

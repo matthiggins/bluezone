@@ -42,5 +42,5 @@ it('can be disabled for tests', function () {
     $bluezone->status()->get();
     $bluezone->status()->get();
 
-    expect(true)->toBeTrue();
+    expect($bluezone->hasReachedRateLimit())->toBeFalse();
 });

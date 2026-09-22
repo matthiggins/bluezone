@@ -8,7 +8,7 @@ it('reports the api online', function () {
     expect(mockBluezone([StatusRequest::class => apiFixture('status')])->status()->get()->isOnline())->toBeTrue();
 });
 
-it('exposes release metadata', function () {
+it('leaves releasedAt and version null because the live endpoint sends no attributes', function () {
     $status = mockBluezone([StatusRequest::class => apiFixture('status')])->status()->get();
 
     expect($status->releasedAt)->toBeNull()->and($status->version)->toBeNull();

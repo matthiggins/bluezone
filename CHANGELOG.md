@@ -17,6 +17,8 @@
 - `TelemetryRequest` is removed; use `Bluezone::telemetry()->download()` / `fetch()`.
 - `MatchNotFoundException`'s constructor is replaced by `MatchNotFoundException::forId()`; `ItemNotFoundException` is removed.
 - `PlayerDestroyBreachableWall::$weapon` is `Item|string`.
+- `PubgMatch::statsForPlayer()` returns `?PlayerMatchStats`; it already returned null for an account that did not play the match.
+- `WeaponHitDetails::$damage` and `$dBNODamage` are floats, matching `WeaponStats`.
 - Response, telemetry event and telemetry object classes are `final`; `TelemetryEvent` is abstract and declares `public readonly Common $common`.
 - The test suite runs with `failOnWarning` and `failOnNotice`.
 
@@ -40,3 +42,5 @@
 - Player names are sent as encoded query parameters instead of being concatenated into the url.
 - `Telemetry::events()` returns a copy, so a caller cannot mutate the memoised collection.
 - Telemetry urls keep their query string.
+- `player()->search()` and `searchMany()` throw `PlayerNotFoundException` for an empty `data` array instead of raising a `TypeError`.
+- Every scalar telemetry value is cast at the call site, so a JSON float in an int-typed field no longer throws.

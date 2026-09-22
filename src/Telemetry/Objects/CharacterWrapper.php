@@ -21,7 +21,7 @@ final class CharacterWrapper
             primaryWeaponFirst: $data['primaryWeaponFirst'],
             primaryWeaponSecond: $data['primaryWeaponSecond'],
             secondaryWeapon: $data['secondaryWeapon'],
-            spawnKitIndex: $data['spawnKitIndex'],
+            spawnKitIndex: (int) $data['spawnKitIndex'],
         );
     }
 }

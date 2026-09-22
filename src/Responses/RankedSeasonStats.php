@@ -29,7 +29,7 @@ final class RankedSeasonStats extends PubgResponse
         return new self(
             accountId: $data['relationships']['player']['data']['id'],
             seasonId: $data['relationships']['season']['data']['id'],
-            gameModeStats: $modes === [] ? [] : array_map(RankedGameModeStats::fromArray(...), $modes),
+            gameModeStats: array_map(RankedGameModeStats::fromArray(...), $modes),
         );
     }
 

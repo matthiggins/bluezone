@@ -33,8 +33,8 @@ final class DamageInfo
             typeCategory: $data['damageTypeCategory'],
             causerName: $data['damageCauserName'],
             additionalInfo: $data['additionalInfo'],
-            distance: $data['distance'],
-            isThroughPentrableWall: $data['isThroughPentrableWall'] ?? null,
+            distance: (float) $data['distance'],
+            isThroughPentrableWall: isset($data['isThroughPentrableWall']) ? (bool) $data['isThroughPentrableWall'] : null,
         );
     }
 }

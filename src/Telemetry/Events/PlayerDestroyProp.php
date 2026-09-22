@@ -24,7 +24,7 @@ final class PlayerDestroyProp extends TelemetryEvent
         public readonly Carbon $timestamp,
     ) {}
 
-    public static function make(array $data): self
+    public static function make(array $data): static
     {
         return new self(
             attacker: Character::make($data['attacker']),

@@ -20,12 +20,12 @@ final class VehicleRide extends TelemetryEvent
         public readonly Common $common,
     ) {}
 
-    public static function make(array $data): self
+    public static function make(array $data): static
     {
         return new self(
             character: Character::make($data['character']),
             vehicle: Vehicle::make($data['vehicle']),
-            seatIndex: $data['seatIndex'],
+            seatIndex: (int) $data['seatIndex'],
             fellowPassengers: array_map(fn ($passenger) => Character::make($passenger), $data['fellowPassengers']),
             common: Common::make($data['common']),
         );

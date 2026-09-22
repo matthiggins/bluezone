@@ -78,6 +78,8 @@ try {
 }
 ```
 
+`recentMatches()` (and `recentCasualMatches()` / `recentRankedMatches()`) issues one request per match id, and `rankedSeasonStatsMany()` one per account id, so a default `$limit` of 20 spends twice a standard key's 10-per-minute budget: keep `$limit` under your per-minute budget, or pass the budget your key actually has.
+
 Turn the plugin off in tests with `$bluezone->useRateLimitPlugin(false)`.
 
 ## Shards and game modes
@@ -108,7 +110,7 @@ Every method returns a typed DTO from `Bluezone\Responses`.
 // Bluezone\Responses\Status
 $status = $bluezone->status()->get();
 $status->isOnline();
-$status->version;
+$status->version;             // null: the live endpoint currently returns neither version nor releasedAt
 
 // Bluezone\Responses\Seasons
 $seasons = $bluezone->season()->all('steam');
@@ -160,7 +162,7 @@ $survival->stats['damageDealt']->careerBest;
 // Bluezone\Responses\PubgMatch
 $match = $bluezone->match()->find('steam', $matchId);
 $match->rosters;                             // Collection<MatchRoster>, sorted by rank
-$match->statsForPlayer($accountId);          // PlayerMatchStats
+$match->statsForPlayer($accountId);          // ?PlayerMatchStats, null when the id did not play
 $match->rosterForPlayer($accountId)?->won;
 $match->teammatesOf($accountId);             // Collection<PlayerMatchStats>
 $match->isRanked();
@@ -195,11 +197,12 @@ try {
 
 | Exception | Thrown when |
 |---|---|
-| `PlayerNotFoundException` | `player()->find()`, `search()` or `searchMany()` gets a 404 |
+| `PlayerNotFoundException` | `player()->find()`, `search()` or `searchMany()` gets a 404, or the search matched no player |
 | `MatchNotFoundException` | `match()->find()` gets a 404 |
 | `InvalidTelemetryUrlException` | a telemetry url is not on `telemetry-cdn.pubg.com` |
 | `InvalidTelemetryException` | a telemetry body is not decodable JSON |
 | `Saloon\RateLimitPlugin\Exceptions\RateLimitReachedException` | the local budget is spent, or the API answered 429 |
+| `ValueError` | `Shard::resolve()` or `GameMode::resolve()` is given a string that is not a shard or game mode |
 
 Everything else surfaces as a Saloon exception (`UnauthorizedException`, `ServiceUnavailableException`, `FatalRequestException`, …). See [Saloon — handling failures](https://docs.saloon.dev/the-basics/handling-failures).
 

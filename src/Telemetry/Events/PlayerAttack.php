@@ -23,11 +23,11 @@ final class PlayerAttack extends TelemetryEvent
         public readonly Common $common,
     ) {}
 
-    public static function make(array $data): self
+    public static function make(array $data): static
     {
         return new self(
-            attackId: $data['attackId'],
-            fireWeaponStackCount: $data['fireWeaponStackCount'],
+            attackId: (int) $data['attackId'],
+            fireWeaponStackCount: (int) $data['fireWeaponStackCount'],
             attacker: Character::make($data['attacker']),
             attackType: $data['attackType'],
             weapon: Item::make($data['weapon']),

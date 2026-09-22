@@ -20,12 +20,12 @@ final class ItemPickupFromLootBox extends TelemetryEvent
         public readonly Common $common,
     ) {}
 
-    public static function make(array $data): self
+    public static function make(array $data): static
     {
         return new self(
             character: Character::make($data['character']),
             item: Item::make($data['item']),
-            ownerTeamId: $data['ownerTeamId'],
+            ownerTeamId: (int) $data['ownerTeamId'],
             creatorAccountId: $data['creatorAccountId'],
             common: Common::make($data['common']),
         );

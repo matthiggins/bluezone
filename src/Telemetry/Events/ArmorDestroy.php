@@ -31,17 +31,17 @@ final class ArmorDestroy extends TelemetryEvent
         $this->damageCategoryName = $this->getValueFromJsonFile('telemetry/damageTypeCategory.json', $this->damageTypeCategory);
     }
 
-    public static function make(array $data): self
+    public static function make(array $data): static
     {
         return new self(
-            attackId: $data['attackId'],
+            attackId: (int) $data['attackId'],
             attacker: Character::make($data['attacker']),
             victim: Character::make($data['victim']),
             damageTypeCategory: $data['damageTypeCategory'],
             damageReason: $data['damageReason'],
             damageCauserName: $data['damageCauserName'],
             item: Item::make($data['item']),
-            distance: $data['distance'],
+            distance: (float) $data['distance'],
             common: Common::make($data['common']),
         );
     }

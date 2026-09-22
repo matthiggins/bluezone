@@ -31,20 +31,19 @@ final class Vehicle
 
     public static function make(array $data): self
     {
-        // dd($data)
         return new self(
             vehicleType: $data['vehicleType'],
             vehicleId: $data['vehicleId'],
-            vehicleUniqueId: $data['vehicleUniqueId'] ?? null,
-            healthPercent: $data['healthPercent'],
-            fuelPercent: $data['fuelPercent'] ?? null,
-            altitudeAbs: $data['altitudeAbs'],
-            altitudeRel: $data['altitudeRel'],
-            velocity: $data['velocity'],
-            seatIndex: $data['seatIndex'],
-            isWheelsInAir: $data['isWheelsInAir'],
-            isInWaterVolume: $data['isInWaterVolume'],
-            isEngineOn: $data['isEngineOn'],
+            vehicleUniqueId: isset($data['vehicleUniqueId']) ? (int) $data['vehicleUniqueId'] : null,
+            healthPercent: (float) $data['healthPercent'],
+            fuelPercent: isset($data['fuelPercent']) ? (float) $data['fuelPercent'] : null,
+            altitudeAbs: (float) $data['altitudeAbs'],
+            altitudeRel: (float) $data['altitudeRel'],
+            velocity: (float) $data['velocity'],
+            seatIndex: (int) $data['seatIndex'],
+            isWheelsInAir: (bool) $data['isWheelsInAir'],
+            isInWaterVolume: (bool) $data['isInWaterVolume'],
+            isEngineOn: (bool) $data['isEngineOn'],
         );
     }
 }

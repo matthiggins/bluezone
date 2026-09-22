@@ -17,9 +17,9 @@ final class GameResult
     public static function make(array $data): self
     {
         return new self(
-            rank: $data['rank'],
+            rank: (int) $data['rank'],
             gameResult: $data['gameResult'],
-            teamId: $data['teamId'],
+            teamId: (int) $data['teamId'],
             stats: Stats::make($data['stats']),
             accountId: $data['accountId'],
         );

@@ -19,12 +19,12 @@ final class ItemPickupFromCarePackage extends TelemetryEvent
         public readonly Common $common,
     ) {}
 
-    public static function make(array $data): self
+    public static function make(array $data): static
     {
         return new self(
             character: Character::make($data['character']),
             item: Item::make($data['item']),
-            carePackageUniqueId: $data['carePackageUniqueId'],
+            carePackageUniqueId: (float) $data['carePackageUniqueId'],
             common: Common::make($data['common']),
         );
     }

@@ -21,12 +21,12 @@ final class WeaponStats
     {
         return new self(
             weapon: $data['weapon'],
-            damage: $data['damage'],
-            dBNODamage: $data['dBNODamage'],
-            shots: $data['shots'],
-            hits: $data['hits'],
-            dBNOHits: $data['dBNOHits'],
-            holdingTime: $data['holdingTime'],
+            damage: (float) $data['damage'],
+            dBNODamage: (float) $data['dBNODamage'],
+            shots: (int) $data['shots'],
+            hits: (int) $data['hits'],
+            dBNOHits: (int) $data['dBNOHits'],
+            holdingTime: (int) $data['holdingTime'],
             hitDetails: array_map(fn ($hitDetail) => WeaponHitDetails::make($hitDetail), $data['hitDetails']),
         );
     }

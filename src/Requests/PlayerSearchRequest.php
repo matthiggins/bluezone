@@ -22,9 +22,6 @@ class PlayerSearchRequest extends Request
         protected string $playerName,
     ) {}
 
-    /**
-     * Resolve the endpoint
-     */
     public function resolveEndpoint(): string
     {
         return 'shards/'.$this->shard->value.'/players';
@@ -36,8 +33,11 @@ class PlayerSearchRequest extends Request
         return ['filter[playerNames]' => $this->playerName];
     }
 
-    public function createDtoFromResponse(Response $response): mixed
+    /** Null when the shard has no player with that name; PlayerResource::search() turns that into a PlayerNotFoundException. */
+    public function createDtoFromResponse(Response $response): ?Player
     {
-        return Player::fromArray($response->json()['data'][0]);
+        $data = $response->json()['data'] ?? [];
+
+        return $data === [] ? null : Player::fromArray($data[0]);
     }
 }

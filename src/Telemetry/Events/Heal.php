@@ -19,12 +19,12 @@ final class Heal extends TelemetryEvent
         public readonly Common $common,
     ) {}
 
-    public static function make(array $data): self
+    public static function make(array $data): static
     {
         return new self(
             character: Character::make($data['character']),
             item: Item::make($data['item']),
-            healAmount: isset($data['healamount']) ? $data['healamount'] : (isset($data['healAmount']) ? $data['healAmount'] : 0),
+            healAmount: (float) ($data['healamount'] ?? $data['healAmount'] ?? 0),
             common: Common::make($data['common']),
         );
     }

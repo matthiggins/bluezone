@@ -40,5 +40,7 @@ it('builds rosters with boolean won and participant ids', function () {
     $someone = $match->stats->first()->playerId;
     expect($match->rosterForPlayer($someone)?->participantIds)->toContain($match->stats->keys()->first())
         ->and($match->teammatesOf($someone))->toHaveCount(1)
-        ->and($match->teammatesOf($someone)->pluck('playerId'))->not->toContain($someone);
+        ->and($match->teammatesOf($someone)->pluck('playerId'))->not->toContain($someone)
+        ->and($match->statsForPlayer($someone))->toBeInstanceOf(PlayerMatchStats::class)
+        ->and($match->statsForPlayer('account.not-in-this-match'))->toBeNull();
 });

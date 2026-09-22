@@ -21,7 +21,7 @@ final class PlayerDestroyBreachableWall extends TelemetryEvent
     ) {}
 
     /** @param  array<string, mixed>  $data */
-    public static function make(array $data): self
+    public static function make(array $data): static
     {
         return new self(
             attacker: Character::make($data['attacker']),

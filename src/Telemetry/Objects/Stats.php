@@ -17,6 +17,13 @@ final class Stats
 
     public static function make(array $data): self
     {
-        return new self($data['killCount'], $data['distanceOnFoot'], $data['distanceOnSwim'], $data['distanceOnVehicle'], $data['distanceOnParachute'], $data['distanceOnFreefall']);
+        return new self(
+            killCount: (int) $data['killCount'],
+            distanceOnFoot: (float) $data['distanceOnFoot'],
+            distanceOnSwim: (float) $data['distanceOnSwim'],
+            distanceOnVehicle: (float) $data['distanceOnVehicle'],
+            distanceOnParachute: (float) $data['distanceOnParachute'],
+            distanceOnFreefall: (float) $data['distanceOnFreefall'],
+        );
     }
 }

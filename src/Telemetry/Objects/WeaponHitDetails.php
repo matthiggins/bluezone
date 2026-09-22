@@ -12,20 +12,20 @@ final class WeaponHitDetails
         public readonly int $dBNOs,
         public readonly int $hits,
         public readonly int $dBNOHits,
-        public readonly int $damage,
-        public readonly int $dBNODamage,
+        public readonly float $damage,
+        public readonly float $dBNODamage,
     ) {}
 
     public static function make(array $data): self
     {
         return new self(
             bodyPart: $data['bodyPart'],
-            kills: $data['kills'],
-            dBNOs: $data['dBNOs'],
-            hits: $data['hits'],
-            dBNOHits: $data['dBNOHits'],
-            damage: $data['damage'],
-            dBNODamage: $data['dBNODamage'],
+            kills: (int) $data['kills'],
+            dBNOs: (int) $data['dBNOs'],
+            hits: (int) $data['hits'],
+            dBNOHits: (int) $data['dBNOHits'],
+            damage: (float) $data['damage'],
+            dBNODamage: (float) $data['dBNODamage'],
         );
     }
 }

@@ -23,16 +23,16 @@ final class MatchStart extends TelemetryEvent
         public readonly Common $common,
     ) {}
 
-    public static function make(array $data): self
+    public static function make(array $data): static
     {
         return new self(
             mapName: $data['mapName'],
             weatherId: $data['weatherId'],
             characters: array_map(fn ($character) => CharacterWrapper::make($character), $data['characters']),
             cameraViewBehaviour: $data['cameraViewBehaviour'],
-            teamSize: $data['teamSize'],
-            isCustomGame: $data['isCustomGame'],
-            isEventMode: $data['isEventMode'],
+            teamSize: (int) $data['teamSize'],
+            isCustomGame: (bool) $data['isCustomGame'],
+            isEventMode: (bool) $data['isEventMode'],
             blueZoneCustomOptions: $data['blueZoneCustomOptions'],
             common: Common::make($data['common']),
         );

@@ -22,14 +22,14 @@ final class VehicleLeave extends TelemetryEvent
         public readonly Common $common,
     ) {}
 
-    public static function make(array $data): self
+    public static function make(array $data): static
     {
         return new self(
             character: Character::make($data['character']),
             vehicle: Vehicle::make($data['vehicle']),
-            rideDistance: $data['rideDistance'],
-            seatIndex: $data['seatIndex'],
-            maxSpeed: $data['maxSpeed'],
+            rideDistance: (float) $data['rideDistance'],
+            seatIndex: (int) $data['seatIndex'],
+            maxSpeed: (float) $data['maxSpeed'],
             fellowPassengers: array_map(fn ($passenger) => Character::make($passenger), $data['fellowPassengers']),
             common: Common::make($data['common']),
         );

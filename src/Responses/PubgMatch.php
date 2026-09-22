@@ -33,9 +33,6 @@ final class PubgMatch extends PubgResponse
         public readonly Collection $rosters,
     ) {}
 
-    /**
-     * Create a DTO from a response.
-     */
     public static function make(Response $response): self
     {
         $data = $response->json()['data'];
@@ -45,8 +42,6 @@ final class PubgMatch extends PubgResponse
     }
 
     /**
-     * Create a DTO from an array.
-     *
      * @param  array<string, mixed>  $data
      * @param  array<int, array<string, mixed>>  $included  "included" data from the PUBG API to get stats and rosters
      */
@@ -68,7 +63,7 @@ final class PubgMatch extends PubgResponse
             assetId: $asset['id'],
             assetUrl: $asset['attributes']['URL'],
             createdAt: Carbon::parse($data['attributes']['createdAt']),
-            duration: $data['attributes']['duration'],
+            duration: (int) $data['attributes']['duration'],
             gameMode: $data['attributes']['gameMode'],
             mapName: Dictionary::get('telemetry/mapName.json', $data['attributes']['mapName']),
             matchType: $data['attributes']['matchType'],
@@ -79,27 +74,18 @@ final class PubgMatch extends PubgResponse
         );
     }
 
-    /**
-     * Get the telemetry DTO from the telemetry file for this match.
-     */
     public function getTelemetry(): Telemetry
     {
         return (new TelemetryResource(new TelemetryConnector))->fetch($this->assetUrl);
     }
 
-    /**
-     * Get the stats for a player.
-     */
-    public function statsForPlayer(string $playerId): PlayerMatchStats
+    public function statsForPlayer(string $playerId): ?PlayerMatchStats
     {
         return collect($this->stats)
             ->where('playerId', $playerId)
             ->first();
     }
 
-    /**
-     * Get the roster a player fought on.
-     */
     public function rosterForPlayer(string $accountId): ?MatchRoster
     {
         $participantId = $this->stats->search(fn (PlayerMatchStats $s) => $s->playerId === $accountId);
@@ -107,11 +93,7 @@ final class PubgMatch extends PubgResponse
         return $participantId === false ? null : $this->rosters->first(fn (MatchRoster $r) => in_array($participantId, $r->participantIds, true));
     }
 
-    /**
-     * Get the stats of everyone on a player's roster except the player.
-     *
-     * @return Collection<int, PlayerMatchStats>
-     */
+    /** @return Collection<int, PlayerMatchStats> */
     public function teammatesOf(string $accountId): Collection
     {
         $roster = $this->rosterForPlayer($accountId);
@@ -122,17 +104,11 @@ final class PubgMatch extends PubgResponse
             ->values();
     }
 
-    /**
-     * Is this a ranked match?
-     */
     public function isRanked(): bool
     {
         return $this->matchType === 'competitive';
     }
 
-    /**
-     * Get the percent of players that are bots.
-     */
     public function botPercent(): float
     {
         $botCount = $this->totalBots();
@@ -140,25 +116,16 @@ final class PubgMatch extends PubgResponse
         return $botCount ? floatval(number_format(($botCount / $this->totalPlayers()) * 100, 2)) : floatval($botCount);
     }
 
-    /**
-     * Get the total number of bots in the roster
-     */
     public function totalBots(): int
     {
         return $this->stats->filter(fn ($stat) => str_starts_with($stat->playerId, 'ai.'))->count();
     }
 
-    /**
-     * Get the total number of players in the roster
-     */
     public function totalPlayers(): int
     {
         return $this->stats->count();
     }
 
-    /**
-     * Get the total number of teams in the match
-     */
     public function totalTeams(): int
     {
         return $this->rosters->count();

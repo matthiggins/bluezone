@@ -32,8 +32,8 @@ final class Clan extends PubgResponse
             shard: $shard,
             name: $data['attributes']['clanName'],
             tag: $data['attributes']['clanTag'],
-            level: $data['attributes']['clanLevel'],
-            memberCount: $data['attributes']['clanMemberCount'],
+            level: (int) $data['attributes']['clanLevel'],
+            memberCount: (int) $data['attributes']['clanMemberCount'],
         );
     }
 }

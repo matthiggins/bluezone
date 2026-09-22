@@ -12,14 +12,18 @@ abstract class TelemetryEvent
 {
     public readonly Common $common;
 
-    public string $eventType;
+    public string $eventType = '';
 
     public ?Carbon $date = null;
 
-    public function __construct(Common $common)
+    /** Never reached, but a readonly property declared here must be assignable from a constructor declared here. */
+    protected function __construct(Common $common)
     {
         $this->common = $common;
     }
+
+    /** @param  array<string, mixed>  $data  one decoded telemetry event */
+    abstract public static function make(array $data): static;
 
     public function setEventType(string $type): self
     {

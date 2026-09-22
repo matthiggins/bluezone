@@ -17,11 +17,11 @@ final class ParachuteLanding extends TelemetryEvent
         public readonly Common $common,
     ) {}
 
-    public static function make(array $data): self
+    public static function make(array $data): static
     {
         return new self(
             character: Character::make($data['character']),
-            distance: $data['distance'],
+            distance: (float) $data['distance'],
             common: Common::make($data['common']),
         );
     }

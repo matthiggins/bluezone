@@ -26,19 +26,19 @@ final class GameState
     public static function make(array $data): self
     {
         return new self(
-            elapsedTime: $data['elapsedTime'],
-            numAliveTeams: $data['numAliveTeams'],
-            numJoinPlayers: $data['numJoinPlayers'],
-            numStartPlayers: $data['numStartPlayers'],
-            numAlivePlayers: $data['numAlivePlayers'],
+            elapsedTime: (int) $data['elapsedTime'],
+            numAliveTeams: (int) $data['numAliveTeams'],
+            numJoinPlayers: (int) $data['numJoinPlayers'],
+            numStartPlayers: (int) $data['numStartPlayers'],
+            numAlivePlayers: (int) $data['numAlivePlayers'],
             safeZonePosition: isset($data['safeZonePosition']) ? Location::make($data['safeZonePosition']) : null,
-            safeZoneRadius: $data['safeZoneRadius'] ?? null,
+            safeZoneRadius: isset($data['safeZoneRadius']) ? (float) $data['safeZoneRadius'] : null,
             poisonGasWarningPosition: Location::make($data['poisonGasWarningPosition']),
-            poisonGasWarningRadius: $data['poisonGasWarningRadius'],
+            poisonGasWarningRadius: (float) $data['poisonGasWarningRadius'],
             redZonePosition: Location::make($data['redZonePosition']),
-            redZoneRadius: $data['redZoneRadius'],
+            redZoneRadius: (float) $data['redZoneRadius'],
             blackZonePosition: Location::make($data['blackZonePosition']),
-            blackZoneRadius: $data['blackZoneRadius'],
+            blackZoneRadius: (float) $data['blackZoneRadius'],
         );
     }
 }

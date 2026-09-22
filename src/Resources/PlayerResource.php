@@ -32,9 +32,6 @@ use Saloon\Exceptions\Request\Statuses\NotFoundException;
 
 class PlayerResource extends Resource
 {
-    /**
-     * Find a player by account id
-     */
     public function find(Shard|string $shard, string $accountId): Player
     {
         $shard = Shard::resolve($shard);
@@ -46,17 +43,11 @@ class PlayerResource extends Resource
         }
     }
 
-    /**
-     * Get recent matches for a player
-     */
     public function recentMatches(Player $player, int $limit = 20): Collection
     {
         return $player->recentMatches($this->connector, $limit);
     }
 
-    /**
-     * Get recent casual matches for a player
-     */
     public function recentCasualMatches(Player $player, int $limit = 20): Collection
     {
         return $this->recentMatches(
@@ -65,9 +56,6 @@ class PlayerResource extends Resource
         )->filter(fn ($match) => ! $match->isRanked());
     }
 
-    /**
-     * Get recent ranked matches for a player
-     */
     public function recentRankedMatches(Player $player, int $limit = 20): Collection
     {
         return $this->recentMatches(
@@ -76,37 +64,32 @@ class PlayerResource extends Resource
         )->filter(fn ($match) => $match->isRanked());
     }
 
-    /**
-     * Search for a player by name
-     */
     public function search(Shard|string $shard, string $playerName): Player
     {
         $shard = Shard::resolve($shard);
 
         try {
-            return $this->send(new PlayerSearchRequest(shard: $shard, playerName: $playerName), Player::class);
+            $player = $this->sendNullable(new PlayerSearchRequest(shard: $shard, playerName: $playerName), Player::class);
         } catch (NotFoundException) {
             throw PlayerNotFoundException::forName($shard, $playerName);
         }
+
+        return $player ?? throw PlayerNotFoundException::forName($shard, $playerName);
     }
 
-    /**
-     * Search for multiple players by name
-     */
     public function searchMany(Shard|string $shard, array $playerNames): PlayerCollection
     {
         $shard = Shard::resolve($shard);
 
         try {
-            return $this->send(new PlayerSearchManyRequest(shard: $shard, playerNames: $playerNames), PlayerCollection::class);
+            $players = $this->sendNullable(new PlayerSearchManyRequest(shard: $shard, playerNames: $playerNames), PlayerCollection::class);
         } catch (NotFoundException) {
             throw PlayerNotFoundException::forName($shard, implode(',', $playerNames));
         }
+
+        return $players ?? throw PlayerNotFoundException::forName($shard, implode(',', $playerNames));
     }
 
-    /**
-     * Get season stats for a player
-     */
     public function seasonStats(Shard|string $shard, string $seasonId, string $accountId): SeasonStats
     {
         return $this->send(new SeasonStatsRequest(
@@ -116,9 +99,6 @@ class PlayerResource extends Resource
         ), SeasonStats::class);
     }
 
-    /**
-     * Get season stats for multiple players
-     */
     public function seasonStatsMany(Shard|string $shard, string $seasonId, GameMode|string $gameMode, array $accountIds): SeasonStatsCollection
     {
         return $this->send(new SeasonStatsManyRequest(
@@ -129,9 +109,6 @@ class PlayerResource extends Resource
         ), SeasonStatsCollection::class);
     }
 
-    /**
-     * Get ranked season stats for a player
-     */
     public function rankedSeasonStats(Shard|string $shard, string $seasonId, string $accountId): RankedSeasonStats
     {
         return $this->send(new RankedSeasonStatsRequest(
@@ -141,12 +118,7 @@ class PlayerResource extends Resource
         ), RankedSeasonStats::class);
     }
 
-    /**
-     * Get ranked season stats for many players. The PUBG API
-     * does not support getting multiple ranked season stats
-     * in a single request... because of that we are cycling
-     * through the account ids and making a request for each
-     */
+    /** One request per account id: the PUBG API has no batch ranked endpoint. */
     public function rankedSeasonStatsMany(Shard|string $shard, string $seasonId, array $accountIds): RankedSeasonStatsCollection
     {
         $shard = Shard::resolve($shard);
@@ -162,9 +134,6 @@ class PlayerResource extends Resource
         return new RankedSeasonStatsCollection($statsResponseCollection);
     }
 
-    /**
-     * Get lifetime stats for a player
-     */
     public function lifetimeStats(Shard|string $shard, string $accountId): LifetimeStats
     {
         return $this->send(new LifetimeStatsRequest(
@@ -173,9 +142,6 @@ class PlayerResource extends Resource
         ), LifetimeStats::class);
     }
 
-    /**
-     * Get lifetime stats for multiple players
-     */
     public function lifetimeStatsMany(Shard|string $shard, GameMode|string $gameMode, array $playerIds): LifetimeStatsCollection
     {
         return $this->send(new LifetimeStatsManyRequest(
@@ -185,9 +151,6 @@ class PlayerResource extends Resource
         ), LifetimeStatsCollection::class);
     }
 
-    /**
-     * Get all weapon mastery for a player
-     */
     public function weaponMastery(Shard|string $shard, string $accountId): WeaponMastery
     {
         return $this->send(new WeaponMasteryRequest(
@@ -196,9 +159,6 @@ class PlayerResource extends Resource
         ), WeaponMastery::class);
     }
 
-    /**
-     * Get all survival mastery for a player
-     */
     public function survivalMastery(Shard|string $shard, string $accountId): SurvivalMastery
     {
         return $this->send(new SurvivalMasteryRequest(

@@ -35,10 +35,10 @@ final class PlayerMakeGroggy extends TelemetryEvent
         $this->damageCategoryName = $this->getValueFromJsonFile('telemetry/damageTypeCategory.json', $this->damageTypeCategory);
     }
 
-    public static function make(array $data): self
+    public static function make(array $data): static
     {
         return new self(
-            attackId: $data['attackId'],
+            attackId: (int) $data['attackId'],
             attacker: Character::make($data['attacker']),
             victim: Character::make($data['victim']),
             damageReason: $data['damageReason'],
@@ -47,10 +47,10 @@ final class PlayerMakeGroggy extends TelemetryEvent
             damageCauserAdditionalInfo: $data['damageCauserAdditionalInfo'],
             victimWeapon: $data['victimWeapon'],
             victimWeaponAdditionalInfo: $data['victimWeaponAdditionalInfo'],
-            distance: $data['distance'],
-            isAttackerInVehicle: $data['isAttackerInVehicle'],
-            dBNOId: $data['dBNOId'],
-            isThroughPenetrableWall: $data['isThroughPenetrableWall'],
+            distance: (float) $data['distance'],
+            isAttackerInVehicle: (bool) $data['isAttackerInVehicle'],
+            dBNOId: (int) $data['dBNOId'],
+            isThroughPenetrableWall: (bool) $data['isThroughPenetrableWall'],
             common: Common::make($data['common']),
         );
     }

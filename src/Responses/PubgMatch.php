@@ -5,15 +5,17 @@ declare(strict_types=1);
 namespace Bluezone\Responses;
 
 use Bluezone\Requests\TelemetryRequest;
-use Bluezone\Telemetry\Concerns\AccessesJsonDictionaries;
+use Bluezone\Support\Dictionary;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Saloon\Http\Response;
 
 class PubgMatch extends PubgResponse
 {
-    use AccessesJsonDictionaries;
-
+    /**
+     * @param  Collection<string, PlayerMatchStats>  $stats
+     * @param  Collection<int, MatchRoster>  $rosters
+     */
     public function __construct(
         public readonly string $id,
         public readonly string $shard,
@@ -22,14 +24,13 @@ class PubgMatch extends PubgResponse
         public readonly Carbon $createdAt,
         public readonly int $duration,
         public readonly string $gameMode,
-        public string $mapName,
+        public readonly string $mapName,
         public readonly string $matchType,
         public readonly string $seasonState,
+        public readonly bool $isCustomMatch,
         public readonly Collection $stats,
-        public readonly Collection $teams,
-    ) {
-        $this->mapName = $this->getValueFromJsonFile('telemetry/mapName.json', $this->mapName);
-    }
+        public readonly Collection $rosters,
+    ) {}
 
     /**
      * Create a DTO from a response.
@@ -45,42 +46,20 @@ class PubgMatch extends PubgResponse
     /**
      * Create a DTO from an array.
      *
-     * @param  array  $included  "included" data from the PUBG API to get stats and teams
+     * @param  array<string, mixed>  $data
+     * @param  array<int, array<string, mixed>>  $included  "included" data from the PUBG API to get stats and rosters
      */
     public static function fromArray(array $data, array $included): self
     {
-        $statsArray = collect($included)
+        $stats = collect($included)
             ->filter(fn ($item) => $item['type'] === 'participant' && $item['attributes']['stats'] !== null)
             ->mapWithKeys(fn ($item) => [$item['id'] => $item['attributes']['stats']])
             ->sortBy('winPlace')
-            ->map(fn ($item) => PlayerMatchStats::fromArray($item))
-            ->toArray();
+            ->map(fn ($item) => PlayerMatchStats::fromArray($item));
 
         $asset = collect($included)
             ->where('type', 'asset')
             ->first();
-
-        $teamsArray = collect($included)
-            ->filter(fn ($item) => $item['type'] === 'roster')
-            ->map(function ($item) use ($statsArray) {
-                return [
-                    'id' => $item['attributes']['stats']['teamId'],
-                    'rank' => $item['attributes']['stats']['rank'],
-                    'won' => $item['attributes']['won'],
-                    'shardId' => $item['attributes']['shardId'],
-                    'members' => collect($item['relationships']['participants']['data'])
-                        ->map(function ($item) use ($statsArray) {
-                            return [
-                                'id' => $item['id'],
-                                'player' => $statsArray[$item['id']],
-                            ];
-                        })
-                        ->toArray(),
-                ];
-            })
-            ->sortBy('rank')
-            ->values()
-            ->toArray();
 
         return new static(
             id: $data['id'],
@@ -90,11 +69,12 @@ class PubgMatch extends PubgResponse
             createdAt: Carbon::parse($data['attributes']['createdAt']),
             duration: $data['attributes']['duration'],
             gameMode: $data['attributes']['gameMode'],
-            mapName: $data['attributes']['mapName'],
+            mapName: Dictionary::get('telemetry/mapName.json', $data['attributes']['mapName']),
             matchType: $data['attributes']['matchType'],
             seasonState: $data['attributes']['seasonState'],
-            stats: collect($statsArray),
-            teams: collect($teamsArray),
+            isCustomMatch: (bool) ($data['attributes']['isCustomMatch'] ?? false),
+            stats: $stats,
+            rosters: collect($included)->where('type', 'roster')->map(MatchRoster::fromArray(...))->sortBy('rank')->values(),
         );
     }
 
@@ -116,6 +96,31 @@ class PubgMatch extends PubgResponse
         return collect($this->stats)
             ->where('playerId', $playerId)
             ->first();
+    }
+
+    /**
+     * Get the roster a player fought on.
+     */
+    public function rosterForPlayer(string $accountId): ?MatchRoster
+    {
+        $participantId = $this->stats->search(fn (PlayerMatchStats $s) => $s->playerId === $accountId);
+
+        return $participantId === false ? null : $this->rosters->first(fn (MatchRoster $r) => in_array($participantId, $r->participantIds, true));
+    }
+
+    /**
+     * Get the stats of everyone on a player's roster except the player.
+     *
+     * @return Collection<int, PlayerMatchStats>
+     */
+    public function teammatesOf(string $accountId): Collection
+    {
+        $roster = $this->rosterForPlayer($accountId);
+
+        return $roster === null ? collect() : collect($roster->participantIds)
+            ->map(fn (string $id) => $this->stats[$id] ?? null)
+            ->filter(fn (?PlayerMatchStats $s) => $s !== null && $s->playerId !== $accountId)
+            ->values();
     }
 
     /**
@@ -153,10 +158,10 @@ class PubgMatch extends PubgResponse
     }
 
     /**
-     * Get the total number of teams in the roster
+     * Get the total number of teams in the match
      */
     public function totalTeams(): int
     {
-        return $this->teams->count();
+        return $this->rosters->count();
     }
 }

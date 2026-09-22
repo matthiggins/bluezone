@@ -6,12 +6,14 @@ namespace Bluezone\Responses;
 
 use Saloon\Http\Response;
 
-class SurvivalMastery extends PubgResponse
+final class SurvivalMastery extends PubgResponse
 {
+    /** @param array<string, SurvivalStat> $stats */
     public function __construct(
         public readonly string $accountId,
         public readonly int $xp,
         public readonly int $level,
+        public readonly int $tier,
         public readonly string $lastMatchId,
         public readonly int $totalMatchesPlayed,
         public readonly array $stats,
@@ -19,15 +21,20 @@ class SurvivalMastery extends PubgResponse
 
     public static function make(Response $response): self
     {
-        $data = $response->json()['data'];
+        $data = $response->json('data');
+        $stats = $data['attributes']['stats'] ?? [];
 
-        return new static(
+        return new self(
             accountId: $data['id'],
-            xp: $data['attributes']['xp'],
-            level: $data['attributes']['level'],
-            lastMatchId: $data['attributes']['lastMatchId'],
-            totalMatchesPlayed: $data['attributes']['totalMatchesPlayed'],
-            stats: $data['attributes']['stats']
+            xp: (int) ($data['attributes']['xp'] ?? 0),
+            level: (int) ($data['attributes']['level'] ?? 0),
+            tier: (int) ($data['attributes']['tier'] ?? 0),
+            lastMatchId: (string) ($data['attributes']['lastMatchId'] ?? ''),
+            totalMatchesPlayed: (int) ($data['attributes']['totalMatchesPlayed'] ?? 0),
+            stats: array_combine(
+                array_keys($stats),
+                array_map(SurvivalStat::fromArray(...), array_keys($stats), $stats),
+            ),
         );
     }
 }

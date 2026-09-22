@@ -6,23 +6,20 @@ namespace Bluezone\Responses;
 
 use Saloon\Http\Response;
 
-class Status extends PubgResponse
+final class Status extends PubgResponse
 {
     public function __construct(
         public readonly string $status,
+        public readonly ?string $releasedAt = null,
+        public readonly ?string $version = null,
     ) {}
 
     public static function make(Response $response): self
     {
-        return self::fromArray([
-            'status' => $response->ok() ? 'online' : 'offline',
-        ]);
-    }
-
-    public static function fromArray(array $data): self
-    {
-        return new static(
-            status: $data['status'],
+        return new self(
+            status: $response->ok() ? 'online' : 'offline',
+            releasedAt: $response->json('data.attributes.releasedAt'),
+            version: $response->json('data.attributes.version'),
         );
     }
 

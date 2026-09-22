@@ -7,31 +7,28 @@ namespace Bluezone\Responses;
 use Illuminate\Support\Collection;
 use Saloon\Http\Response;
 
-class Seasons extends PubgResponse
+final class Seasons extends PubgResponse
 {
+    /** @param Collection<int, Season> $seasons */
     public function __construct(
         public readonly Collection $seasons,
     ) {}
 
     public static function make(Response $response): self
     {
-        $data = $response->json()['data'];
+        $seasons = collect($response->json('data'))->map(fn (array $s) => new Season(
+            id: $s['id'],
+            isCurrentSeason: $s['attributes']['isCurrentSeason'],
+            isOffSeason: $s['attributes']['isOffseason'],
+        ))->values();
 
-        $seasons = collect($data)->map(function ($s) {
-            return new Season(
-                id: $s['id'],
-                isCurrentSeason: $s['attributes']['isCurrentSeason'],
-                isOffSeason: $s['attributes']['isOffseason'],
-            );
-        });
-
-        return new static($seasons);
+        return new self($seasons);
     }
 
     /**
      * Get the current season
      */
-    public function currentSeason(): Season
+    public function currentSeason(): ?Season
     {
         return $this->seasons->firstWhere('isCurrentSeason', true);
     }

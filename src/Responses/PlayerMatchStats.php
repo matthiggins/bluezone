@@ -10,6 +10,7 @@ class PlayerMatchStats extends PubgResponse
         public readonly int $assists,
         public readonly int $boosts,
         public readonly float $damageDealt,
+        public readonly int $dBNOs,
         public readonly string $deathType,
         public readonly int $headshotKills,
         public readonly int $heals,
@@ -31,12 +32,14 @@ class PlayerMatchStats extends PubgResponse
         public readonly int $winPlace,
     ) {}
 
+    /** @param array<string, mixed> $data */
     public static function fromArray(array $data): self
     {
         return new static(
             $data['assists'],
             $data['boosts'],
             $data['damageDealt'],
+            $data['DBNOs'] ?? 0,
             $data['deathType'],
             $data['headshotKills'],
             $data['heals'],

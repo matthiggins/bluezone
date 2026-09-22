@@ -7,16 +7,17 @@ namespace Bluezone\Responses;
 use Illuminate\Support\Collection;
 use Saloon\Http\Response;
 
-class LifetimeStatsCollection extends PubgResponse
+final class LifetimeStatsCollection extends PubgResponse
 {
+    /** @param Collection<int, LifetimeStats> $stats */
     public function __construct(
         public readonly Collection $stats,
     ) {}
 
     public static function make(Response $response): self
     {
-        return new static(
-            stats: collect($response->json()['data'])->map(fn ($p) => LifetimeStats::fromArray($p))
+        return new self(
+            stats: collect($response->json('data'))->map(LifetimeStats::fromArray(...))->values()
         );
     }
 }

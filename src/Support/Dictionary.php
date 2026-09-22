@@ -10,9 +10,7 @@ final class Dictionary
     /** @var array<string, array<string, mixed>> */
     private static array $files = [];
 
-    /**
-     * The translated value for $key in $file, or $key itself when unmapped.
-     */
+    /** The translated value for $key in $file, or $key itself when unmapped. */
     public static function get(string $file, string $key): string
     {
         if ($key === '') {

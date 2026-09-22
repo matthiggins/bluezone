@@ -1,53 +1,43 @@
 ![bluezone-banner](https://github.com/matthiggins/bluezone/assets/422780/e309788b-b3bd-47fb-9df3-edaa2d3f6a52)
 
-# BLUEZONE : A PHP SDK for the PUBG API 
+# BLUEZONE : A PHP SDK for the PUBG API
 
 [![Version](http://poser.pugx.org/matthiggins/bluezone/version)](https://packagist.org/packages/matthiggins/bluezone)
 [![PHP Version Require](http://poser.pugx.org/matthiggins/bluezone/require/php)](https://packagist.org/packages/matthiggins/bluezone)
 [![License](http://poser.pugx.org/matthiggins/bluezone/license)](https://packagist.org/packages/matthiggins/bluezone)
 
-BLUEZONE is an SDK for PHP that makes using the [PUBG API](https://developer.pubg.com/) dead simple. It provides a set of simple and intuitive methods that allow you to interact with the PUBG API without having to worry about low-level details such as authentication and request handling. With BLUEZONE, you can easily retrieve data for players, matches, seasons, weapon mastery, and survival mastery. It also includes a set of data transfer objects (DTOs) that help you work with the data returned by the API in a structured and organized way.
+BLUEZONE is a PHP SDK for the [PUBG API](https://developer.pubg.com/). It covers players, matches, seasons, clans, ranked and lifetime stats, weapon and survival mastery, and it parses match telemetry files into typed event objects.
 
-In addition to accessing data from the API, BLUEZONE also allows you to access match telemetry files and parse them for player data. This makes it easy to analyze gameplay data and gain insights into player behavior. Whether you're building a tool to help players improve their skills or conducting research on player behavior, BLUEZONE provides a powerful and flexible way to work with PUBG data.
+It is built on [Saloon 4](https://docs.saloon.dev/): every response is a data transfer object, and every Saloon feature (mocking, middleware, retries) is available.
 
----
+**Links:** [PUBG API](https://developer.pubg.com/) · [PUBG API docs](https://documentation.pubg.com/) · [Saloon](https://docs.saloon.dev/) · [Laravel Collections](https://laravel.com/docs/12.x/collections)
 
-**Relevant Links**
-- [PUBG API](https://developer.pubg.com/)
-- [Saloon](https://docs.saloon.dev/)
-- [Laravel Collections](https://laravel.com/docs/10.x/collections)
+## Contents
 
----
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Creating a client](#creating-a-client)
+- [Rate limiting](#rate-limiting)
+- [Shards and game modes](#shards-and-game-modes)
+- [Resources](#resources)
+- [Exceptions](#exceptions)
+- [Match telemetry](#match-telemetry)
+- [Telemetry events](#telemetry-events)
+- [Testing](#testing)
 
-## Table of Contents
-- [BLUEZONE : A PHP SDK for the PUBG API](#bluezone--a-php-sdk-for-the-pubg-api)
-  - [Table of Contents](#table-of-contents)
-  - [Installation](#installation)
-  - [Usage](#usage)
-  - [Making requests](#making-requests)
-  - [Available methods](#available-methods)
-    - [Seasons list](#seasons-list)
-    - [Player search, player profiles, and stats](#player-search-player-profiles-and-stats)
-    - [Matches](#matches)
-  - [Accessing Match Telemetry Data](#accessing-match-telemetry-data)
-    - [Working with telemetry events](#working-with-telemetry-events)
-    - [Game events and match events from telemetry](#game-events-and-match-events-from-telemetry)
-    - [Filter events from the telemetry data](#filter-events-from-the-telemetry-data)
+## Requirements
 
----
+- PHP 8.3 or 8.4
+- Saloon 4 (installed as a dependency)
+- A PUBG API key from the [PUBG Developer Portal](https://developer.pubg.com/)
 
 ## Installation
 
-To install, require the package `matthiggins/bluezone` via composer.
 ```
 composer require matthiggins/bluezone
 ```
 
-## Usage
-
-Instantiate a new Bluezone instance using your PUBG API key. You can get your own API key by going to the [PUBG Developer Portal](https://developer.pubg.com/).
-
-Bluezone uses [Saloon](https://docs.saloon.dev/) to create a Connector, Requests, and DTOs for the PUBG API. You can use all of the features of Saloon in the requests and responses.
+## Creating a client
 
 ```php
 use Bluezone\Bluezone;
@@ -55,243 +45,309 @@ use Bluezone\Bluezone;
 $bluezone = new Bluezone($apiKey);
 ```
 
-## Making requests
-
-Requests will return a PUBG DTO instance or a collection of instances. 
+The constructor is:
 
 ```php
-// Search for a player
-$player = $bluezone->player()->search($shard, $playerName);
-
-// Find a player by account ID
-$player = $bluezone->player()->find($shard, $accountId);
-
+new Bluezone(string $apiKey, ?RateLimitStore $store = null, int $requestsPerMinute = 10);
 ```
 
-If the request results in an error an exception will be thrown. 
+`$requestsPerMinute` should match the quota on your key (10 for a standard key). Connect and request timeouts are 10s and 15s.
+
+## Rate limiting
+
+Bluezone enforces your quota client-side with the [Saloon rate limit plugin](https://docs.saloon.dev/plugins/rate-limit-handler), so you fail fast instead of burning 429s.
+
+The default store is Saloon's `MemoryStore`, which only tracks one process. In a queue worker, a web app, or anything else running more than one process at a time, pass a shared store:
 
 ```php
+use Bluezone\Bluezone;
+use Saloon\RateLimitPlugin\Stores\PredisStore;
 
-use Saloon\Exceptions\SaloonException;
+$bluezone = new Bluezone($apiKey, new PredisStore($predis), requestsPerMinute: 100);
+```
+
+`LaravelCacheStore` and `FileStore` work as well. Both the spent local budget and a 429 from the API raise `Saloon\RateLimitPlugin\Exceptions\RateLimitReachedException`; the 429 handler runs first, so Saloon's own `TooManyRequestsException` is not what you catch.
+
+```php
+use Saloon\RateLimitPlugin\Exceptions\RateLimitReachedException;
 
 try {
-    $seasons = $bluezone->season()->all('fail');
-}catch(SaloonException $e) {
-    $status = $e->getStatus();
+    $player = $bluezone->player()->search('steam', 'TGLTN');
+} catch (RateLimitReachedException $e) {
+    $waitSeconds = $e->getLimit()->getRemainingSeconds();
+}
+```
+
+Turn the plugin off in tests with `$bluezone->useRateLimitPlugin(false)`.
+
+## Shards and game modes
+
+Every resource method takes `Bluezone\Enums\Shard` or its string value, and `Bluezone\Enums\GameMode` or its string value.
+
+```php
+use Bluezone\Enums\GameMode;
+use Bluezone\Enums\Shard;
+
+$bluezone->player()->search(Shard::Steam, 'TGLTN');
+$bluezone->player()->search('steam', 'TGLTN');   // identical
+
+Shard::Steam->label();          // 'PC (Steam)'
+Shard::Psn->isConsole();        // true
+GameMode::SquadFpp->label();    // 'Squad FPP'
+GameMode::SquadFpp->teamSize(); // 4
+GameMode::battleRoyale();       // the six BR modes
+```
+
+Shards: `steam`, `xbox`, `psn`, `kakao`, `console`, `tournament`. Game modes: `solo`, `solo-fpp`, `duo`, `duo-fpp`, `squad`, `squad-fpp`.
+
+## Resources
+
+Every method returns a typed DTO from `Bluezone\Responses`.
+
+```php
+// Bluezone\Responses\Status
+$status = $bluezone->status()->get();
+$status->isOnline();
+$status->version;
+
+// Bluezone\Responses\Seasons
+$seasons = $bluezone->season()->all('steam');
+$seasons->seasons;          // Collection<Season>
+$seasons->currentSeason();  // ?Season
+
+// Bluezone\Responses\Clan
+$clan = $bluezone->clan()->find('steam', $clanId);
+
+// Bluezone\Responses\Player
+$player = $bluezone->player()->find('steam', $accountId);
+$player = $bluezone->player()->search('steam', $playerName); // exact in-game name
+$player->matches;                                            // Collection<string> of match ids
+
+// Bluezone\Responses\PlayerCollection (up to 10 names)
+$players = $bluezone->player()->searchMany('steam', [$nameOne, $nameTwo]);
+
+// Collection<PubgMatch>, one request per match
+$matches = $bluezone->player()->recentMatches($player, limit: 20);
+$ranked = $bluezone->player()->recentRankedMatches($player);
+$casual = $bluezone->player()->recentCasualMatches($player);
+
+// Bluezone\Responses\SeasonStats / SeasonStatsCollection
+$seasonStats = $bluezone->player()->seasonStats('steam', $seasonId, $accountId);
+$seasonStats->forMode(GameMode::SquadFpp);   // ?GameModeStats
+$seasonStats->matches['squad-fpp'];          // match ids, kebab-case keys
+$manyStats = $bluezone->player()->seasonStatsMany('steam', $seasonId, 'squad-fpp', [$accountId, $otherId]);
+
+// Bluezone\Responses\RankedSeasonStats / RankedSeasonStatsCollection
+$ranked = $bluezone->player()->rankedSeasonStats('steam', $seasonId, $accountId);
+$ranked->forMode('squad-fpp')?->currentTier->label();   // 'Diamond 4'
+$rankedMany = $bluezone->player()->rankedSeasonStatsMany('steam', $seasonId, [$accountId, $otherId]);
+
+// Bluezone\Responses\LifetimeStats / LifetimeStatsCollection
+$lifetime = $bluezone->player()->lifetimeStats('steam', $accountId);
+$lifetime->forMode('solo-fpp')?->kills;
+$lifetimeMany = $bluezone->player()->lifetimeStatsMany('steam', 'squad-fpp', [$accountId, $otherId]);
+
+// Bluezone\Responses\WeaponMastery
+$weapons = $bluezone->player()->weaponMastery('steam', $accountId);
+$weapons->weaponSummaries;                   // array<string itemId, WeaponSummary>
+$weapons->weaponSummaries['Item_Weapon_AK47_C']->statsTotal->kills;
+
+// Bluezone\Responses\SurvivalMastery
+$survival = $bluezone->player()->survivalMastery('steam', $accountId);
+$survival->stats;                            // array<string key, SurvivalStat>
+$survival->stats['damageDealt']->careerBest;
+
+// Bluezone\Responses\PubgMatch
+$match = $bluezone->match()->find('steam', $matchId);
+$match->rosters;                             // Collection<MatchRoster>, sorted by rank
+$match->statsForPlayer($accountId);          // PlayerMatchStats
+$match->rosterForPlayer($accountId)?->won;
+$match->teammatesOf($accountId);             // Collection<PlayerMatchStats>
+$match->isRanked();
+$match->totalPlayers();
+$match->totalBots();
+$match->botPercent();
+```
+
+`rankedSeasonStatsMany()` is one request per account id: the PUBG API has no batch ranked endpoint.
+
+## Exceptions
+
+Bluezone throws `Bluezone\Exceptions\BluezoneException` subclasses for the cases the API reports as a bare 404:
+
+```php
+use Bluezone\Exceptions\MatchNotFoundException;
+use Bluezone\Exceptions\PlayerNotFoundException;
+
+try {
+    $player = $bluezone->player()->search('steam', $name);
+} catch (PlayerNotFoundException $e) {
+    $e->shard;       // Shard
+    $e->identifier;  // the name or account id that was not found
 }
 
+try {
+    $match = $bluezone->match()->find('steam', $matchId);
+} catch (MatchNotFoundException $e) {
+    // PUBG only keeps matches for about 14 days
+}
 ```
 
-By default, Saloon provides classes for specific errors related to the request.
+| Exception | Thrown when |
+|---|---|
+| `PlayerNotFoundException` | `player()->find()`, `search()` or `searchMany()` gets a 404 |
+| `MatchNotFoundException` | `match()->find()` gets a 404 |
+| `InvalidTelemetryUrlException` | a telemetry url is not on `telemetry-cdn.pubg.com` |
+| `InvalidTelemetryException` | a telemetry body is not decodable JSON |
+| `Saloon\RateLimitPlugin\Exceptions\RateLimitReachedException` | the local budget is spent, or the API answered 429 |
 
-[Saloon - Handling Failures](https://docs.saloon.dev/the-basics/handling-failures)
+Everything else surfaces as a Saloon exception (`UnauthorizedException`, `ServiceUnavailableException`, `FatalRequestException`, …). See [Saloon — handling failures](https://docs.saloon.dev/the-basics/handling-failures).
 
-```
-SaloonException
-├── FatalRequestException (Connection Errors)
-└── RequestException (Request Errors)
-    ├── ServerException (5xx)
-    │   ├── InternalServerErrorException (500)
-    │   ├── ServiceUnavailableException (503)
-    │   └── GatewayTimeoutException (504)
-    └── ClientException (4xx)
-        ├── UnauthorizedException (401)
-        ├── ForbiddenException (403)
-        ├── NotFoundException (404)
-        ├── MethodNotAllowedException (405)
-        ├── RequestTimeOutException (408)
-        ├── UnprocessableEntityException (422)
-        └── TooManyRequestsException (429)
-```
+## Match telemetry
 
-## Available methods
-
-Bluezone has easy methods for accessing the [PUBG API endpoints](https://documentation.pubg.com/en/introduction.ht
-
-
-### Seasons list
-```php
-// Get all PUBG seasons
-$seasons = $bluezone->season()->all($shard);
-```
-
-### Player search, player profiles, and stats
-
-You can search for a player by their in-game name and shard or you can retrieve a player using their Account ID. 
+Telemetry files are gzipped JSON on a public CDN, typically 5-15 MB, and are downloaded by a separate connector that carries no API key and does not count against your rate limit.
 
 ```php
+$match = $bluezone->match()->find('steam', $matchId);
 
-// Find a specific player using the account id
-$player = $bluezone->player()->find($shard, $accountId);
-
-// Search for a player by name 
-// NOTE : player search requires the name to be entered exactly as it is displayed in-game
-$player = $bluezone->player()->search($shard, $playerName);
-
-// Search for up to 10 players
-$results = $bluezone->player()->searchMany($shard, [$playerName01, $playerName02]);
-
-// Season stats for a single player
-$seasonStats = $bluezone->player()->seasonStats($shard, $season, $accountId);
-
-// Season stats for up to 10 players
-$seasonStats = $bluezone->player()->seasonStatsMany($shard, $season, $gameMode, [$accountId,$accountId]);
-
-// Ranked season stats for a single player
-$rankedSeasonStats = $bluezone->player()->rankedSeasonStats($shard, $season, $accountId);
-
-// Lifetime season stats for a single player
-$lifetimeStats = $bluezone->player()->lifetimeStats($shard, $accountId);
-
-// Lifetime stats for up to 10 players
-$lifetimeStats = $bluezone->player()->lifetimeStatsMany($shard, $gameMode, [$accountId,$accountId]);
-
-// Get weapon mastery for a single player
-$weaponMastery = $bluezone->player()->weaponMastery($shard, $accountId);
-
-// Get survival mastery for a single player
-$survivalMastery = $bluezone->player()->survivalMastery($shard, $accountId);
+// Parse the file into a Bluezone\Responses\Telemetry DTO (reads it into memory)
+$telemetry = $bluezone->telemetry()->fetch($match->assetUrl);
+$telemetry = $match->getTelemetry();   // same thing
 ```
 
-### Matches
+Use `download()` instead when you want the bytes rather than the objects. It returns the compressed body as a PSR-7 `StreamInterface` and decodes nothing:
+
 ```php
-// Get a match
-$match = $bluezone->match()->find($shard, $matchId);
+$stream = $bluezone->telemetry()->download($match->assetUrl);
+$out = fopen('/archive/'.$match->id.'.json.gz', 'wb');
+while (! $stream->eof()) {
+    fwrite($out, $stream->read(1 << 20));
+}
+fclose($out);
 ```
 
----
-
-## Accessing Match Telemetry Data
-The PUBG API provides access to very detailed match data in a Match Telemetry file. This file contains information about game details, player movement, player action, zone information, and more. Telemetry files are large JSON files that can be parsed and analyzed for deeper analysis. 
-
-To get a telemetry file you must first request details of a PUBG match. 
+## Telemetry events
 
 ```php
-// Get a single match DTO instance
-$match = $bluezone->match()->find($shard, $matchId);
+// Every event as a Bluezone\Telemetry\Events\* object
+$events = $telemetry->events();
 
-// Get the telemetry DTO instance
-$telemetry = $match->getTelemetry();
+// The undecoded events, exactly as PUBG wrote them
+$raw = $telemetry->raw();
 
-// Get the raw telemetry events in a Collection
-$rawEvents = $telemetry->raw();
+// Events after the first circle
+$telemetry->eventsDuringGame();
 
-// Alternatively you can map all telemetry 
-// events to their DTO instances
-$events = $telemetry->events();   
-
+// Event types this version of Bluezone has no class for, with their counts
+$telemetry->unmappedTypes();   // ['LogSomeNewThing' => 12]
 ```
 
-### Working with telemetry events
-The telemetry file is essentially a huge list of events that happen during a match. These are events for individual players as well as game events like care packages, circle movement, etc. You can easily filter these events with helper methods that make pulling player and game data easier.
+Events whose `_T` has no class are skipped rather than failing the parse, and counted by `unmappedTypes()`.
+
+### Player events
 
 ```php
-// Get all telemetry events for a specific player
-$telemetry->player($accountId)->all();
+$player = $telemetry->player($accountId);
 
-// Get all attack events for a specific player
-$telemetry->player($accountId)->attackEvents();
+$player->all();                             // every event the player appears in
+$player->attackEvents();
+$player->attackEventsFromVehicle();
+$player->causeDamageEvents();
+$player->takeDamageEvents();
+$player->killEvents();
+$player->killEventsFromVehicle();
+$player->knockEvents();
+$player->knockEventsFromVehicle();
+$player->downedEvents();
+$player->healEvents();
+$player->itemAttachEvents();
+$player->itemDetachEvents();
+$player->itemDropEvents();
+$player->itemEquipEvents();
+$player->itemPickupEvents();
+$player->itemPickupFromCarePackageEvents();
+$player->itemPickupFromCustomPackageEvents();
+$player->itemPickupFromLootBoxEvents();
+$player->itemUnequipEvents();
+$player->itemUseEvents();
+$player->objectDestroyEvents();
+$player->objectInteractionEvents();
+$player->parachuteLandingEvents();
+$player->positionEvents();
+$player->useThrowableEvents();
+$player->swimEvents();
+$player->swimStartEvents();
+$player->swimEndEvents();
+$player->vaultEvents();
+$player->vehicleEvents();
+$player->weaponFireCountEvents();
+$player->wheelDestroyEvents();
 
-// Get all heal events for a specific player
-$telemetry->player($accountId)->healEvents();
+// Interactions with one other player, and per-weapon slices
+$player->causeDamageToPlayer($otherAccountId);
+$player->takeDamageFromPlayer($otherAccountId);
+$player->killEventsForWeapon('WeapHK416_C');
+$player->causeDamageEventsForWeapon('WeapHK416_C');
 
-// Get all item attachment events for a specific player
-$telemetry->player($accountId)->itemAttachEvents();
-
-// Get all item detachment events for a specific player
-$telemetry->player($accountId)->itemDetachEvents();
-
-// Get all item drop events for a specific player
-$telemetry->player($accountId)->itemDropEvents();
-
-// Get all item equip events for a specific player
-$telemetry->player($accountId)->itemEquipEvents();
-
-// Get all item pickup events for a specific player
-$telemetry->player($accountId)->itemPickupEvents();
-
-// Get all item unequip events for a specific player
-$telemetry->player($accountId)->itemUnequipEvents();
-
-// Get all item use events for a specific player
-$telemetry->player($accountId)->itemUseEvents();
-
-// Get all kill events for a specific player
-$telemetry->player($accountId)->killEvents();
-
-// Get all object destroy events for a specific player
-$telemetry->player($accountId)->objectDestroyEvents();
-
-// Get all object interaction events for a specific player
-$telemetry->player($accountId)->objectInteractionEvents();
-
-// Get all parachute landing events for a specific player
-$telemetry->player($accountId)->parachuteLandingEvents();
-
-// Get all position events for a specific player
-$telemetry->player($accountId)->positionEvents();
-
-// Get all take damage events for a specific player
-$telemetry->player($accountId)->takeDamageEvents();
-
-// Get all throwable use events for a specific player
-$telemetry->player($accountId)->useThrowableEvents();
-
-// Get all swim events for a specific player
-$telemetry->player($accountId)->swimEvents();
-
-// Get all swim start events for a specific player
-$telemetry->player($accountId)->swimStartEvents();
-
-// Get all swim end events for a specific player
-$telemetry->player($accountId)->swimEndEvents();
-
-// Get all vault events for a specific player
-$telemetry->player($accountId)->vaultEvents();
-
-// Get all vehicle events for a specific player
-$telemetry->player($accountId)->vehicleEvents();
-
-// Get all weapon fire count events for a specific player
-$telemetry->player($accountId)->weaponFireCountEvents();
-
-// Get all wheel destroy events for a specific player
-$telemetry->player($accountId)->wheelDestroyEvents();
+// Environment
+$player->takeBluezoneDamageEvents();
 ```
 
-### Game events and match events from telemetry
-In addition to player events you can also easily access game events and match details.
+### Match events
 
 ```php
-// Get all care package events from the telemetry
+$telemetry->match()->definition();       // MatchDefinition
+$telemetry->match()->start();            // MatchStart
+$telemetry->match()->end();              // MatchEnd
+$telemetry->match()->phaseChanges();     // Collection<PhaseChange>
 $telemetry->match()->carePackageEvents();
-
-// Get the definition of the match
-$telemetry->match()->definition();
-
-// Get the end state of the match
-$telemetry->match()->end();
-
-// Get all phase change events for the match
-$telemetry->match()->phaseChanges();
-
-// Get the start state of the match
-$telemetry->match()->start();
-
-// Get all state events from the match
-$telemetry->match()->stateEvents();
+$telemetry->match()->stateEvents();      // Collection<GameStatePeriodic>
 ```
 
-### Filter events from the telemetry data
+### Filtering events
 
-You can easily filter out events from the data using [Laravel Collection](https://laravel.com/docs/10.x/collections) methods. 
-
-For example:
+`events()` is a [Laravel Collection](https://laravel.com/docs/12.x/collections), so filter it however you like:
 
 ```php
 use Bluezone\Telemetry\Events\PlayerAttack;
+use Bluezone\Telemetry\Events\PlayerPosition;
 
-$playerAttackEvents = $telemetry->events()->filter(function ($event) use ($accountId) {
-    return ($event instanceof PlayerAttack) && $event->attacker->accountId == $accountId;
-});
+$attacks = $telemetry->events()->filter(
+    fn ($event) => $event instanceof PlayerAttack && $event->attacker->accountId === $accountId
+);
+
+// Or drop the noisiest types
+$interesting = $telemetry->excludeEvents([PlayerPosition::class]);
 ```
+
+## Testing
+
+Bluezone is a Saloon connector, so mock it with Saloon's `MockClient`:
+
+```php
+use Bluezone\Bluezone;
+use Bluezone\Requests\PlayerSearchRequest;
+use Saloon\Http\Faking\MockClient;
+use Saloon\Http\Faking\MockResponse;
+
+$bluezone = new Bluezone('test-key');
+$bluezone->withMockClient(new MockClient([
+    PlayerSearchRequest::class => MockResponse::make(['data' => [/* ... */]]),
+]));
+```
+
+Telemetry downloads go through a second connector (`TelemetryConnector`), which a `MockClient` attached to the `Bluezone` instance does not reach; use `MockClient::global([...])` to mock them.
+
+This package's own suite replays recorded responses:
+
+```php
+MockResponse::fixture('player');   // tests/Fixtures/player.json
+```
+
+To re-record a fixture, delete the file and run the recording test with a real key:
+
+```
+PUBG_API_KEY=your-key vendor/bin/pest tests/Feature/FixtureRecordingTest.php
+```
+
+Run the checks with `composer check` (Pint, PHPStan level 5, Pest).

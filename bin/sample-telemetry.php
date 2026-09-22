@@ -31,5 +31,5 @@ foreach ($events as $event) {
     }
 }
 
-file_put_contents(__DIR__.'/../tests/Fixtures/telemetry-sample.json', json_encode($sample, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+file_put_contents(__DIR__.'/../tests/Fixtures/telemetry-sample.json', json_encode($sample, JSON_UNESCAPED_SLASHES));
 echo count($sample).' events sampled from '.count($events).' ('.count($seen)." types)\n";

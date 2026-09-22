@@ -32,6 +32,12 @@ final class Dictionary
         );
     }
 
+    /** The dictionary files read so far this process. @return array<int, string> */
+    public static function loaded(): array
+    {
+        return array_keys(self::$files);
+    }
+
     public static function flush(): void
     {
         self::$files = [];

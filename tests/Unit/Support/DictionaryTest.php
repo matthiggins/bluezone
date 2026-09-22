@@ -13,9 +13,13 @@ it('translates known ids and echoes unknown ones', function () {
 
 it('reads each file from disk once', function () {
     Dictionary::flush();
-    $before = memory_get_usage();
-    for ($i = 0; $i < 20000; $i++) {
+
+    expect(Dictionary::loaded())->toBe([]);
+
+    for ($i = 0; $i < 100; $i++) {
         Dictionary::get('telemetry/item/itemId.json', 'Item_Weapon_AK47_C');
     }
-    expect(memory_get_usage() - $before)->toBeLessThan(2_000_000);
+    Dictionary::get('telemetry/mapName.json', 'Baltic_Main');
+
+    expect(Dictionary::loaded())->toBe(['telemetry/item/itemId.json', 'telemetry/mapName.json']);
 });

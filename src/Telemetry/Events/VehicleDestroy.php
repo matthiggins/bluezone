@@ -6,6 +6,7 @@ namespace Bluezone\Telemetry\Events;
 
 use Bluezone\Telemetry\Concerns\AccessesJsonDictionaries;
 use Bluezone\Telemetry\Objects\Character;
+use Bluezone\Telemetry\Objects\Common;
 use Bluezone\Telemetry\Objects\Vehicle;
 
 class VehicleDestroy extends TelemetryEvent
@@ -23,6 +24,7 @@ class VehicleDestroy extends TelemetryEvent
         public readonly string $damageTypeCategory,
         public readonly string $damageCauserName,
         public readonly float $distance,
+        public readonly Common $common,
     ) {
         $this->damageCategoryName = $this->getValueFromJsonFile('telemetry/damageTypeCategory.json', $this->damageTypeCategory);
     }
@@ -36,6 +38,7 @@ class VehicleDestroy extends TelemetryEvent
             damageTypeCategory: $data['damageTypeCategory'],
             damageCauserName: $data['damageCauserName'],
             distance: $data['distance'],
+            common: Common::make($data['common']),
         );
     }
 }

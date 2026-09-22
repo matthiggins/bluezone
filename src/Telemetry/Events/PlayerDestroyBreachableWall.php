@@ -6,6 +6,7 @@ namespace Bluezone\Telemetry\Events;
 
 use Bluezone\Telemetry\Objects\Character;
 use Bluezone\Telemetry\Objects\Common;
+use Bluezone\Telemetry\Objects\Item;
 
 final class PlayerDestroyBreachableWall extends TelemetryEvent
 {
@@ -14,7 +15,7 @@ final class PlayerDestroyBreachableWall extends TelemetryEvent
     /** @param  array<int, string>  $weaponAdditionalInfo */
     public function __construct(
         public readonly Character $attacker,
-        public readonly string $weapon,
+        public readonly Item|string $weapon,
         public readonly array $weaponAdditionalInfo,
         public readonly Common $common,
     ) {}
@@ -24,7 +25,7 @@ final class PlayerDestroyBreachableWall extends TelemetryEvent
     {
         return new self(
             attacker: Character::make($data['attacker']),
-            weapon: $data['weapon'] ?? '',
+            weapon: is_array($data['weapon'] ?? null) ? Item::make($data['weapon']) : ($data['weapon'] ?? ''),
             weaponAdditionalInfo: $data['weaponAdditionalInfo'] ?? [],
             common: Common::make($data['common']),
         );

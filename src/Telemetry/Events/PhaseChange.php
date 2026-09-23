@@ -32,15 +32,19 @@ final class PhaseChange extends TelemetryEvent
         );
     }
 
-    /** Whole isGame steps are a new circle appearing; the half step after each is it shrinking. */
+    /**
+     * Whole isGame steps are a new circle appearing; the half step after each is it
+     * shrinking. `phase` ticks up at the shrink, so the circle's number comes from isGame.
+     */
     public function phaseName(): string
     {
         if ($this->common->isGame < 1.0) {
-            return "Phase {$this->phase} lobby";
+            return 'Lobby';
         }
 
+        $circle = (int) floor($this->common->isGame);
         $shrinking = fmod($this->common->isGame, 1.0) >= 0.5;
 
-        return "Phase {$this->phase} circle ".($shrinking ? 'shrinks' : 'appears');
+        return "Circle {$circle} ".($shrinking ? 'shrinks' : 'appears');
     }
 }

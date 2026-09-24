@@ -31,8 +31,9 @@ final class GameState
             numJoinPlayers: (int) $data['numJoinPlayers'],
             numStartPlayers: (int) $data['numStartPlayers'],
             numAlivePlayers: (int) $data['numAlivePlayers'],
-            safeZonePosition: isset($data['safeZonePosition']) ? Location::make($data['safeZonePosition']) : null,
-            safeZoneRadius: isset($data['safeZoneRadius']) ? (float) $data['safeZoneRadius'] : null,
+            // PUBG names the blue zone `safetyZone*`; the property keeps its shorter name.
+            safeZonePosition: isset($data['safetyZonePosition']) ? Location::make($data['safetyZonePosition']) : null,
+            safeZoneRadius: isset($data['safetyZoneRadius']) ? (float) $data['safetyZoneRadius'] : null,
             poisonGasWarningPosition: Location::make($data['poisonGasWarningPosition']),
             poisonGasWarningRadius: (float) $data['poisonGasWarningRadius'],
             redZonePosition: Location::make($data['redZonePosition']),

@@ -33,3 +33,11 @@ it('stamps event type and date', function () use ($sample) {
         ->and($event->eventType)->toBe($sample[0]['_T'])
         ->and($event->date?->toIso8601ZuluString())->toBe(substr($sample[0]['_D'], 0, 19).'Z');
 });
+
+it('reads the blue zone from the safety zone keys real telemetry uses', function () use ($sample) {
+    $raw = array_values(array_filter($sample, fn (array $event): bool => $event['_T'] === 'LogGameStatePeriodic'))[0];
+    $event = EventFactory::make($raw);
+
+    expect($event->gameState->safeZoneRadius)->toBe((float) $raw['gameState']['safetyZoneRadius'])
+        ->and($event->gameState->safeZonePosition?->x)->toBe((float) $raw['gameState']['safetyZonePosition']['x']);
+});

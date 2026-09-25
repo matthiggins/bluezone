@@ -9,6 +9,7 @@ use Bluezone\Enums\Shard;
 use Bluezone\Exceptions\PlayerNotFoundException;
 use Bluezone\Requests\LifetimeStatsManyRequest;
 use Bluezone\Requests\LifetimeStatsRequest;
+use Bluezone\Requests\PlayerAccountManyRequest;
 use Bluezone\Requests\PlayerAccountRequest;
 use Bluezone\Requests\PlayerSearchManyRequest;
 use Bluezone\Requests\PlayerSearchRequest;
@@ -41,6 +42,20 @@ class PlayerResource extends Resource
         } catch (NotFoundException) {
             throw PlayerNotFoundException::forAccountId($shard, $accountId);
         }
+    }
+
+    /** Up to 10 players in one request; an id the shard does not know is left out of the collection. */
+    public function findMany(Shard|string $shard, array $accountIds): PlayerCollection
+    {
+        $shard = Shard::resolve($shard);
+
+        try {
+            $players = $this->sendNullable(new PlayerAccountManyRequest(shard: $shard, accountIds: $accountIds), PlayerCollection::class);
+        } catch (NotFoundException) {
+            throw PlayerNotFoundException::forAccountId($shard, implode(',', $accountIds));
+        }
+
+        return $players ?? throw PlayerNotFoundException::forAccountId($shard, implode(',', $accountIds));
     }
 
     public function recentMatches(Player $player, int $limit = 20): Collection

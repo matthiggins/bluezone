@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Bluezone\Enums\Shard;
 use Bluezone\Exceptions\PlayerNotFoundException;
+use Bluezone\Requests\PlayerAccountManyRequest;
 use Bluezone\Requests\PlayerAccountRequest;
 use Bluezone\Requests\PlayerAccountRequest as FindRequest;
 use Bluezone\Requests\PlayerSearchManyRequest;
@@ -23,6 +24,22 @@ it('finds a player by account id', function () {
         ->and($player->matches->count())->toBeGreaterThan(0)
         ->and($player->matches->first())->toBeString();
 });
+
+it('finds many players by account id in one request', function () {
+    $bluezone = mockBluezone([PlayerAccountManyRequest::class => apiFixture('player-search-many')]);
+
+    $players = $bluezone->player()->findMany('steam', ['account.82bad0072f31455d8d9f8d834da2f2f3', 'account.48cf00fd16c548ca9f6c6091d2c82d1c']);
+
+    expect($players)->toBeInstanceOf(PlayerCollection::class)
+        ->and($players->players->pluck('name')->sort()->values()->all())->toBe(['TGLTN', 'hwinn']);
+    expect((string) $bluezone->getMockClient()->getLastResponse()->getPsrRequest()->getUri())
+        ->toEndWith('/shards/steam/players?filter%5BplayerIds%5D=account.82bad0072f31455d8d9f8d834da2f2f3%2Caccount.48cf00fd16c548ca9f6c6091d2c82d1c');
+});
+
+it('throws PlayerNotFoundException when no account id is known', function () {
+    mockBluezone([PlayerAccountManyRequest::class => MockResponse::make(['errors' => [['title' => 'Not Found']]], 404)])
+        ->player()->findMany('steam', ['account.missing', 'account.gone']);
+})->throws(PlayerNotFoundException::class, 'No player with account id [account.missing,account.gone] on shard [steam].');
 
 it('searches one player by name', function () {
     $player = mockBluezone([PlayerSearchRequest::class => apiFixture('player-search')])

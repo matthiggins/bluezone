@@ -127,8 +127,9 @@ $player = $bluezone->player()->find('steam', $accountId);
 $player = $bluezone->player()->search('steam', $playerName); // exact in-game name
 $player->matches;                                            // Collection<string> of match ids
 
-// Bluezone\Responses\PlayerCollection (up to 10 names)
+// Bluezone\Responses\PlayerCollection (up to 10 names or account ids, one request)
 $players = $bluezone->player()->searchMany('steam', [$nameOne, $nameTwo]);
+$players = $bluezone->player()->findMany('steam', [$accountIdOne, $accountIdTwo]);
 
 // Collection<PubgMatch>, one request per match
 $matches = $bluezone->player()->recentMatches($player, limit: 20);
@@ -211,7 +212,7 @@ try {
 
 | Exception | Thrown when |
 |---|---|
-| `PlayerNotFoundException` | `player()->find()`, `search()` or `searchMany()` gets a 404, or the search matched no player |
+| `PlayerNotFoundException` | `player()->find()`, `findMany()`, `search()` or `searchMany()` gets a 404, or the search matched no player |
 | `MatchNotFoundException` | `match()->find()` gets a 404 |
 | `LeaderboardNotFoundException` | `leaderboard()->get()` gets a 404: no board for that region, season and mode |
 | `InvalidSampleWindowException` | `sample()->get()` is given a start time more than 14 days back or in the future; thrown before any request is sent |

@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- `player()->findMany($shard, $accountIds)` returns a `PlayerCollection` for up to 10 account ids in one request (`filter[playerIds]`); a 404 or empty result throws `PlayerNotFoundException`.
+
 ## v1.1.0 — 2026-09-25
 
 ### Added

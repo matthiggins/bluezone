@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Bluezone\Bluezone;
 use Bluezone\Requests\MatchRequest;
+use Bluezone\Requests\SamplesRequest;
 use Bluezone\Requests\StatusRequest;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
@@ -55,3 +56,11 @@ it('never meters matches, which pubg does not rate limit', function () {
 
     expect($bluezone->hasReachedRateLimit())->toBeFalse();
 });
+
+it('meters samples, which pubg does rate limit', function () {
+    $bluezone = new Bluezone('key', new MemoryStore, requestsPerMinute: 1);
+    $bluezone->withMockClient(new MockClient([SamplesRequest::class => apiFixture('samples')]));
+
+    $bluezone->samples()->get('steam');
+    $bluezone->samples()->get('steam');
+})->throws(RateLimitReachedException::class);

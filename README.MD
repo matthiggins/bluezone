@@ -102,6 +102,8 @@ GameMode::battleRoyale();       // the six BR modes
 
 Shards: `steam`, `xbox`, `psn`, `kakao`, `console`, `tournament`. Game modes: `solo`, `solo-fpp`, `duo`, `duo-fpp`, `squad`, `squad-fpp`.
 
+Leaderboards are the one endpoint still keyed by platform-region, so they take `Bluezone\Enums\Region` (`pc-eu`, `pc-na`, `pc-as`, `pc-sea`, `pc-kakao`, …) instead of a shard.
+
 ## Resources
 
 Every method returns a typed DTO from `Bluezone\Responses`.
@@ -169,9 +171,21 @@ $match->isRanked();
 $match->totalPlayers();
 $match->totalBots();
 $match->botPercent();
+
+// Bluezone\Responses\Samples: a random sample of recent public matches (hundreds of ids)
+$samples = $bluezone->samples()->get('steam');                          // the last 24 hours
+$samples = $bluezone->samples()->get('steam', now()->subHours(6));      // from a given time, within 14 days
+$samples->matchIds;                          // Collection<string>
+
+// Bluezone\Responses\Leaderboard: the top 500, in one page, sorted by rank
+$board = $bluezone->leaderboard()->get('pc-eu', $seasonId, 'squad-fpp');
+$board->players;                             // Collection<LeaderboardPlayer>
+$board->players->first()->tier->label();     // 'Master 1'
 ```
 
 `rankedSeasonStatsMany()` is one request per account id: the PUBG API has no batch ranked endpoint.
+
+Samples and leaderboards are metered against the rate limit; matches are not. A leaderboard row's `kda` and `killDeathRatio` are always 0 from the API, so `LeaderboardPlayer` leaves them out.
 
 ## Exceptions
 

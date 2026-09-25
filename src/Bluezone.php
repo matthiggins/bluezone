@@ -6,8 +6,10 @@ namespace Bluezone;
 
 use Bluezone\Requests\MatchRequest;
 use Bluezone\Resources\ClanResource;
+use Bluezone\Resources\LeaderboardResource;
 use Bluezone\Resources\MatchResource;
 use Bluezone\Resources\PlayerResource;
+use Bluezone\Resources\SampleResource;
 use Bluezone\Resources\SeasonResource;
 use Bluezone\Resources\StatusResource;
 use Bluezone\Resources\TelemetryResource;
@@ -87,6 +89,11 @@ class Bluezone extends Connector
         return new ClanResource($this);
     }
 
+    public function leaderboard(): LeaderboardResource
+    {
+        return new LeaderboardResource($this);
+    }
+
     public function match(): MatchResource
     {
         return new MatchResource($this);
@@ -95,6 +102,11 @@ class Bluezone extends Connector
     public function player(): PlayerResource
     {
         return new PlayerResource($this);
+    }
+
+    public function samples(): SampleResource
+    {
+        return new SampleResource($this);
     }
 
     public function season(): SeasonResource

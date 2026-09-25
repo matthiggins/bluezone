@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- `Bluezone::samples()->get($shard, ?$since)` returns `Samples`: a shard's random sample of recent match ids.
+- `Bluezone::leaderboard()->get($region, $seasonId, $gameMode, $page = 0)` returns `Leaderboard`, with `LeaderboardPlayer` rows sorted by rank.
+- `Bluezone\Enums\Region`, the platform-region shards the leaderboard endpoint takes.
+
 ## v1.0.1 — 2026-09-25
 
 ### Fixed

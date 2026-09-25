@@ -1,10 +1,11 @@
 # Changelog
 
-## Unreleased
+## v1.2.0 — 2026-09-25
 
 ### Added
 
 - `player()->findMany($shard, $accountIds)` returns a `PlayerCollection` for up to 10 account ids in one request (`filter[playerIds]`); a 404 or empty result throws `PlayerNotFoundException`.
+- `PlayerMatchStats::$shardId`, the participant's own platform. A `console` match mixes `xbox` and `psn` players, so the match's shard no longer stands for everyone in it.
 
 ## v1.1.0 — 2026-09-25
 

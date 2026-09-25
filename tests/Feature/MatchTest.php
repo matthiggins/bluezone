@@ -17,6 +17,7 @@ it('builds a match with translated map name and per-participant stats', function
         ->and($match->assetUrl)->toStartWith('https://telemetry-cdn.pubg.com/')
         ->and($match->stats->first())->toBeInstanceOf(PlayerMatchStats::class)
         ->and($match->stats->first()->winPlace)->toBe(1)
+        ->and($match->stats->first()->shardId)->toBe('steam')
         ->and($match->totalPlayers())->toBeGreaterThan(50);
 });
 

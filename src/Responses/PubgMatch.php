@@ -49,7 +49,8 @@ final class PubgMatch extends PubgResponse
     {
         $stats = collect($included)
             ->filter(fn ($item) => $item['type'] === 'participant' && $item['attributes']['stats'] !== null)
-            ->mapWithKeys(fn ($item) => [$item['id'] => $item['attributes']['stats']])
+            // The participant's shard sits beside its stats, not inside them.
+            ->mapWithKeys(fn ($item) => [$item['id'] => [...$item['attributes']['stats'], 'shardId' => $item['attributes']['shardId'] ?? '']])
             ->sortBy('winPlace')
             ->map(fn ($item) => PlayerMatchStats::fromArray($item));
 

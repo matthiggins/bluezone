@@ -23,6 +23,8 @@ final class PlayerMatchStats extends PubgResponse
         public readonly int $revives,
         public readonly float $rideDistance,
         public readonly int $roadKills,
+        /** The participant's own platform; console lobbies mix `xbox` and `psn`. */
+        public readonly string $shardId,
         public readonly float $swimDistance,
         public readonly int $teamKills,
         public readonly float $timeSurvived,
@@ -52,6 +54,7 @@ final class PlayerMatchStats extends PubgResponse
             revives: (int) ($data['revives'] ?? 0),
             rideDistance: (float) ($data['rideDistance'] ?? 0),
             roadKills: (int) ($data['roadKills'] ?? 0),
+            shardId: (string) ($data['shardId'] ?? ''),
             swimDistance: (float) ($data['swimDistance'] ?? 0),
             teamKills: (int) ($data['teamKills'] ?? 0),
             timeSurvived: (float) ($data['timeSurvived'] ?? 0),

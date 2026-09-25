@@ -6,18 +6,22 @@ namespace Bluezone\Resources;
 
 use Bluezone\Enums\GameMode;
 use Bluezone\Enums\Region;
+use Bluezone\Exceptions\LeaderboardNotFoundException;
 use Bluezone\Requests\LeaderboardRequest;
 use Bluezone\Responses\Leaderboard;
+use Saloon\Exceptions\Request\Statuses\NotFoundException;
 
 class LeaderboardResource extends Resource
 {
-    public function get(Region|string $region, string $seasonId, GameMode|string $gameMode, int $page = 0): Leaderboard
+    public function get(Region|string $region, string $seasonId, GameMode|string $gameMode): Leaderboard
     {
-        return $this->send(new LeaderboardRequest(
-            region: Region::resolve($region),
-            seasonId: $seasonId,
-            gameMode: GameMode::resolve($gameMode),
-            page: $page,
-        ), Leaderboard::class);
+        $region = Region::resolve($region);
+        $gameMode = GameMode::resolve($gameMode);
+
+        try {
+            return $this->send(new LeaderboardRequest(region: $region, seasonId: $seasonId, gameMode: $gameMode), Leaderboard::class);
+        } catch (NotFoundException) {
+            throw LeaderboardNotFoundException::forBoard($region, $seasonId, $gameMode);
+        }
     }
 }

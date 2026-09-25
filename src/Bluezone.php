@@ -104,7 +104,7 @@ class Bluezone extends Connector
         return new PlayerResource($this);
     }
 
-    public function samples(): SampleResource
+    public function sample(): SampleResource
     {
         return new SampleResource($this);
     }

@@ -67,7 +67,7 @@ it('records lifetime-stats', fn () => record('lifetime-stats', LifetimeStatsRequ
 it('records weapon-mastery', fn () => record('weapon-mastery', WeaponMasteryRequest::class, fn ($b) => $b->player()->weaponMastery('steam', HWINN)));
 it('records survival-mastery', fn () => record('survival-mastery', SurvivalMasteryRequest::class, fn ($b) => $b->player()->survivalMastery('steam', HWINN)));
 it('records status', fn () => record('status', StatusRequest::class, fn ($b) => $b->status()->get()));
-it('records samples', fn () => record('samples', SamplesRequest::class, fn ($b) => $b->samples()->get('steam')));
+it('records samples', fn () => record('samples', SamplesRequest::class, fn ($b) => $b->sample()->get('steam')));
 it('records leaderboard', fn () => record('leaderboard', LeaderboardRequest::class, fn ($b) => $b->leaderboard()->get('pc-eu', SEASON, 'squad-fpp')));
 it('records clan', fn () => record('clan', ClanRequest::class, fn ($b) => $b->clan()->find('steam', 'clan.7e41009b212341a5a62d46430b391533')));
 it('records match and match-missing', function () {

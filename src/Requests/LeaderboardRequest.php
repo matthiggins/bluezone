@@ -22,7 +22,6 @@ class LeaderboardRequest extends Request
         protected Region $region,
         protected string $seasonId,
         protected GameMode $gameMode,
-        protected int $page = 0,
     ) {}
 
     public function resolveEndpoint(): string
@@ -30,14 +29,8 @@ class LeaderboardRequest extends Request
         return 'shards/'.$this->region->value.'/leaderboards/'.$this->seasonId.'/'.$this->gameMode->value;
     }
 
-    /** @return array<string, int> */
-    protected function defaultQuery(): array
-    {
-        return ['page[number]' => $this->page];
-    }
-
     public function createDtoFromResponse(Response $response): mixed
     {
-        return Leaderboard::make($response);
+        return Leaderboard::make($response, $this->region, $this->gameMode);
     }
 }

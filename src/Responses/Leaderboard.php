@@ -9,7 +9,7 @@ use Bluezone\Enums\Region;
 use Illuminate\Support\Collection;
 use Saloon\Http\Response;
 
-/** One region's ranked leaderboard for a season and mode; PUBG returns the whole top 500 on page 0. */
+/** One region's ranked leaderboard for a season and mode; PUBG returns the whole top 500 in one page. */
 final class Leaderboard extends PubgResponse
 {
     /** @param Collection<int, LeaderboardPlayer> $players */
@@ -21,13 +21,17 @@ final class Leaderboard extends PubgResponse
         public readonly Collection $players,
     ) {}
 
-    public static function make(Response $response): self
+    public static function make(Response $response, Region $region, GameMode $gameMode): self
     {
-        return self::fromArray($response->json());
+        return self::fromArray($response->json(), $region, $gameMode);
     }
 
-    /** @param array<string, mixed> $body the decoded response body */
-    public static function fromArray(array $body): self
+    /**
+     * Region and mode come from the request, not the body, so a shardId or ranked mode the enums lack cannot fail a good response.
+     *
+     * @param  array<string, mixed>  $body  the decoded response body
+     */
+    public static function fromArray(array $body, Region $region, GameMode $gameMode): self
     {
         $data = $body['data'];
 
@@ -40,9 +44,9 @@ final class Leaderboard extends PubgResponse
 
         return new self(
             id: $data['id'],
-            region: Region::from($data['attributes']['shardId']),
+            region: $region,
             seasonId: $data['attributes']['seasonId'],
-            gameMode: GameMode::from($data['attributes']['gameMode']),
+            gameMode: $gameMode,
             players: $players,
         );
     }

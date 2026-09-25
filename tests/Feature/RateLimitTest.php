@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Bluezone\Bluezone;
+use Bluezone\Requests\LeaderboardRequest;
 use Bluezone\Requests\MatchRequest;
 use Bluezone\Requests\SamplesRequest;
 use Bluezone\Requests\StatusRequest;
@@ -61,6 +62,14 @@ it('meters samples, which pubg does rate limit', function () {
     $bluezone = new Bluezone('key', new MemoryStore, requestsPerMinute: 1);
     $bluezone->withMockClient(new MockClient([SamplesRequest::class => apiFixture('samples')]));
 
-    $bluezone->samples()->get('steam');
-    $bluezone->samples()->get('steam');
+    $bluezone->sample()->get('steam');
+    $bluezone->sample()->get('steam');
+})->throws(RateLimitReachedException::class);
+
+it('meters leaderboards, which pubg does rate limit', function () {
+    $bluezone = new Bluezone('key', new MemoryStore, requestsPerMinute: 1);
+    $bluezone->withMockClient(new MockClient([LeaderboardRequest::class => apiFixture('leaderboard')]));
+
+    $bluezone->leaderboard()->get('pc-eu', 'division.bro.official.pc-2018-43', 'squad-fpp');
+    $bluezone->leaderboard()->get('pc-eu', 'division.bro.official.pc-2018-43', 'squad-fpp');
 })->throws(RateLimitReachedException::class);

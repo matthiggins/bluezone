@@ -6,6 +6,7 @@ namespace Bluezone\Requests;
 
 use Bluezone\Enums\Shard;
 use Bluezone\Responses\Samples;
+use Carbon\Carbon;
 use DateTimeInterface;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -33,7 +34,7 @@ class SamplesRequest extends Request
     {
         return $this->since === null
             ? []
-            : ['filter[createdAt-start]' => $this->since->format('Y-m-d\TH:i:s\Z')];
+            : ['filter[createdAt-start]' => Carbon::instance($this->since)->utc()->format('Y-m-d\TH:i:s\Z')];
     }
 
     public function createDtoFromResponse(Response $response): mixed

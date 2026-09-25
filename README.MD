@@ -173,8 +173,8 @@ $match->totalBots();
 $match->botPercent();
 
 // Bluezone\Responses\Samples: a random sample of recent public matches (hundreds of ids)
-$samples = $bluezone->samples()->get('steam');                          // the last 24 hours
-$samples = $bluezone->samples()->get('steam', now()->subHours(6));      // from a given time, within 14 days
+$samples = $bluezone->sample()->get('steam');                           // the last 24 hours
+$samples = $bluezone->sample()->get('steam', now()->subHours(6));       // from a given time, within 14 days
 $samples->matchIds;                          // Collection<string>
 
 // Bluezone\Responses\Leaderboard: the top 500, in one page, sorted by rank
@@ -213,10 +213,12 @@ try {
 |---|---|
 | `PlayerNotFoundException` | `player()->find()`, `search()` or `searchMany()` gets a 404, or the search matched no player |
 | `MatchNotFoundException` | `match()->find()` gets a 404 |
+| `LeaderboardNotFoundException` | `leaderboard()->get()` gets a 404: no board for that region, season and mode |
+| `InvalidSampleWindowException` | `sample()->get()` is given a start time more than 14 days back or in the future; thrown before any request is sent |
 | `InvalidTelemetryUrlException` | a telemetry url is not on `telemetry-cdn.pubg.com` |
 | `InvalidTelemetryException` | a telemetry body is not decodable JSON |
 | `Saloon\RateLimitPlugin\Exceptions\RateLimitReachedException` | the local budget is spent, or the API answered 429 |
-| `ValueError` | `Shard::resolve()` or `GameMode::resolve()` is given a string that is not a shard or game mode |
+| `ValueError` | `Shard::resolve()`, `Region::resolve()` or `GameMode::resolve()` is given a string that is not a shard, region or game mode |
 
 Everything else surfaces as a Saloon exception (`UnauthorizedException`, `ServiceUnavailableException`, `FatalRequestException`, …). See [Saloon — handling failures](https://docs.saloon.dev/the-basics/handling-failures).
 

@@ -4,8 +4,8 @@
 
 ### Added
 
-- `Bluezone::samples()->get($shard, ?$since)` returns `Samples`: a shard's random sample of recent match ids.
-- `Bluezone::leaderboard()->get($region, $seasonId, $gameMode, $page = 0)` returns `Leaderboard`, with `LeaderboardPlayer` rows sorted by rank.
+- `Bluezone::sample()->get($shard, ?$since)` returns `Samples`: a shard's random sample of recent match ids. `$since` is sent as UTC, and one more than 14 days back or in the future throws `InvalidSampleWindowException` before any request.
+- `Bluezone::leaderboard()->get($region, $seasonId, $gameMode)` returns `Leaderboard`, with `LeaderboardPlayer` rows sorted by rank. A 404 throws `LeaderboardNotFoundException`.
 - `Bluezone\Enums\Region`, the platform-region shards the leaderboard endpoint takes.
 
 ## v1.0.1 — 2026-09-25

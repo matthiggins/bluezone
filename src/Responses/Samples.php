@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Bluezone\Responses;
 
 use Bluezone\Enums\Shard;
-use Carbon\CarbonImmutable;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Saloon\Http\Response;
 
@@ -16,7 +16,7 @@ final class Samples extends PubgResponse
     public function __construct(
         public readonly string $id,
         public readonly Shard $shard,
-        public readonly CarbonImmutable $createdAt,
+        public readonly Carbon $createdAt,
         public readonly Collection $matchIds,
     ) {}
 
@@ -33,7 +33,7 @@ final class Samples extends PubgResponse
         return new self(
             id: $data['id'],
             shard: Shard::from($data['attributes']['shardId']),
-            createdAt: CarbonImmutable::parse($data['attributes']['createdAt']),
+            createdAt: Carbon::parse($data['attributes']['createdAt']),
             matchIds: collect($data['relationships']['matches']['data'] ?? [])
                 ->pluck('id')
                 ->values(),

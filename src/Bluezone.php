@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Bluezone;
 
+use Bluezone\Requests\MatchRequest;
 use Bluezone\Resources\ClanResource;
 use Bluezone\Resources\MatchResource;
 use Bluezone\Resources\PlayerResource;
@@ -13,6 +14,7 @@ use Bluezone\Resources\TelemetryResource;
 use Saloon\Contracts\Authenticator;
 use Saloon\Http\Auth\TokenAuthenticator;
 use Saloon\Http\Connector;
+use Saloon\Http\PendingRequest;
 use Saloon\RateLimitPlugin\Contracts\RateLimitStore;
 use Saloon\RateLimitPlugin\Limit;
 use Saloon\RateLimitPlugin\Stores\MemoryStore;
@@ -24,7 +26,9 @@ use Saloon\Traits\Plugins\HasTimeout;
 class Bluezone extends Connector
 {
     use AlwaysThrowOnErrors;
-    use HasRateLimits;
+    use HasRateLimits {
+        bootHasRateLimits as bootMeteredRateLimits;
+    }
     use HasTimeout;
 
     protected int $connectTimeout = 10;
@@ -53,6 +57,16 @@ class Bluezone extends Connector
         return [
             'Accept' => 'application/vnd.api+json',
         ];
+    }
+
+    /** PUBG does not rate limit matches, so they neither spend nor wait on the budget; telemetry has its own connector. */
+    public function bootHasRateLimits(PendingRequest $pendingRequest): void
+    {
+        if ($pendingRequest->getRequest() instanceof MatchRequest) {
+            return;
+        }
+
+        $this->bootMeteredRateLimits($pendingRequest);
     }
 
     /** @return array<int, Limit> */

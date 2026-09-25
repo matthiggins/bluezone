@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.0.1 — 2026-09-25
+
+### Fixed
+
+- `MatchRequest` no longer spends or waits on the rate limit budget; PUBG does not rate limit the match endpoint.
+
 ## v1.0.0 — 2026-09-24
 
 ### Breaking

@@ -41,3 +41,11 @@ it('reads the blue zone from the safety zone keys real telemetry uses', function
     expect($event->gameState->safeZoneRadius)->toBe((float) $raw['gameState']['safetyZoneRadius'])
         ->and($event->gameState->safeZonePosition?->x)->toBe((float) $raw['gameState']['safetyZonePosition']['x']);
 });
+
+it('reads the knock from the dBNO keys real telemetry uses', function () use ($sample) {
+    $raw = array_values(array_filter($sample, fn (array $event): bool => $event['_T'] === 'LogPlayerKillV2' && isset($event['dBNOMaker'])))[0];
+    $event = EventFactory::make($raw);
+
+    expect($event->dBNOMaker?->accountId)->toBe($raw['dBNOMaker']['accountId'])
+        ->and($event->dBNODamageInfo?->distance)->toBe((float) $raw['dBNODamageInfo']['distance']);
+});

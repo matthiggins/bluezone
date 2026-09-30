@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.2.1 — 2026-09-30
+
+### Fixed
+
+- `PlayerKillV2` reads the knock from `dBNOMaker` and `dBNODamageInfo`, the keys real telemetry uses; both were always null.
+
 ## v1.2.0 — 2026-09-25
 
 ### Added

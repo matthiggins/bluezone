@@ -25,6 +25,7 @@ final class Vehicle
         public readonly bool $isWheelsInAir,
         public readonly bool $isInWaterVolume,
         public readonly bool $isEngineOn,
+        public readonly ?Location $location = null,
     ) {
         $this->vehicleName = $this->getValueFromJsonFile('telemetry/vehicle/vehicleId.json', $this->vehicleId);
     }
@@ -36,7 +37,8 @@ final class Vehicle
             vehicleId: $data['vehicleId'],
             vehicleUniqueId: isset($data['vehicleUniqueId']) ? (int) $data['vehicleUniqueId'] : null,
             healthPercent: (float) $data['healthPercent'],
-            fuelPercent: isset($data['fuelPercent']) ? (float) $data['fuelPercent'] : null,
+            // Real telemetry spells it `feulPercent`.
+            fuelPercent: isset($data['feulPercent']) || isset($data['fuelPercent']) ? (float) ($data['feulPercent'] ?? $data['fuelPercent']) : null,
             altitudeAbs: (float) $data['altitudeAbs'],
             altitudeRel: (float) $data['altitudeRel'],
             velocity: (float) $data['velocity'],
@@ -44,6 +46,7 @@ final class Vehicle
             isWheelsInAir: (bool) $data['isWheelsInAir'],
             isInWaterVolume: (bool) $data['isInWaterVolume'],
             isEngineOn: (bool) $data['isEngineOn'],
+            location: isset($data['location']) ? Location::make($data['location']) : null,
         );
     }
 }

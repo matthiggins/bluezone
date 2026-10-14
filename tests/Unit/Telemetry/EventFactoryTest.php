@@ -49,3 +49,11 @@ it('reads the knock from the dBNO keys real telemetry uses', function () use ($s
     expect($event->dBNOMaker?->accountId)->toBe($raw['dBNOMaker']['accountId'])
         ->and($event->dBNODamageInfo?->distance)->toBe((float) $raw['dBNODamageInfo']['distance']);
 });
+
+it('reads a vehicle fuel from the feulPercent key real telemetry uses, and its own location', function () use ($sample) {
+    $raw = array_values(array_filter($sample, fn (array $event): bool => $event['_T'] === 'LogVehicleDamage' && isset($event['vehicle']['feulPercent'])))[0];
+    $event = EventFactory::make($raw);
+
+    expect($event->vehicle->fuelPercent)->toBe((float) $raw['vehicle']['feulPercent'])
+        ->and($event->vehicle->location?->x)->toBe((float) $raw['vehicle']['location']['x']);
+});

@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.2.2 — 2026-10-14
+
+### Fixed
+
+- `Vehicle::$fuelPercent` reads `feulPercent`, the key real telemetry uses; it was always null.
+
+### Added
+
+- `Vehicle::$location`, the vehicle's own position, which telemetry sends alongside the rider's.
+
 ## v1.2.1 — 2026-09-30
 
 ### Fixed
